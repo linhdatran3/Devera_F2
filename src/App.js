@@ -1,9 +1,8 @@
 import logo from './logo.svg';
 import './App.css';
-import Item from './components/Item/Item'
-import Button from './components/Button/Button'
-import PreviewItem from './components/PreviewItem/PreviewItem';
-import Input from './components/Input/Input';
+
+
+import Home from './containers/Home/Home'
 function App() {
   return (
     <div className="App">
@@ -21,10 +20,8 @@ function App() {
           Learn React
         </a>
       </header>
-      <Item/>
-      <Button/>
-      <PreviewItem />
-      <Input />
+     
+    <Home />
     </div>
   );
 }
