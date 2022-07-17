@@ -1,10 +1,20 @@
 import React from "react";
-const Input = () => {
+import styled from "styled-components";
+const StyledInput = styled.input`
+  padding: 0.5rem 1rem;
+`;
+const Input = (type, placeholder, onChange, value) => {
+  const handleChange = (e) => {
+    onChange(e.target.value);
+  };
   return (
     <React.Fragment>
-      <div>
-        <input type="text" value={"input"} />
-      </div>
+      <StyledInput
+        type={type}
+        placeholder={placeholder}
+        value={value}
+        onChange={handleChange}
+      ></StyledInput>
     </React.Fragment>
   );
 };

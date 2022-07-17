@@ -1,0 +1,34 @@
+.navbar{
+    display: flex;
+}
+.logo{
+    width: 10%;
+}
+
+.menu{
+    width: 60%;
+}
+.menu ul{
+    display: flex;
+    justify-content: space-around;
+}
+.menu ul li{
+    list-style: none; 
+    text-decoration: none;
+
+}
+ a{
+    text-decoration: none;
+    
+}
+.menu ul li a{
+    font-size: 14px;
+    line-height: 18px;
+}
+.search{
+    width: 20%;;
+}
+
+.btn-search{
+    width: 15%;;
+}

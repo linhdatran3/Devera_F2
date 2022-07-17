@@ -1,23 +1,32 @@
 import React from "react";
 import styled from "styled-components";
-const styledButton = styled.button`
+const StyledButton = styled.button`
   outline: none;
   cursor: pointer;
   border: none;
   position: relative;
-  ${({ bgColor, height, width }) => {
+  padding: 0.8rem 1.8rem;
+  border-radius: 5px;
+  font-weight: 720;
+  ${({ bgColor, txtColor, height, width }) => {
     return `
-     background-color: ${bgColor};
-     height: ${height}px;
-      width: ${width}px;
+     background: ${bgColor};
+     color:${txtColor};
+     height: ${height} px;
+      width: ${width} px;
     `;
   }};
 `;
-const Button = ({ children, bgColor, height, width }) => {
+const Button = ({ txtColor, children, bgColor, height, width }) => {
   return (
-    <styledButton bgColor={bgColor} width={width} height={height}>
+    <StyledButton
+      txtColor={txtColor}
+      bgColor={bgColor}
+      width={width}
+      height={height}
+    >
       {children}
-    </styledButton>
+    </StyledButton>
   );
 };
 export default Button;
