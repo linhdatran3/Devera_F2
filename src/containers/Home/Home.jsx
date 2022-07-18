@@ -1,10 +1,15 @@
 import React from "react";
-import Item from "../../components/Item/Item";
 import Button from "../../components/Button/Button";
-import PreviewItem from "../../components/PreviewItem/PreviewItem";
 import Input from "../../components/Input/Input";
 import Navbar from "../../components/Navbar/Navbar";
+import {
+  LeftOutlined,
+  RightOutlined,
+  CarOutlined,
+  AliwangwangOutlined,
+} from "@ant-design/icons";
 import "./Home.css";
+import PreviewItem from "../../components/PreviewItem/PreviewItem";
 const Home = () => {
   return (
     <React.Fragment>
@@ -16,8 +21,6 @@ const Home = () => {
           <div className="banner">
             <div className="banner__content">
               <div className="banner__content-title">
-                <h1>Discover, Sell</h1>
-                <h2>& Collect Rare</h2>
                 <h2>NFTs</h2>
               </div>
               <div className="banner__content-sub-title">
@@ -53,10 +56,92 @@ const Home = () => {
             </div>
           </div>
         </header>
-        <Item />
-        <Button />
-        <PreviewItem />
-        <Input />
+        <section className="category">
+          <div className="category__head">
+            <div className="title">
+              <h2 className="h2">Category</h2>
+            </div>
+            <div className="next-pre">
+              <div className="pre-icon circleClasses">
+                <LeftOutlined className="circleItemCenter" />
+              </div>
+              <div className="next-icon circleClasses">
+                <RightOutlined className="circleItemCenter" />
+              </div>
+            </div>
+          </div>
+          <div className="categories">
+            <div className="item item1">
+              <CarOutlined />
+              <p className="p1">Car</p>
+            </div>
+            <div className="item item2">
+              <AliwangwangOutlined />
+              <p className="p1">Alien</p>
+            </div>
+            <div className="item item3">
+              <AliwangwangOutlined />
+              <p className="p1">Alien</p>
+            </div>
+            <div className="item item4">
+              <AliwangwangOutlined />
+              <p className="p1">Alien</p>
+            </div>
+            <div className="item item5">
+              <AliwangwangOutlined />
+              <p className="p1">Alien</p>
+            </div>
+            <div className="item item6">
+              <AliwangwangOutlined />
+              <p className="p1">Alien</p>
+            </div>
+            <div className="item item7">
+              <AliwangwangOutlined />
+              <p className="p1">Alien</p>
+            </div>
+          </div>
+        </section>
+
+        <section className="popular">
+          <div className="popular__head">
+            <div className="title">
+              <h2>Popular Product</h2>
+            </div>
+            <div className="see-all">
+              <Button borderRadius={"10px"}>See all</Button>
+            </div>
+          </div>
+          <div className="popular__content">
+            <div className="row">
+              <div className="col col1">
+                <PreviewItem />
+              </div>
+              <div className="col col2">
+                <PreviewItem />
+              </div>
+              <div className="col col3">
+                <PreviewItem />
+              </div>
+              <div className="col col4">
+                <PreviewItem />
+              </div>
+            </div>
+            <div className="row">
+              <div className="col col1">
+                <PreviewItem />
+              </div>
+              <div className="col col2">
+                <PreviewItem />
+              </div>
+              <div className="col col3">
+                <PreviewItem />
+              </div>
+              <div className="col col4">
+                <PreviewItem />
+              </div>
+            </div>
+          </div>
+        </section>
       </div>
     </React.Fragment>
   );

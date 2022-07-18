@@ -1,0 +1,40 @@
+.previewItem{
+    position: relative;
+    margin: 1rem;
+    background-color: #f7f7f7;
+    border-radius: 15px;
+    width: 100%;
+    padding: 1rem 0;
+}
+
+.image{
+    position:relative;
+    top:100%;
+    left:50%;
+    transform:translate(-50%,0%);
+    height: 220px;
+    width: 260px;
+    background-color: #fff;
+    
+}
+.content{
+    display: flex;
+    margin: 0 1rem;
+}
+.content .right{
+    padding-top: 2rem;
+    position:relative;
+    top:100%;
+    right: 0%;
+    transform:translateX(90%);
+}
+.content .price__item{
+    display: flex;
+}
+.content .price-icon{
+    background-color: "#fff";
+    border-radius: "50%";
+    color: "#40AA54";
+    width: 18px;
+    height: 18px;
+}

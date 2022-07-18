@@ -11,10 +11,12 @@
 .menu{
     position: absolute;    
     width: 60%;
-    right: 10%;
+    right: 30%;
 }
 .menu ul{
     display: flex;
+    position: absolute;
+    right: 0;
 }
 .menu ul li{
     list-style: none; 
@@ -36,6 +38,9 @@
     
 }
 .icon__heart{
+    position: absolute;
+    width: 20%;
+    right: 80%;
     display: flex;
     font-weight: 500 !important;
 }
@@ -57,6 +62,10 @@
 .icon__cart{
     display: flex;
     font-weight: 500 !important;
+    position: absolute;
+    width: 20%;
+    right: 60%;
+
 }
 .icon__cart .cart{
     background-color: #d5fbdc;
@@ -75,6 +84,9 @@
 
 
 .user{
+    position: absolute;
+    right: 0;
+    width: 60%;
     display: flex;
     padding: 0 0.5rem;
 }
