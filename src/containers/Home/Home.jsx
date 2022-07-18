@@ -9,7 +9,6 @@ const Home = () => {
   return (
     <React.Fragment>
       <div>
-        <h1>HOME</h1>
         <header>
           <div className="head">
             <Navbar />
@@ -28,12 +27,8 @@ const Home = () => {
                 </p>
               </div>
               <div className="banner__content-btn">
-                <Button
-                  bgColor={"#8E99F8;"}
-                  txtColor={"#fff"}
-                  width={"199px"}
-                  height={"40px"}
-                >
+                <Input />
+                <Button width="199px" height="40px" borderRadius="20px">
                   Discover Now
                 </Button>
               </div>
@@ -50,7 +45,7 @@ const Home = () => {
             </div>
             <div className="banner__image">
               <img
-                src=".\.\public\Devera-brand-character 1 (1).png"
+                src="Devera-brand-character 1 (1).png"
                 alt=""
                 height={"513px"}
                 width={"505px"}

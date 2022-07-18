@@ -1,5 +1,15 @@
+.head{
+    height: 12vh;
+    align-items: center;
+    display: flex;
+    padding: 1rem 0;
+}
 .banner{
     display: flex;
+    height: 80vh;
+    background-color: #d5fbdc;
+    padding: 1rem;
+    border-radius: 30px;
 }
 .banner__content{
     width: 60%;

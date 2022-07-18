@@ -1,7 +1,11 @@
 import React from "react";
 import { BrowserRouter as Router, Link } from "react-router-dom";
-import Input from "../Input/Input";
-import Button from "../Button/Button";
+import {
+  HeartOutlined,
+  ShoppingCartOutlined,
+  UserOutlined,
+  DownOutlined,
+} from "@ant-design/icons";
 import "./Navbar.css";
 const Navbar = () => {
   return (
@@ -9,37 +13,61 @@ const Navbar = () => {
       <Router>
         <div className="navbar container">
           <div className="logo">
-            {/* logo */}
-            <h2>
-              <Link to="/">Devestore</Link>
-            </h2>
+            {/* img logo */}
+
+            <Link to="/">
+              <img src="logo192.png" alt="logo" height={"50px"} />
+            </Link>
           </div>
           <div className="menu">
             <ul>
               <li>
-                <Link to="/a">Explore</Link>
+                <Link to="/a">Home</Link>
               </li>
               <li>
-                <Link to="/b">Marketplace</Link>
+                <Link to="/b">Categories</Link>
               </li>
               <li>
-                <Link to="/c">Artist</Link>
+                <Link to="/c">Popular</Link>
               </li>
               <li>
-                <Link to="/d">Collection</Link>
+                <Link to="/d">Contact</Link>
               </li>
             </ul>
           </div>
-          <div className="search">
-            <Input type="text" placeholder="search" />
-          </div>
-          <div className="btn-connect">
-            <Button
-              bgColor="linear-gradient(90deg, #E12D2D 0%, #1254FE 100%);"
-              txtColor="#fff"
-            >
-              Connect
-            </Button>
+          <div className="icon">
+            <div className="icon__heart">
+              <div className="heart circleClasses ">
+                <HeartOutlined className="circleItemCenter" />
+              </div>
+              <div className="numHeart p2 circleClasses ">
+                {/* number heart */}
+                <div className="circleItemCenter">n</div>
+              </div>
+            </div>
+            <div className="icon__cart">
+              <div className="cart circleClasses">
+                <ShoppingCartOutlined className="circleItemCenter" />
+              </div>
+              <div className="numCart p2 circleClasses ">
+                {/* number cart */}
+                <div className="circleItemCenter">n</div>
+              </div>
+            </div>
+            <div className="user">
+              <div className="user__name">
+                <span className="p2">Hello, </span>
+                <span className="username p1">Linhda</span>
+              </div>
+              <div className="user__icon circleClasses">
+                {/* icon user */}
+                <UserOutlined className="circleItemCenter" />
+              </div>
+              <div className="user__more">
+                {/* icon click more */}
+                <DownOutlined className="circleItemCenter" />
+              </div>
+            </div>
           </div>
         </div>
       </Router>

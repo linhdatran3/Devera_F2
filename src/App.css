@@ -34,5 +34,30 @@
 body{
   font-family: 'Space Grotesk';
   font-style: normal;
-  font-weight: 700;
+  color: #16162E
+}
+a{
+  text-decoration: none;
+  color: #16162E;
+}
+.p1{
+  font-size: 18px;
+  color: #16162E;
+}
+.p2{
+  font-size: 14px;
+  color: #16162E;
+}
+
+.circleClasses{
+  height: 36px;
+  width: 36px;
+  border-radius: 50%;
+
+}
+.circleItemCenter{
+  position:relative;
+  top:50%;
+  left:50%;
+  transform:translate(-50%,-50%)
 }

@@ -6,24 +6,35 @@ const StyledButton = styled.button`
   border: none;
   position: relative;
   padding: 0.8rem 1.8rem;
-  border-radius: 5px;
+  border-radius: 10px;
   font-weight: 720;
-  ${({ bgColor, txtColor, height, width }) => {
+  background: #40aa54;
+  color: #fff;
+  ${({ bgColor, txtColor, height, width, borderRadius }) => {
     return `
      background: ${bgColor};
      color:${txtColor};
-     height: ${height} px;
-      width: ${width} px;
+     height: ${height};
+      width: ${width};
+      border-radius:${borderRadius};
     `;
   }};
 `;
-const Button = ({ txtColor, children, bgColor, height, width }) => {
+const Button = ({
+  txtColor,
+  children,
+  bgColor,
+  height,
+  width,
+  borderRadius,
+}) => {
   return (
     <StyledButton
       txtColor={txtColor}
       bgColor={bgColor}
       width={width}
       height={height}
+      borderRadius={borderRadius}
     >
       {children}
     </StyledButton>
