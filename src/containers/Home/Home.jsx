@@ -2,6 +2,7 @@ import React from "react";
 import Button from "../../components/Button/Button";
 import Input from "../../components/Input/Input";
 import Navbar from "../../components/Navbar/Navbar";
+import Footer from "../../components/Footer/Footer";
 import {
   LeftOutlined,
   RightOutlined,
@@ -91,14 +92,6 @@ const Home = () => {
               <AliwangwangOutlined />
               <p className="p1">Alien</p>
             </div>
-            <div className="item item6">
-              <AliwangwangOutlined />
-              <p className="p1">Alien</p>
-            </div>
-            <div className="item item7">
-              <AliwangwangOutlined />
-              <p className="p1">Alien</p>
-            </div>
           </div>
         </section>
 
@@ -142,6 +135,48 @@ const Home = () => {
             </div>
           </div>
         </section>
+
+        <section className="sales">
+          <div className="sales__head">
+            <div className="title">
+              <h2>Flash sales</h2>
+            </div>
+          </div>
+          <div className="sales__content">
+            <div className="row">
+              <div className="col col1">
+                <PreviewItem />
+              </div>
+              <div className="col col2">
+                <PreviewItem />
+              </div>
+              <div className="col col3">
+                <PreviewItem />
+              </div>
+              <div className="col col4">
+                <PreviewItem />
+              </div>
+            </div>
+            <div className="row">
+              <div className="col col1">
+                <PreviewItem />
+              </div>
+              <div className="col col2">
+                <PreviewItem />
+              </div>
+              <div className="col col3">
+                <PreviewItem />
+              </div>
+              <div className="col col4">
+                <PreviewItem />
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <footer>
+          <Footer />
+        </footer>
       </div>
     </React.Fragment>
   );

@@ -1,13 +1,17 @@
 
 import './App.css';
 
-
+import {Routes, Route } from 'react-router-dom';
 import Home from './containers/Home/Home'
+import Products from './containers/Products/Product';
 function App() {
   return (
     <div className="container">
+      <Routes>
+        <Route path='/' element={<Home/>} />
+        <Route path='/products' element={<Products/>} />
 
-    <Home />
+      </Routes>
     </div>
   );
 }

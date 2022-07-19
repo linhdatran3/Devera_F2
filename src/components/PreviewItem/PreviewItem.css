@@ -1,10 +1,10 @@
 .previewItem{
     position: relative;
-    margin: 1rem;
-    background-color: #f7f7f7;
+    background-color: #fff;
     border-radius: 15px;
     width: 100%;
     padding: 1rem 0;
+    border: 1.5px solid #f4f4f4;;
 }
 
 .image{
@@ -20,13 +20,13 @@
 .content{
     display: flex;
     margin: 0 1rem;
+    justify-content: space-around;
 }
 .content .right{
     padding-top: 2rem;
     position:relative;
     top:100%;
     right: 0%;
-    transform:translateX(90%);
 }
 .content .price__item{
     display: flex;

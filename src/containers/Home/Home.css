@@ -1,5 +1,5 @@
 .head{
-    height: 12vh;
+    height: 10vh;
     align-items: center;
     display: flex;
     padding: 1rem 0;
@@ -79,7 +79,7 @@
  }
  .categories .item{
     background-color: #f7f7f7;
-    width: calc(100%/7);
+    width: calc(100%/5);
     margin:  1rem;
     text-align: center;
     padding: 3rem 0 0.5rem 0;
@@ -109,5 +109,31 @@
 }
 .popular .row{
     display: flex;
-    justify-content: space-between;
+    width: 100%;
+    padding-bottom: 1rem;
+}
+.popular .row .col{
+    width: 25%;
+    margin: 0 0.5rem;
+}
+
+.sales{
+    height: 100%;
+    background-color: #d5fbdc;
+    border-radius: 40px;
+}
+.sales__head{
+    padding: 1rem 4rem;
+}
+.sales__content{
+    padding: 0rem 3rem;
+}
+.sales .row{
+    display: flex;
+    width: 100%;
+    padding-bottom: 1rem;
+}
+.sales .row .col{
+    width: 25%;
+    margin: 0 0.5rem;
 }

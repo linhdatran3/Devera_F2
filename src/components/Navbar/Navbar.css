@@ -1,6 +1,7 @@
 .navbar{
     display: flex;
     position: relative;
+    height: 100%;
 }
 .logo{
     width: 10%;
@@ -12,11 +13,14 @@
     position: absolute;    
     width: 60%;
     right: 30%;
+    height: 100%;
+    bottom: -40%;
 }
 .menu ul{
     display: flex;
     position: absolute;
     right: 0;
+    margin: 0;
 }
 .menu ul li{
     list-style: none; 
@@ -31,11 +35,13 @@
 .icon{
     position: absolute;    
     width: 30%;
+    height: 100%;
     right: 0;
+    bottom: -25%;    
     display: flex;
     color: "#eb4d4b" ;
     font-size: 24px;
-    
+
 }
 .icon__heart{
     position: absolute;
@@ -43,6 +49,8 @@
     right: 80%;
     display: flex;
     font-weight: 500 !important;
+    justify-content: right;
+
 }
 .icon__heart .heart{
     background-color: #ffc5c3;
@@ -65,11 +73,13 @@
     position: absolute;
     width: 20%;
     right: 60%;
+    justify-content: right;
 
 }
 .icon__cart .cart{
     background-color: #d5fbdc;
     color: #40AA54;
+
 }
 .icon__cart .numCart{
     position: relative;
@@ -80,6 +90,7 @@
     font-size: 14px;
     color: #fff;
     background-color: #40AA54;
+
 }
 
 
@@ -89,6 +100,8 @@
     width: 60%;
     display: flex;
     padding: 0 0.5rem;
+    justify-content: right;
+
 }
 .user__icon{
     background-color: #d5fbdc;
