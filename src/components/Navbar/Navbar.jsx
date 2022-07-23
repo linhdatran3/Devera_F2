@@ -36,23 +36,25 @@ const Navbar = () => {
         </div>
         <div className="icon">
           <div className="icon__heart">
-            <div className="heart circleClasses ">
+            <div className="icon__heart-icon circleClasses ">
               <HeartOutlined className="circleItemCenter" />
             </div>
-            <div className="numHeart p2 circleClasses ">
+            <div className="icon__heart-num p2 circleClasses ">
               {/* number heart */}
               <div className="circleItemCenter">n</div>
             </div>
           </div>
-          <div className="icon__cart">
-            <div className="cart circleClasses">
+
+          <Link className="icon__cart" to="/cart">
+            <div className="icon__cart-icon circleClasses">
               <ShoppingCartOutlined className="circleItemCenter" />
             </div>
-            <div className="numCart p2 circleClasses ">
+            <div className="icon__cart-num p2 circleClasses ">
               {/* number cart */}
               <div className="circleItemCenter">n</div>
             </div>
-          </div>
+          </Link>
+
           <div className="user">
             <div className="user__name">
               <span className="p2">Hello, </span>

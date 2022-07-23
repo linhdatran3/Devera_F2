@@ -52,12 +52,12 @@
     justify-content: right;
 
 }
-.icon__heart .heart{
+.icon__heart .icon__heart-icon{
     background-color: #ffc5c3;
     color: #eb4d4b;
 
 }
-.icon__heart .numHeart{
+.icon__heart .icon__heart-num{
     position: relative;
     left: -15%;
     text-align: center;
@@ -76,12 +76,12 @@
     justify-content: right;
 
 }
-.icon__cart .cart{
+.icon__cart .icon__cart-icon{
     background-color: #d5fbdc;
     color: #40AA54;
 
 }
-.icon__cart .numCart{
+.icon__cart .icon__cart-num{
     position: relative;
     text-align: center;
     left: -15%;
