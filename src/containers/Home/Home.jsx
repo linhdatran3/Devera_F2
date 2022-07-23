@@ -174,6 +174,13 @@ const Home = () => {
           </div>
         </section>
 
+        <section className="join-our-community">
+          <div className="join__head">
+            <div className="join__head-title">
+              <h2>Join Our Community</h2>
+            </div>
+          </div>
+        </section>
         <footer>
           <Footer />
         </footer>

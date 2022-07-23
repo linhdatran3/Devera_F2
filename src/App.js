@@ -3,7 +3,7 @@ import './App.css';
 
 import {Routes, Route } from 'react-router-dom';
 import Home from './containers/Home/Home'
-import Products from './containers/Products/Product';
+import Products from './containers/Products/Products';
 function App() {
   return (
     <div className="container">

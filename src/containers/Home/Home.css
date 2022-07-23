@@ -72,12 +72,12 @@
     color: #fff;
  }
 
- .categories{
+ .category .categories{
     position: relative;
     top: 50px;
     display: flex;
  }
- .categories .item{
+ .category .categories .item{
     background-color: #f7f7f7;
     width: calc(100%/5);
     margin:  1rem;
@@ -85,7 +85,7 @@
     padding: 3rem 0 0.5rem 0;
     border-radius: 15px;
  }
- .categories .item svg{
+ .category .categories .item svg{
     height: 36px;
     width: 36px;
  }

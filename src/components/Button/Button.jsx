@@ -27,6 +27,7 @@ const Button = ({
   height,
   width,
   borderRadius,
+  type,
 }) => {
   return (
     <StyledButton
@@ -35,6 +36,7 @@ const Button = ({
       width={width}
       height={height}
       borderRadius={borderRadius}
+      type={type}
     >
       {children}
     </StyledButton>

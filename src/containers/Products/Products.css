@@ -1,3 +1,28 @@
 .products__head{
     height: 10vh;
 }
+.products{
+    display: flex;
+    width: 100%;
+    padding: 1rem 0;
+}
+.products .categories{
+    width: 15%;
+}
+.products .list-products{
+    width: 85%;
+}
+.list-products .list-products__filter{
+
+}
+.list-products .row{
+    display: flex;
+    padding: 0.5rem 0;
+}
+.list-products .row .col{
+    width: 25%;
+    margin: 0 0.5rem;
+}
+.list-products__pagination{
+
+}

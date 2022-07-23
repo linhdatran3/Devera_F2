@@ -93,7 +93,9 @@ const Footer = () => {
           </div>
         </div>
       </div>
-      <p className="copyright p2">&copy; 2022 Linhdadev.xyz</p>
+      <p className="copyright p2">
+        &copy; 2022 Linhdadev.xyz. All right reserved.
+      </p>
     </React.Fragment>
   );
 };
