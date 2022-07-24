@@ -186,18 +186,18 @@ const Cart = () => {
           <div className="cart__payment-total">
             <div className="row">
               <div className="col col1">
-                <h4>Total price:</h4>
+                <h5>Total price:</h5>
               </div>
               <div className="col col2">
-                <h4>467.62</h4>
+                <h5>467.62</h5>
               </div>
             </div>
             <div className="row">
               <div className="col col1">
-                <h4>Discount:</h4>
+                <h5>Discount:</h5>
               </div>
               <div className="col col2">
-                <h4>467.62</h4>
+                <h5>467.62</h5>
               </div>
             </div>
             <div className="row">

@@ -29,8 +29,8 @@ const Checkout = () => {
         />
         <Step title="Confirm" description="This is a description." />
       </Steps>
-      <div className="checkout">
-        <div className="contact-form">
+      <Row className="checkout">
+        <Col sm={8} className="contact-form">
           <h4>Contact information</h4>
           <div className="user__info">
             <Form>
@@ -113,53 +113,77 @@ const Checkout = () => {
               Continue Shopping
             </Button>
           </div>
-        </div>
-        <div className="bill">
-          <h4>Bill</h4>
-          <Button>Edit</Button>
-          <div className="bill__products-confirm">
-            <div className="row ">
-              <div className="col col1">
-                <div className="item-image">
-                  <img src="logo.png" alt="" height="40px" />
-                </div>
-                <div className="item-info">
-                  <h4>Name products</h4>
-                  <p className="p2">Created by: aaa</p>
-                </div>
-              </div>
-              <div className="col col2">
-                <h4>
-                  <span>Quantity</span>
-                  <span>1</span>
-                </h4>
-              </div>
-              <div className="col col3">
-                <h4>5.00</h4>
-              </div>
+        </Col>
+        <Col className="bill">
+          <div className="bill__head">
+            <div className="bill__head-title">
+              <h4>Bill</h4>
             </div>
-            <div className="row ">
-              <div className="col col1">
-                <div className="item-image">
-                  <img src="logo.png" alt="" height="40px" />
-                </div>
-                <div className="item-info">
-                  <h4>Name products</h4>
-                  <p className="p2">Created by: aaa</p>
-                </div>
-              </div>
-              <div className="col col2">
-                <h4>
-                  <span>Quantity</span>
-                  <span>1</span>
-                </h4>
-              </div>
-              <div className="col col3">
-                <h4>5.00</h4>
-              </div>
+            <div className="bill__head-edit">
+              <Button bgColor={"#d5fbdc"} txtColor={"#40aa54"}>
+                Edit
+              </Button>
             </div>
           </div>
+
+          <div className="bill__products-confirm">
+            <Row>
+              <Col sm={3}>
+                <div className="item-image">
+                  <img src="logo.png" alt="" height="40px" />
+                </div>
+              </Col>
+              <Col>
+                <div className="item-info">
+                  <h4>Name products</h4>
+                  <p className="p2">Created by: aaa</p>
+                </div>
+                <span>Quantity</span>
+                <span>1</span>
+              </Col>
+              <Col sm={3}>
+                <h5>5.00</h5>
+              </Col>
+            </Row>
+            <Row>
+              <Col sm={3}>
+                <div className="item-image">
+                  <img src="logo.png" alt="" height="40px" />
+                </div>
+              </Col>
+              <Col>
+                <div className="item-info">
+                  <h4>Name products</h4>
+                  <p className="p2">Created by: aaa</p>
+                </div>
+                <span>Quantity</span>
+                <span>1</span>
+              </Col>
+              <Col sm={3}>
+                <h5>5.00</h5>
+              </Col>
+            </Row>
+            <Row>
+              <Col sm={3}>
+                <div className="item-image">
+                  <img src="logo.png" alt="" height="40px" />
+                </div>
+              </Col>
+              <Col>
+                <div className="item-info">
+                  <h4>Name products</h4>
+                  <p className="p2">Created by: aaa</p>
+                </div>
+                <span>Quantity</span>
+                <span>1</span>
+              </Col>
+              <Col sm={3}>
+                <h5>5.00</h5>
+              </Col>
+            </Row>
+          </div>
           <div className="bill__voucher">
+            <h4>Voucher</h4>
             <Input placeholder={"voucher code"} />
             <Button>Add</Button>
           </div>
@@ -196,8 +220,8 @@ const Checkout = () => {
           <div className="bill__checkout">
             <Button>Check out</Button>
           </div>
-        </div>
-      </div>
+        </Col>
+      </Row>
       <Footer />
     </React.Fragment>
   );

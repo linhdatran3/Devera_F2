@@ -5,7 +5,8 @@
 }
 .cart{
     background-color: #fff;
-    margin-right: 0;
+    margin-right: 0 !important;
+    margin-top: 1rem !important;
 }
 
 .cart .cart__products .temp{

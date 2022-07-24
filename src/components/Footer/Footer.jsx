@@ -2,6 +2,7 @@ import React from "react";
 import "./Footer.css";
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
+import { Link } from "react-router-dom";
 import {
   TwitterOutlined,
   InstagramOutlined,
@@ -15,7 +16,7 @@ const Footer = () => {
     <React.Fragment>
       <div className="footer">
         <Row className="row">
-          <Col sm={3}>
+          <Col sm={4} className="footer__col1">
             <div className="footer_logo">
               <img src="logo1.png" alt="" height={"70px"} />
             </div>
@@ -40,26 +41,42 @@ const Footer = () => {
               </div>
             </div>
           </Col>
-          <Col sm={2}>
+          <Col>
             <div className="title">
               <h3>Feature</h3>
             </div>
             <div className="footer_content">
-              <span className="p1">Feature</span>
-              <span className="p1">Feature</span>
-              <span className="p1">Feature</span>
-              <span className="p1">Feature</span>
-            </div>{" "}
+              <Link to={"/"}>
+                <p className="p1">Feature</p>
+              </Link>
+              <Link to={"/"}>
+                <p className="p1">Feature</p>
+              </Link>
+              <Link to={"/"}>
+                <p className="p1">Feature</p>
+              </Link>
+              <Link to={"/"}>
+                <p className="p1">Feature</p>
+              </Link>
+            </div>
           </Col>
-          <Col sm={2}>
+          <Col>
             <div className="title">
               <h3>Solution</h3>
             </div>
             <div className="footer_content">
-              <span className="p1">Feature</span>
-              <span className="p1">Feature</span>
-              <span className="p1">Feature</span>
-              <span className="p1">Feature</span>
+              <Link to={"/"}>
+                <p className="p1">Feature</p>
+              </Link>
+              <Link to={"/"}>
+                <p className="p1">Feature</p>
+              </Link>
+              <Link to={"/"}>
+                <p className="p1">Feature</p>
+              </Link>
+              <Link to={"/"}>
+                <p className="p1">Feature</p>
+              </Link>
             </div>
           </Col>
           <Col sm={3}>
