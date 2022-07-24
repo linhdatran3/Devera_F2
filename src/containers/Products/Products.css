@@ -1,5 +1,5 @@
 .products__head{
-    height: 10vh;
+    height: 16vh;
 }
 .products{
     display: flex;
@@ -12,9 +12,9 @@
 .products .list-products{
     width: 85%;
 }
-.list-products .list-products__filter{
+/* .list-products .list-products__filter{
 
-}
+} */
 .list-products .row{
     display: flex;
     padding: 0.5rem 0;
@@ -23,6 +23,6 @@
     width: 25%;
     margin: 0 0.5rem;
 }
-.list-products__pagination{
+/* .list-products__pagination{
 
-}
+} */

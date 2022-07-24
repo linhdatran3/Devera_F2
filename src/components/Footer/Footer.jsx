@@ -1,5 +1,7 @@
 import React from "react";
 import "./Footer.css";
+import Col from "react-bootstrap/Col";
+import Row from "react-bootstrap/Row";
 import {
   TwitterOutlined,
   InstagramOutlined,
@@ -12,8 +14,8 @@ const Footer = () => {
   return (
     <React.Fragment>
       <div className="footer">
-        <div className="row">
-          <div className="col col1">
+        <Row className="row">
+          <Col sm={3}>
             <div className="footer_logo">
               <img src="logo1.png" alt="" height={"70px"} />
             </div>
@@ -37,8 +39,8 @@ const Footer = () => {
                 <FacebookOutlined className="circleItemCenter" />
               </div>
             </div>
-          </div>
-          <div className="col col2">
+          </Col>
+          <Col sm={2}>
             <div className="title">
               <h3>Feature</h3>
             </div>
@@ -47,9 +49,9 @@ const Footer = () => {
               <span className="p1">Feature</span>
               <span className="p1">Feature</span>
               <span className="p1">Feature</span>
-            </div>
-          </div>
-          <div className="col col3">
+            </div>{" "}
+          </Col>
+          <Col sm={2}>
             <div className="title">
               <h3>Solution</h3>
             </div>
@@ -59,8 +61,8 @@ const Footer = () => {
               <span className="p1">Feature</span>
               <span className="p1">Feature</span>
             </div>
-          </div>
-          <div className="col col4">
+          </Col>
+          <Col sm={3}>
             <div className="title">
               <h3>Contact</h3>
             </div>
@@ -90,8 +92,8 @@ const Footer = () => {
                 </div>
               </div>
             </div>
-          </div>
-        </div>
+          </Col>
+        </Row>
       </div>
       <p className="copyright p2">
         &copy; 2022 Linhdadev.xyz. All right reserved.

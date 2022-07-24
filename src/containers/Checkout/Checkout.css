@@ -2,7 +2,7 @@
     width: 100%;
     display: flex;
 }
-.checkout__info{
+.contact-form{
     width: 70%;
     border-radius: 20px;
     background-color: rgb(149, 241, 150);
@@ -18,10 +18,19 @@
     padding: 1rem;
    
 }
-.user__info-name .row{
-    display: flex;
-    justify-content: space-between;
+
+.custome-step .ant-steps-item-title:after{ 
+    background: #40aa54  !important; 
 }
-.user__info-name .row .col2{
-    width: 60%;
+.custome-step .ant-steps-item-icon {
+    border-color: #40aa54  !important; 
+}
+.custome-step .ant-steps-item-icon .ant-steps-icon{
+    color: #40aa54  !important; 
+}
+.ant-steps-item-process .ant-steps-item-icon>.ant-steps-icon {
+    color: #fff !important;
+}
+.ant-steps-item-process>.ant-steps-item-container>.ant-steps-item-icon {
+    background: #40aa54 !important;
 }

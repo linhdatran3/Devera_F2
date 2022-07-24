@@ -10,8 +10,11 @@ body{
 }
 
 a{
-  text-decoration: none;
-  color: #16162E;
+  text-decoration: none !important;
+  color: #16162E !important;
+}
+svg {
+  vertical-align: baseline !important;
 }
 ul li{
   list-style: none;

@@ -4,9 +4,14 @@ import Navbar from "../../components/Navbar/Navbar";
 import Button from "../../components/Button/Button";
 import Footer from "../../components/Footer/Footer";
 import Input from "../../components/Input/Input";
+
+import Col from "react-bootstrap/Col";
+import Row from "react-bootstrap/Row";
+
 import { Link } from "react-router-dom";
 import { CloseOutlined } from "@ant-design/icons";
 import { Alert } from "antd";
+
 const Cart = () => {
   return (
     <React.Fragment>
@@ -18,29 +23,31 @@ const Cart = () => {
         type="success"
         showIcon
       />
-      <div className="cart">
-        <div className="cart__products">
+      <Row className="cart">
+        <Col sm={9} className="cart__products">
           <div className="temp">
             <div className="cart__products-head">
-              <div className="row">
-                <div className="col col1">
-                  <h3>Product</h3>
-                </div>
-                <div className="col col2">
-                  <h3>Quantity</h3>
-                </div>
-                <div className="col col3">
-                  <h3>Price</h3>
-                </div>
-                <div className="col col4">
-                  <h3>Total</h3>
-                </div>
-                <div className="col col5"></div>
-              </div>
+              <Row>
+                <Col sm={6}>
+                  <h4>Product</h4>
+                </Col>
+                <Col sm={2}>
+                  <h4>Quantity</h4>
+                </Col>
+                <Col sm={2}>
+                  <h4>Price</h4>
+                </Col>
+                <Col sm={1}>
+                  <h4>Total</h4>
+                </Col>
+                <Col sm={1}>
+                  <h4> </h4>
+                </Col>
+              </Row>
             </div>
             <div className="cart__products-item">
-              <div className="item row ">
-                <div className="col col1">
+              <Row>
+                <Col sm={6} className="item-products">
                   <div className="item-image">
                     <img src="logo.png" alt="" height="80px" />
                   </div>
@@ -48,27 +55,28 @@ const Cart = () => {
                     <h4>Name products</h4>
                     <p className="p2">Created by: aaa</p>
                   </div>
-                </div>
-                <div className="col col2">
-                  <h4>
+                </Col>
+                <Col sm={2}>
+                  <h5>
                     <span className="decrease">-</span>
                     <span className="qtyItem">1</span>
                     <span className="increase">+</span>
-                  </h4>
-                </div>
-                <div className="col col3">
-                  <h4>5.00</h4>
-                </div>
-                <div className="col col4">
-                  <h4>10.00</h4>
-                </div>
-                <div className="col col5">
+                  </h5>
+                </Col>
+                <Col sm={2}>
+                  <h5>5.00</h5>
+                </Col>
+                <Col sm={1}>
+                  <h5>10.00</h5>
+                </Col>
+                <Col sm={1}>
                   <CloseOutlined />
-                </div>
-              </div>
-
-              <div className="item row ">
-                <div className="col col1">
+                </Col>
+              </Row>
+            </div>
+            <div className="cart__products-item">
+              <Row>
+                <Col sm={6} className="item-products">
                   <div className="item-image">
                     <img src="logo.png" alt="" height="80px" />
                   </div>
@@ -76,26 +84,28 @@ const Cart = () => {
                     <h4>Name products</h4>
                     <p className="p2">Created by: aaa</p>
                   </div>
-                </div>
-                <div className="col col2">
-                  <h4>
+                </Col>
+                <Col sm={2}>
+                  <h5>
                     <span className="decrease">-</span>
                     <span className="qtyItem">1</span>
                     <span className="increase">+</span>
-                  </h4>
-                </div>
-                <div className="col col3">
-                  <h4>5.00</h4>
-                </div>
-                <div className="col col4">
-                  <h4>10.00</h4>
-                </div>
-                <div className="col col5">
+                  </h5>
+                </Col>
+                <Col sm={2}>
+                  <h5>5.00</h5>
+                </Col>
+                <Col sm={1}>
+                  <h5>10.00</h5>
+                </Col>
+                <Col sm={1}>
                   <CloseOutlined />
-                </div>
-              </div>
-              <div className="item row ">
-                <div className="col col1">
+                </Col>
+              </Row>
+            </div>
+            <div className="cart__products-item">
+              <Row>
+                <Col sm={6} className="item-products">
                   <div className="item-image">
                     <img src="logo.png" alt="" height="80px" />
                   </div>
@@ -103,24 +113,53 @@ const Cart = () => {
                     <h4>Name products</h4>
                     <p className="p2">Created by: aaa</p>
                   </div>
-                </div>
-                <div className="col col2">
-                  <h4>
+                </Col>
+                <Col sm={2}>
+                  <h5>
                     <span className="decrease">-</span>
                     <span className="qtyItem">1</span>
                     <span className="increase">+</span>
-                  </h4>
-                </div>
-                <div className="col col3">
-                  <h4>5.00</h4>
-                </div>
-                <div className="col col4">
-                  <h4>10.00</h4>
-                </div>
-                <div className="col col5">
+                  </h5>
+                </Col>
+                <Col sm={2}>
+                  <h5>5.00</h5>
+                </Col>
+                <Col sm={1}>
+                  <h5>10.00</h5>
+                </Col>
+                <Col sm={1}>
                   <CloseOutlined />
-                </div>
-              </div>
+                </Col>
+              </Row>
+            </div>
+            <div className="cart__products-item">
+              <Row>
+                <Col sm={6} className="item-products">
+                  <div className="item-image">
+                    <img src="logo.png" alt="" height="80px" />
+                  </div>
+                  <div className="item-info">
+                    <h4>Name products</h4>
+                    <p className="p2">Created by: aaa</p>
+                  </div>
+                </Col>
+                <Col sm={2}>
+                  <h5>
+                    <span className="decrease">-</span>
+                    <span className="qtyItem">1</span>
+                    <span className="increase">+</span>
+                  </h5>
+                </Col>
+                <Col sm={2}>
+                  <h5>5.00</h5>
+                </Col>
+                <Col sm={1}>
+                  <h5>10.00</h5>
+                </Col>
+                <Col sm={1}>
+                  <CloseOutlined />
+                </Col>
+              </Row>
             </div>
           </div>
 
@@ -135,10 +174,10 @@ const Cart = () => {
               </Button>
             </div>
           </div>
-        </div>
-        <div className="cart__payment">
+        </Col>
+        <Col className="cart__payment">
           <div className="cart__payment-coupon">
-            <h3>Have coupon?</h3>
+            <h4>Have coupon?</h4>
             <div className="coupon">
               <Input placeholder={"Coupon code"} />
               <Button>Apply</Button>
@@ -173,8 +212,8 @@ const Cart = () => {
           <Link to={"/checkout"}>
             <Button>Check out</Button>
           </Link>
-        </div>
-      </div>
+        </Col>
+      </Row>
       <Footer />
     </React.Fragment>
   );
