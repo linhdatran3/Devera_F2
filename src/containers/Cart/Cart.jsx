@@ -4,6 +4,7 @@ import Navbar from "../../components/Navbar/Navbar";
 import Button from "../../components/Button/Button";
 import Footer from "../../components/Footer/Footer";
 import Input from "../../components/Input/Input";
+import { Link } from "react-router-dom";
 import { CloseOutlined } from "@ant-design/icons";
 import { Alert } from "antd";
 const Cart = () => {
@@ -133,9 +134,6 @@ const Cart = () => {
                 Continue Shopping
               </Button>
             </div>
-            <div className="makePurcharse">
-              <Button>Make Purchase</Button>
-            </div>
           </div>
         </div>
         <div className="cart__payment">
@@ -172,6 +170,9 @@ const Cart = () => {
               </div>
             </div>
           </div>
+          <Link to={"/checkout"}>
+            <Button>Check out</Button>
+          </Link>
         </div>
       </div>
       <Footer />

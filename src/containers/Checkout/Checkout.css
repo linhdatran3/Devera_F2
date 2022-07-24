@@ -1,0 +1,27 @@
+.checkout{
+    width: 100%;
+    display: flex;
+}
+.checkout__info{
+    width: 70%;
+    border-radius: 20px;
+    background-color: rgb(149, 241, 150);
+    border: 1px solid #f7f7f7;
+    padding: 1rem;
+    margin-right: 1rem;
+}
+.bill{
+    width: 30%;
+    border-radius: 20px;
+    background-color: #d5fbdc;
+    border: 1px solid #f7f7f7;
+    padding: 1rem;
+   
+}
+.user__info-name .row{
+    display: flex;
+    justify-content: space-between;
+}
+.user__info-name .row .col2{
+    width: 60%;
+}

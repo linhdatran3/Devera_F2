@@ -22,7 +22,10 @@
 .cart .cart__payment{
     width: 20%;
     margin-left: 1rem;
-    
+    background-color: #d5fbdc;
+    padding: 1rem;
+    border-radius: 20px;
+    border: 1px solid #f7f7f7;
 
 }
 .row{
@@ -81,12 +84,9 @@
 .cart__payment{
     height: 100%;
 }
-.cart__payment .cart__payment-coupon{
-    background-color: #d5fbdc;
-    padding: 1rem;
-    border-radius: 20px;
-    border: 1px solid #f7f7f7;
-}
+/* .cart__payment .cart__payment-coupon{
+   
+} */
 .cart__payment .coupon{
     display: flex;
 }
@@ -94,10 +94,8 @@
     width: 80%;
 }
 .cart__payment .cart__payment-total{
-    background-color: #d5fbdc;
-    padding: 1rem;
-    border-radius: 20px;
-    border: 1px solid #f7f7f7;
+    border-bottom: 1px solid #f7f7f7;
+    border-top: 1px solid #f7f7f7;
     margin-top: 1rem;
 }
 .cart__payment .cart__payment-total .row{
