@@ -24,7 +24,7 @@ const Cart = () => {
         showIcon
       />
       <Row className="cart">
-        <Col sm={9} className="cart__products">
+        <Col sm={9} className="cart__products ">
           <div className="temp">
             <div className="cart__products-head">
               <Row>
@@ -175,7 +175,7 @@ const Cart = () => {
             </div>
           </div>
         </Col>
-        <Col className="cart__payment">
+        <Col className="cart__payment ">
           <div className="cart__payment-coupon">
             <h4>Have coupon?</h4>
             <div className="coupon">
@@ -184,34 +184,36 @@ const Cart = () => {
             </div>
           </div>
           <div className="cart__payment-total">
-            <div className="row">
-              <div className="col col1">
-                <h5>Total price:</h5>
-              </div>
-              <div className="col col2">
-                <h5>467.62</h5>
-              </div>
-            </div>
-            <div className="row">
-              <div className="col col1">
-                <h5>Discount:</h5>
-              </div>
-              <div className="col col2">
-                <h5>467.62</h5>
-              </div>
-            </div>
-            <div className="row">
-              <div className="col col1">
-                <h4>Total:</h4>
-              </div>
-              <div className="col col2">
-                <h4>467.62</h4>
-              </div>
-            </div>
+            <Row>
+              <Col>
+                <span className="p1">Total products: </span>
+              </Col>
+              <Col sm={4}>
+                <h5>252.84</h5>
+              </Col>
+            </Row>
+            <Row>
+              <Col>
+                <span className="p1">Coupon: </span>
+              </Col>
+              <Col sm={4}>
+                <h5>-10.00</h5>
+              </Col>
+            </Row>
+            <Row>
+              <Col>
+                <span className="p1">Total: </span>
+              </Col>
+              <Col sm={4}>
+                <h4 style={{ color: "#eb4d4b" }}>242.84</h4>
+              </Col>
+            </Row>
           </div>
-          <Link to={"/checkout"}>
-            <Button>Check out</Button>
-          </Link>
+          <div className="cart__payment-check-out">
+            <Link to={"/checkout"}>
+              <Button width={"90%"}>PAYMENT</Button>
+            </Link>
+          </div>
         </Col>
       </Row>
       <Footer />

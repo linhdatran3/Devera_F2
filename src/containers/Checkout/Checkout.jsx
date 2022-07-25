@@ -11,6 +11,7 @@ import Form from "react-bootstrap/Form";
 import Row from "react-bootstrap/Row";
 
 import { Space, Radio } from "antd";
+import { Link } from "react-router-dom";
 
 const { Step } = Steps;
 
@@ -29,10 +30,10 @@ const Checkout = () => {
         />
         <Step title="Confirm" description="This is a description." />
       </Steps>
-      <Row className="checkout">
-        <Col sm={8} className="contact-form">
-          <h4>Contact information</h4>
-          <div className="user__info">
+      <Row className="checkout ">
+        <Col sm={8} className="contact-form ">
+          <h4 className="container">Contact information</h4>
+          <div className="user-info container">
             <Form>
               <Row className="mb-3">
                 <Form.Group as={Col} controlId="formGridEmail">
@@ -75,15 +76,9 @@ const Checkout = () => {
                   <Form.Control />
                 </Form.Group>
               </Row>
-
-              <Form.Group className="mb-3" id="formGridCheckbox">
-                <Form.Check type="checkbox" label="Check me out" />
-              </Form.Group>
-
-              <Button>Submit</Button>
             </Form>
           </div>
-          <div className="shipping">
+          <div className="shipping container">
             <h4>Shipping mode</h4>
             {/* onChange={onChange} value={value} */}
             <Radio.Group>
@@ -94,7 +89,7 @@ const Checkout = () => {
               </Space>
             </Radio.Group>
           </div>
-          <div className="payment__method">
+          <div className="payment-method container">
             <h4>Payment method</h4>
             <Radio.Group>
               <Space direction="vertical">
@@ -104,7 +99,142 @@ const Checkout = () => {
               </Space>
             </Radio.Group>
           </div>
-          <div className="continue-shopping">
+        </Col>
+        <Col className="bill ">
+          <div className="bill__head container">
+            <div className="bill__head-title">
+              <h4>Bill</h4>
+            </div>
+            <div className="bill__head-edit">
+              <Link to={"/cart"}>
+                <h5>Edit</h5>
+              </Link>
+            </div>
+          </div>
+
+          <div className="bill__products-confirm container">
+            <Row className="bill__products-confirm__item">
+              <Col sm={3}>
+                <div className="item-image">
+                  <img src="logo.png" alt="" height="40px" />
+                </div>
+              </Col>
+              <Col>
+                <div className="item-info">
+                  <span className="p1">Name products</span> <br />
+                  <span className="p2">Created by: aaa</span> <br />
+                  <span className="p2">Quantity: </span>
+                  <span className="p2">1</span>
+                </div>
+              </Col>
+              <Col sm={2}>
+                <h5>5.00</h5>
+              </Col>
+            </Row>
+            <Row className="bill__products-confirm__item">
+              <Col sm={3}>
+                <div className="item-image">
+                  <img src="logo.png" alt="" height="40px" />
+                </div>
+              </Col>
+              <Col>
+                <div className="item-info">
+                  <span className="p1">Name products</span> <br />
+                  <span className="p2">Created by: aaa</span> <br />
+                  <span className="p2">Quantity: </span>
+                  <span className="p2">1</span>
+                </div>
+              </Col>
+              <Col sm={2}>
+                <h5>5.00</h5>
+              </Col>
+            </Row>
+            <Row className="bill__products-confirm__item">
+              <Col sm={3}>
+                <div className="item-image">
+                  <img src="logo.png" alt="" height="40px" />
+                </div>
+              </Col>
+              <Col>
+                <div className="item-info">
+                  <span className="p1">Name products</span> <br />
+                  <span className="p2">Created by: aaa</span> <br />
+                  <span className="p2">Quantity: </span>
+                  <span className="p2">1</span>
+                </div>
+              </Col>
+              <Col sm={2}>
+                <h5>5.00</h5>
+              </Col>
+            </Row>
+          </div>
+          <div className="bill__voucher container">
+            <h5 className="bill__voucher__head">Voucher</h5>
+            <Row>
+              <Col className="bill__voucher__input">
+                <Input placeholder={"voucher code"} />
+              </Col>
+              <Col sm={4}>
+                <Button>Add</Button>
+              </Col>
+            </Row>
+          </div>
+          <div className="bill__shipping-fee">
+            <h5 className="bill__shipping-fee__title">Shipping</h5>
+            <Row>
+              <Col>
+                <span className="p1">Delivery:</span>
+              </Col>
+              <Col sm={3}>
+                <h5>GHTK</h5>
+              </Col>
+            </Row>
+            <Row>
+              <Col>
+                <span className="p1">Fee:</span>
+              </Col>
+              <Col sm={3}>
+                <h5>2.00</h5>
+              </Col>
+            </Row>
+          </div>
+          <div className="bill__total">
+            <h5 className="bill__total__title">Total</h5>
+            <Row>
+              <Col>
+                <span className="p1">Total products: </span>
+              </Col>
+              <Col sm={3}>
+                <h5>252.84</h5>
+              </Col>
+            </Row>
+            <Row>
+              <Col>
+                <span className="p1">Discount: </span>
+              </Col>
+              <Col sm={3}>
+                <h5>-10.00</h5>
+              </Col>
+            </Row>
+            <Row>
+              <Col>
+                <span className="p1">Total: </span>
+              </Col>
+              <Col sm={3}>
+                <h4 style={{ color: "#eb4d4b" }}>242.84</h4>
+              </Col>
+            </Row>
+          </div>
+          <div className="bill__checkout">
+            <Button bgColor={"#eb4d4b"} width={"90%"}>
+              Check out
+            </Button>
+          </div>
+        </Col>
+      </Row>
+      <Row>
+        <Col sm={8}>
+          <div className="continue-shopping container">
             <Button
               bgColor={"#fff"}
               txtColor={"#16162E"}
@@ -112,113 +242,6 @@ const Checkout = () => {
             >
               Continue Shopping
             </Button>
-          </div>
-        </Col>
-        <Col className="bill">
-          <div className="bill__head">
-            <div className="bill__head-title">
-              <h4>Bill</h4>
-            </div>
-            <div className="bill__head-edit">
-              <Button bgColor={"#d5fbdc"} txtColor={"#40aa54"}>
-                Edit
-              </Button>
-            </div>
-          </div>
-
-          <div className="bill__products-confirm">
-            <Row>
-              <Col sm={3}>
-                <div className="item-image">
-                  <img src="logo.png" alt="" height="40px" />
-                </div>
-              </Col>
-              <Col>
-                <div className="item-info">
-                  <h4>Name products</h4>
-                  <p className="p2">Created by: aaa</p>
-                </div>
-                <span>Quantity</span>
-                <span>1</span>
-              </Col>
-              <Col sm={3}>
-                <h5>5.00</h5>
-              </Col>
-            </Row>
-            <Row>
-              <Col sm={3}>
-                <div className="item-image">
-                  <img src="logo.png" alt="" height="40px" />
-                </div>
-              </Col>
-              <Col>
-                <div className="item-info">
-                  <h4>Name products</h4>
-                  <p className="p2">Created by: aaa</p>
-                </div>
-                <span>Quantity</span>
-                <span>1</span>
-              </Col>
-              <Col sm={3}>
-                <h5>5.00</h5>
-              </Col>
-            </Row>
-            <Row>
-              <Col sm={3}>
-                <div className="item-image">
-                  <img src="logo.png" alt="" height="40px" />
-                </div>
-              </Col>
-              <Col>
-                <div className="item-info">
-                  <h4>Name products</h4>
-                  <p className="p2">Created by: aaa</p>
-                </div>
-                <span>Quantity</span>
-                <span>1</span>
-              </Col>
-              <Col sm={3}>
-                <h5>5.00</h5>
-              </Col>
-            </Row>
-          </div>
-          <div className="bill__voucher">
-            <h4>Voucher</h4>
-            <Input placeholder={"voucher code"} />
-            <Button>Add</Button>
-          </div>
-          <div className="bill__shipping-fee">
-            <span>Shipping fee: </span>
-            <span className="p1">10.00</span>
-          </div>
-          <div className="bill__total">
-            <div className="row">
-              <div className="col col1">
-                <h4>Total price:</h4>
-              </div>
-              <div className="col col2">
-                <h4>467.62</h4>
-              </div>
-            </div>
-            <div className="row">
-              <div className="col col1">
-                <h4>Discount:</h4>
-              </div>
-              <div className="col col2">
-                <h4>467.62</h4>
-              </div>
-            </div>
-            <div className="row">
-              <div className="col col1">
-                <h4>Total:</h4>
-              </div>
-              <div className="col col2">
-                <h4>467.62</h4>
-              </div>
-            </div>
-          </div>
-          <div className="bill__checkout">
-            <Button>Check out</Button>
           </div>
         </Col>
       </Row>
