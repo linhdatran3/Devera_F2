@@ -1,47 +1,31 @@
 .navbar{
     display: flex;
-    position: relative;
     height: 100%;
-}
-.logo{
-    width: 10%;
-    left: 0;
+    background-color: #fff;
     position: absolute;
 }
 
 .menu{
-    position: absolute;    
+    position: absolute;
     width: 60%;
     right: 30%;
-    height: 100%;
-    bottom: -40%;
-}
-.menu ul{
+    justify-content: right;
     display: flex;
-    position: absolute;
-    right: 0;
-    margin: 0;
+    top: 38%;
 }
-.menu ul li{
-    list-style: none; 
-    text-decoration: none;
-    margin: 0 2rem;
 
-}
-.menu ul li a{
+.menu  a{
     font-size: 20px;
     line-height: 18px;
+    margin-right: 3rem;
 }
 .icon{
     position: absolute;    
     width: 30%;
-    height: 100%;
     right: 0;
-    bottom: -25%;    
+    top: 30%;
     display: flex;
-    color: "#eb4d4b" ;
     font-size: 24px;
-
 }
 .icon__heart{
     position: absolute;

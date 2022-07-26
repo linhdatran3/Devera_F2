@@ -3,6 +3,8 @@ import Button from "../../components/Button/Button";
 import Input from "../../components/Input/Input";
 import Navbar from "../../components/Navbar/Navbar";
 import Footer from "../../components/Footer/Footer";
+import Col from "react-bootstrap/Col";
+import Row from "react-bootstrap/Row";
 import {
   LeftOutlined,
   RightOutlined,
@@ -105,34 +107,34 @@ const Home = () => {
             </div>
           </div>
           <div className="popular__content">
-            <div className="row">
-              <div className="col col1">
+            <Row>
+              <Col xs={6} md={3}>
                 <PreviewItem />
-              </div>
-              <div className="col col2">
+              </Col>
+              <Col xs={6} md={3}>
                 <PreviewItem />
-              </div>
-              <div className="col col3">
+              </Col>
+              <Col xs={6} md={3}>
                 <PreviewItem />
-              </div>
-              <div className="col col4">
+              </Col>
+              <Col xs={6} md={3}>
                 <PreviewItem />
-              </div>
-            </div>
-            <div className="row">
-              <div className="col col1">
+              </Col>
+            </Row>
+            <Row>
+              <Col xs={6} md={3}>
                 <PreviewItem />
-              </div>
-              <div className="col col2">
+              </Col>
+              <Col xs={6} md={3}>
                 <PreviewItem />
-              </div>
-              <div className="col col3">
+              </Col>
+              <Col xs={6} md={3}>
                 <PreviewItem />
-              </div>
-              <div className="col col4">
+              </Col>
+              <Col xs={6} md={3}>
                 <PreviewItem />
-              </div>
-            </div>
+              </Col>
+            </Row>
           </div>
         </section>
 
@@ -143,34 +145,34 @@ const Home = () => {
             </div>
           </div>
           <div className="sales__content">
-            <div className="row">
-              <div className="col col1">
+            <Row>
+              <Col xs={6} md={3}>
                 <PreviewItem />
-              </div>
-              <div className="col col2">
+              </Col>
+              <Col xs={6} md={3}>
                 <PreviewItem />
-              </div>
-              <div className="col col3">
+              </Col>
+              <Col xs={6} md={3}>
                 <PreviewItem />
-              </div>
-              <div className="col col4">
+              </Col>
+              <Col xs={6} md={3}>
                 <PreviewItem />
-              </div>
-            </div>
-            <div className="row">
-              <div className="col col1">
+              </Col>
+            </Row>
+            <Row>
+              <Col xs={6} md={3}>
                 <PreviewItem />
-              </div>
-              <div className="col col2">
+              </Col>
+              <Col xs={6} md={3}>
                 <PreviewItem />
-              </div>
-              <div className="col col3">
+              </Col>
+              <Col xs={6} md={3}>
                 <PreviewItem />
-              </div>
-              <div className="col col4">
+              </Col>
+              <Col xs={6} md={3}>
                 <PreviewItem />
-              </div>
-            </div>
+              </Col>
+            </Row>
           </div>
         </section>
 
@@ -179,6 +181,16 @@ const Home = () => {
             <div className="join__head-title">
               <h2>Join Our Community</h2>
             </div>
+            <p>
+              Lorem ipsum, dolor sit amet consectetur adipisicing elit. Harum,
+              nostrum? Itaque sapiente ratione illum nulla labore. Dicta, ullam
+              sint! Eum corrupti, laborum alias provident velit animi suscipit
+              eaque accusantium incidunt?
+            </p>
+          </div>
+          <div className="join__content">
+            <Input border={"1px solid #40aa54 "} />
+            <Button>Submit</Button>
           </div>
         </section>
         <footer>

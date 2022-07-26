@@ -4,6 +4,8 @@ import Footer from "../../components/Footer/Footer";
 import MenuCategories from "../../components/MenuCategories/MenuCategories";
 import PreviewItem from "../../components/PreviewItem/PreviewItem";
 import { Pagination } from "antd";
+import Col from "react-bootstrap/Col";
+import Row from "react-bootstrap/Row";
 import "./Products.css";
 const Products = () => {
   return (
@@ -22,62 +24,62 @@ const Products = () => {
           </div>
           <div className="list-products">
             <div className="list-products__filter"></div>
-            <div className="row">
-              <div className="col col1">
+            <Row>
+              <Col xs={6} md={3}>
                 <PreviewItem />
-              </div>
-              <div className="col col2">
+              </Col>
+              <Col xs={6} md={3}>
                 <PreviewItem />
-              </div>
-              <div className="col col3">
+              </Col>
+              <Col xs={6} md={3}>
                 <PreviewItem />
-              </div>
-              <div className="col col4">
+              </Col>
+              <Col xs={6} md={3}>
                 <PreviewItem />
-              </div>
-            </div>
-            <div className="row">
-              <div className="col col1">
+              </Col>
+            </Row>
+            <Row>
+              <Col xs={6} md={3}>
                 <PreviewItem />
-              </div>
-              <div className="col col2">
+              </Col>
+              <Col xs={6} md={3}>
                 <PreviewItem />
-              </div>
-              <div className="col col3">
+              </Col>
+              <Col xs={6} md={3}>
                 <PreviewItem />
-              </div>
-              <div className="col col4">
+              </Col>
+              <Col xs={6} md={3}>
                 <PreviewItem />
-              </div>
-            </div>
-            <div className="row">
-              <div className="col col1">
+              </Col>
+            </Row>
+            <Row>
+              <Col xs={6} md={3}>
                 <PreviewItem />
-              </div>
-              <div className="col col2">
+              </Col>
+              <Col xs={6} md={3}>
                 <PreviewItem />
-              </div>
-              <div className="col col3">
+              </Col>
+              <Col xs={6} md={3}>
                 <PreviewItem />
-              </div>
-              <div className="col col4">
+              </Col>
+              <Col xs={6} md={3}>
                 <PreviewItem />
-              </div>
-            </div>
-            <div className="row">
-              <div className="col col1">
+              </Col>
+            </Row>
+            <Row>
+              <Col xs={6} md={3}>
                 <PreviewItem />
-              </div>
-              <div className="col col2">
+              </Col>
+              <Col xs={6} md={3}>
                 <PreviewItem />
-              </div>
-              <div className="col col3">
+              </Col>
+              <Col xs={6} md={3}>
                 <PreviewItem />
-              </div>
-              <div className="col col4">
+              </Col>
+              <Col xs={6} md={3}>
                 <PreviewItem />
-              </div>
-            </div>
+              </Col>
+            </Row>
 
             <div className="list-products__pagination">
               <Pagination defaultCurrent={1} total={50} />

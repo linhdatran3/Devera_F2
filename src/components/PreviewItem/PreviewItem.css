@@ -17,6 +17,14 @@
     background-color: #fff;
     
 }
+.user__icon img{
+    height: 36px;
+    width: 36px;
+    border-radius: 50%;
+}
+.right .user__icon .circleItemCenter{
+    top: 50% !important;
+}
 .content{
     display: flex;
     margin: 0 1rem;

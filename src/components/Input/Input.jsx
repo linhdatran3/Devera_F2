@@ -4,9 +4,11 @@ import PropTypes from "prop-types";
 const StyledInput = styled.input`
   padding: 0.5rem 1rem;
   border-radius: 10px;
-  border: none;
+  ${({ border }) => {
+    return `border: ${border}`;
+  }}
 `;
-const Input = ({ type, placeholder, onChange, value }) => {
+const Input = ({ type, placeholder, onChange, value, border }) => {
   const handleChange = (e) => {
     onChange(e.target.value);
   };
@@ -17,6 +19,7 @@ const Input = ({ type, placeholder, onChange, value }) => {
         placeholder={placeholder || ""}
         value={value}
         onChange={handleChange}
+        border={border}
       ></StyledInput>
     </React.Fragment>
   );
@@ -29,5 +32,6 @@ Input.propTypes = {
 Input.defaultProps = {
   placeholder: "",
   type: "text",
+  border: "none",
 };
 export default Input;

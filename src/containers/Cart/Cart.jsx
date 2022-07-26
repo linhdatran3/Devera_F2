@@ -165,13 +165,15 @@ const Cart = () => {
 
           <div className="cart__products-foot">
             <div className="continue-shopping">
-              <Button
-                bgColor={"#fff"}
-                txtColor={"#16162E"}
-                border={"1px solid #40aa54"}
-              >
-                Continue Shopping
-              </Button>
+              <Link to={"/"}>
+                <Button
+                  bgColor={"#fff"}
+                  txtColor={"#16162E"}
+                  border={"1px solid #40aa54"}
+                >
+                  Continue Shopping
+                </Button>
+              </Link>
             </div>
           </div>
         </Col>

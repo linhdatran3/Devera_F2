@@ -9,20 +9,21 @@
 .products .categories{
     width: 15%;
 }
+.products .categories ul{
+    width: 100%;
+    padding-right: 0.5rem;
+}
 .products .list-products{
     width: 85%;
 }
 /* .list-products .list-products__filter{
 
 } */
-.list-products .row{
-    display: flex;
-    padding: 0.5rem 0;
-}
-.list-products .row .col{
-    width: 25%;
-    margin: 0 0.5rem;
-}
+
+/* .list-products .row .col-md-3{
+   
+
+} */
 /* .list-products__pagination{
 
 } */

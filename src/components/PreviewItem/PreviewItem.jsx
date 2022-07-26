@@ -6,7 +6,7 @@ const PreviewItem = ({ name, price, createBy, unit, user }) => {
     <React.Fragment>
       <div className="previewItem">
         <div className="image">
-          <img src="../../../public/image\ 3.png" alt="" />
+          <img src="logo.png" alt="" height={"100%"} width={"100%"} />
         </div>
         <div className="content">
           <div className="left">
@@ -37,7 +37,13 @@ const PreviewItem = ({ name, price, createBy, unit, user }) => {
           <div className="right">
             {/* img user */}
             <div className="user__icon circleClasses">
-              <img src={user} alt="" className="circleItemCenter" />
+              <img
+                src="Devera-brand-character 1 (1).png"
+                alt=""
+                className="circleItemCenter"
+                height={"100%"}
+                width={"100%"}
+              />
             </div>
           </div>
         </div>
