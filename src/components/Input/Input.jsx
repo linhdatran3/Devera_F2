@@ -8,7 +8,7 @@ const StyledInput = styled.input`
     return `border: ${border}`;
   }}
 `;
-const Input = ({ type, placeholder, onChange, value, border }) => {
+const Input = ({ type, placeholder, onChange, value, border, disabled }) => {
   const handleChange = (e) => {
     onChange(e.target.value);
   };
@@ -20,6 +20,7 @@ const Input = ({ type, placeholder, onChange, value, border }) => {
         value={value}
         onChange={handleChange}
         border={border}
+        disabled={disabled}
       ></StyledInput>
     </React.Fragment>
   );

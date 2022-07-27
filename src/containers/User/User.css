@@ -1,0 +1,34 @@
+.user__info{
+    /* background-color: #d5fbdc; */
+    padding-top: 2rem;
+    padding-bottom: 1rem;
+    border-radius: 20px;
+    border: 1.5px solid #dbdada;
+}
+.user__info__avatar{
+    text-align: center;
+}
+.user__setting{
+    padding: 1rem;
+    margin: 2rem ;
+    border-radius: 20px;
+    border: 1.5px solid #dbdada; 
+}
+.user__setting .personal-detail .row{
+    padding: 0.5rem 0 !important;
+}
+.user__setting .personal-detail__head{
+    display: flex;
+    justify-content: space-between;
+}
+
+.accout-setting{
+    padding: 2rem;
+    margin: 2rem ;
+    border-radius: 20px;
+    border: 1.5px solid #dbdada; 
+}
+.account-setting__head{
+    display: flex;
+    justify-content: space-between;
+}

@@ -3,12 +3,11 @@ import {
   HeartOutlined,
   ShoppingCartOutlined,
   UserOutlined,
-  DownOutlined,
 } from "@ant-design/icons";
 import "./Navbar.css";
 import Navbar from "react-bootstrap/Navbar";
 import Nav from "react-bootstrap/Nav";
-
+import NavDropdown from "react-bootstrap/NavDropdown";
 const Navbarr = () => {
   return (
     <React.Fragment>
@@ -31,7 +30,7 @@ const Navbarr = () => {
                 <Nav.Link href="/">Home</Nav.Link>
                 <Nav.Link href="/products">Product</Nav.Link>
                 <Nav.Link href="/products">Popular</Nav.Link>
-                <Nav.Link href="/products">Contact</Nav.Link>
+                <Nav.Link href="/user">Contact</Nav.Link>
               </div>
 
               <div className="icon">
@@ -65,11 +64,27 @@ const Navbarr = () => {
                     </div>
                     <div className="user__icon circleClasses">
                       {/* icon user */}
-                      <UserOutlined className="circleItemCenter" />
+                      <Nav.Link href="/user">
+                        <UserOutlined className="circleItemCenter" />
+                      </Nav.Link>
                     </div>
                     <div className="user__more">
                       {/* icon click more */}
-                      <DownOutlined className="circleItemCenter" />
+                      <NavDropdown title="" id="basic-nav-dropdown">
+                        <NavDropdown.Item href="/products">
+                          History
+                        </NavDropdown.Item>
+                        <NavDropdown.Item href="/products">
+                          Change password
+                        </NavDropdown.Item>
+                        <NavDropdown.Item href="/products">
+                          Setting
+                        </NavDropdown.Item>
+                        <NavDropdown.Divider />
+                        <NavDropdown.Item href="/products">
+                          Log out
+                        </NavDropdown.Item>
+                      </NavDropdown>
                     </div>
                   </div>
                 </Nav.Link>

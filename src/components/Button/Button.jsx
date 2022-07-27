@@ -30,6 +30,7 @@ const Button = ({
   borderRadius,
   type,
   border,
+  onClick,
 }) => {
   return (
     <StyledButton
@@ -40,6 +41,7 @@ const Button = ({
       borderRadius={borderRadius}
       type={type}
       border={border}
+      onClick={onClick}
     >
       {children}
     </StyledButton>

@@ -6,6 +6,7 @@ import Home from './containers/Home/Home'
 import Products from './containers/Products/Products';
 import Cart from './containers/Cart/Cart'
 import Checkout from './containers/Checkout/Checkout'
+import User from './containers/User/User';
 import "antd/dist/antd.min.css";
 // Bootstrap CSS
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -19,6 +20,7 @@ function App() {
         <Route path='/products' element={<Products/>} />
         <Route path='/cart' element={<Cart/>} />
         <Route path='/checkout' element={<Checkout/>} />
+        <Route path='/user' element={<User/>} />
       </Routes>
     </div>
   );

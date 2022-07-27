@@ -91,7 +91,17 @@
     background-color: #d5fbdc;
     margin-left: 1rem;
 }
+.user__icon .circleItemCenter{
+    transform: translate(-50%,-37%) !important;
+}
 
 .user__more{
     font-size: 12px;
+}
+.dropdown-menu[data-bs-popper] {
+    left: auto !important; 
+    right: 0 !important; 
+}
+.dropdown-menu a:focus{
+    background-color: #40aa54;
 }
