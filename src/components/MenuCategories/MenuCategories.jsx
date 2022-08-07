@@ -5,6 +5,32 @@ import {
 } from "@ant-design/icons";
 import { Menu } from "antd";
 import React, { useState } from "react";
+import styled from "styled-components";
+const StyledMenu = styled.div`
+  .ant-menu-submenu-open .ant-menu-submenu-title,
+  i {
+    color: #40aa54;
+  }
+  .ant-menu-light .ant-menu-submenu-title:hover {
+    color: #40aa54;
+  }
+  .ant-menu-light .ant-menu-item:hover {
+    color: #40aa54;
+  }
+  .ant-menu-item-selected {
+    background-color: #d5fbdc !important;
+    color: #000;
+  }
+  .ant-menu-inline .ant-menu-item:after {
+    border-right: 3px solid #40aa54;
+  }
+  .ant-menu-submenu-selected {
+    color: #40aa54;
+  }
+  .ant-menu-submenu:hover > .ant-menu-submenu-title > .ant-menu-submenu-arrow {
+    color: #40aa54 !important;
+  }
+`;
 
 function getItem(label, key, icon, children, type) {
   return {
@@ -26,10 +52,6 @@ const items = [
   getItem("Navigation Two", "sub2", <AppstoreOutlined />, [
     getItem("Option 5", "5"),
     getItem("Option 6", "6"),
-    getItem("Submenu", "sub3", null, [
-      getItem("Option 7", "7"),
-      getItem("Option 8", "8"),
-    ]),
   ]),
   getItem("Navigation Three", "sub4", <SettingOutlined />, [
     getItem("Option 9", "9"),
@@ -54,15 +76,17 @@ const MenuCategories = () => {
   };
   return (
     <React.Fragment>
-      <Menu
-        mode="inline"
-        openKeys={openKeys}
-        onOpenChange={onOpenChange}
-        style={{
-          width: 256,
-        }}
-        items={items}
-      />
+      <StyledMenu>
+        <Menu
+          mode="inline"
+          openKeys={openKeys}
+          onOpenChange={onOpenChange}
+          style={{
+            width: 256,
+          }}
+          items={items}
+        />
+      </StyledMenu>
     </React.Fragment>
   );
 };

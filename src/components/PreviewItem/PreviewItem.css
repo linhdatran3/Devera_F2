@@ -4,7 +4,7 @@
     border-radius: 15px;
     width: 100%;
     padding: 1rem 0;
-    border: 1.5px solid #f4f4f4;
+    /* border: 1.5px solid #f4f4f4; */
 }
 
 .image{
@@ -12,7 +12,7 @@
     top:100%;
     left:50%;
     transform:translate(-50%,0%);
-    height: 220px;
+    /* height: 220px; */
     width: 100%;
     background-color: #fff;
     
@@ -22,9 +22,7 @@
     width: 36px;
     border-radius: 50%;
 }
-.right .user__icon .circleItemCenter{
-    top: 50% !important;
-}
+
 .content{
     display: flex;
     margin: 0 1rem;

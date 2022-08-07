@@ -16,7 +16,7 @@ const User = () => {
   return (
     <React.Fragment>
       <Navbar />
-      <div>
+      <div className="container">
         <Row>
           <Col md={3} xs={2} className="user__info">
             <div className="user__info__avatar">

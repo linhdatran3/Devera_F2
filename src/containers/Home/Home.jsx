@@ -5,6 +5,7 @@ import Navbar from "../../components/Navbar/Navbar";
 import Footer from "../../components/Footer/Footer";
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
+import { Link } from "react-router-dom";
 import {
   LeftOutlined,
   RightOutlined,
@@ -18,10 +19,8 @@ const Home = () => {
     <React.Fragment>
       <div>
         <header>
-          <div className="head">
-            <Navbar />
-          </div>
-          <div className="banner">
+          <Navbar />
+          <div className="banner container">
             <div className="banner__content">
               <div className="banner__content-title">
                 <h2>NFTs</h2>
@@ -38,6 +37,7 @@ const Home = () => {
                   Discover Now
                 </Button>
               </div>
+
               <div className="banner__content-number">
                 <div className="number-nft">
                   <span>460 301</span>
@@ -47,6 +47,30 @@ const Home = () => {
                   <span>2857</span>
                   <p>Artists</p>
                 </div>
+              </div>
+              <div className="tempt" style={{ fontSize: "20px", color: "red" }}>
+                <h5>A lot of pages on NFT website</h5>
+                <Link to={"/"}>1. Home</Link> <br />
+                <Link to={"/products"}>
+                  2. Products: All products in website
+                </Link>{" "}
+                <br />
+                <Link to={"/products/:id"}>3. Products: a item</Link> <br />
+                <Link to={"/cart"}>4. Cart</Link> <br />
+                <Link to={"/checkout"}>5. checkout</Link> <br />
+                <Link to={"/user"}>6. user: edit account</Link> <br />
+                <Link to={"/history"}>7. User:history shopping cart</Link>{" "}
+                <br />
+                <Link to={"/stores/:id"}>
+                  8. A store (search store by name)
+                </Link>
+                <br />
+                <Link to={"/stores/create"}>
+                  9. Edit store (create nft, edit name,..)
+                </Link>
+                <br />
+                <Link to={"/"}>10....</Link>
+                <br />
               </div>
             </div>
             <div className="banner__image">
@@ -59,7 +83,7 @@ const Home = () => {
             </div>
           </div>
         </header>
-        <section className="category">
+        <section className="category container">
           <div className="category__head">
             <div className="title">
               <h2 className="h2">Category</h2>
@@ -97,7 +121,7 @@ const Home = () => {
           </div>
         </section>
 
-        <section className="popular">
+        <section className="popular container">
           <div className="popular__head">
             <div className="title">
               <h2>Popular Product</h2>
@@ -138,7 +162,7 @@ const Home = () => {
           </div>
         </section>
 
-        <section className="sales">
+        <section className="sales container">
           <div className="sales__head">
             <div className="title">
               <h2>Flash sales</h2>
@@ -176,7 +200,7 @@ const Home = () => {
           </div>
         </section>
 
-        <section className="join-our-community">
+        <section className="join-our-community container">
           <div className="join__head">
             <div className="join__head-title">
               <h2>Join Our Community</h2>
