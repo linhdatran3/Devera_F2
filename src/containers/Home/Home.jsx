@@ -53,7 +53,7 @@ const Home = () => {
                 <Link to={"/"}>1. Home</Link> <br />
                 <Link to={"/products"}>
                   2. Products: All products in website
-                </Link>{" "}
+                </Link>
                 <br />
                 <Link to={"/products/:id"}>3. Products: a item</Link> <br />
                 <Link to={"/cart"}>4. Cart</Link> <br />

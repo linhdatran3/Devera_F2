@@ -9,6 +9,6 @@ export async function getSingleProductById(id) {
     fetchAPI(`products/${id}`, {baseURL: ENDPOINT})
 }
 
-export async function getListProduct() {
+export async function getListProducts() {
     fetchAPI(`products`, {baseURL: ENDPOINT})
 }

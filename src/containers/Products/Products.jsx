@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Navbar from "../../components/Navbar/Navbar";
 import Footer from "../../components/Footer/Footer";
 import MenuCategories from "../../components/MenuCategories/MenuCategories";
@@ -7,7 +7,7 @@ import { Pagination } from "antd";
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
 import styled from "styled-components";
-// import { useDispatch, useSelector } from "../../hooks";
+import { useDispatch, useSelector } from "../../hooks";
 const StyledProduct = styled.div`
   .products .categories ul {
     width: 100% !important;
@@ -15,12 +15,17 @@ const StyledProduct = styled.div`
   }
 `;
 const Products = () => {
-  // const productState = useSelector((state) => state.productInfo); // lấy data từ store ra sài
-  // console.log(productState);
-  // const { getSingleProductById } = useDispatch(({ productInfo }) => ({
-  //   getSingleProductById: productInfo.getSingleProductById,
-  // }));
-  // useEffect(() => {});
+  const getListProducts = useDispatch(({ productModel }) => ({
+    getListProducts: productModel.getListProducts,
+  }));
+
+  const { products } = useSelector(({ productModel }) => ({
+    products: productModel.products,
+  })); // lấy data từ store ra sài
+
+  useEffect(() => {
+    getListProducts();
+  }, [getListProducts]);
   return (
     <React.Fragment>
       <StyledProduct>
@@ -37,7 +42,7 @@ const Products = () => {
               <MenuCategories />
             </Col>
             <Col md={10} className="list-products">
-              <div className="list-products__filter"></div>
+              <div className="list-products__filter">{products}</div>
               <Row>
                 <Col xs={6} md={3}>
                   <PreviewItem />

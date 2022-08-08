@@ -1,29 +1,16 @@
-import { getListProducts, getSingleProductById } from '../../services/productServices/productServices';
-export const productInfo = {
+import { getListProducts} from '../../services/productServices/productServices';
+export const productModel = {
     state: {
-        name:'aaa',
-        price:'',
+        products:[]
     }, // initial state
     reducers: {
       // handle state changes with pure functions // functions: NOT async/await functions
-      setProductName(state, productName) {
+      setProducts(state, payload) {
         return {
             ...state,
-            productName,
+            products:[...payload],
           };
       },
-      setPrice(state, price) {
-        return {
-            ...state,
-            price,
-          };
-      },
-      setProductById(state,product){
-        return{
-          ...state,
-          product,
-        };
-      }
     },
     effects: (dispatch) => ({
       // handle state changes with impure functions.
@@ -31,14 +18,19 @@ export const productInfo = {
     //   async updateFirstName(payload, rootState) {
     //     this.setFistName(payload);
     //   },
-    async getSingleProductById({id}){
-        const res=await getSingleProductById(id);
-        this.setProductById(res);
-        return res;
-    },
-    async getListProduct(){
-      const res=await getListProducts();
-      return res;
+    // async getSingleProductById({id}){
+    //     const res=await getSingleProductById(id);
+    //     this.setProductById(res);
+    // },
+
+
+    async getListProducts(){
+        try {
+            const res=await getListProducts();
+            this.setProducts(res)
+        } catch (error) {
+            console.log(error)
+        }
     }
 
     }),
