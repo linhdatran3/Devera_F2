@@ -7,13 +7,19 @@ import Row from "react-bootstrap/Row";
 import styled from "styled-components";
 const StyledHistoryCart = styled.div`
   .history__head {
-    padding: 0 1rem;
+    padding-top: 1rem;
+    padding-bottom: 0;
+    text-align: center;
+  }
+  .history-title .row {
+    padding: 0;
+    padding-left: 1rem;
   }
   .history-item {
     border-radius: 20px;
     border: 1.5px solid #dbdada;
     padding: 1rem;
-    margin: 1rem 0;
+    margin-bottom: 1rem;
   }
   .history-item .item-products {
     display: flex;
@@ -39,27 +45,29 @@ const HistoryCart = () => {
             <div className="temp">
               <div className="history__head">
                 <h4>History shopping cart</h4>
-                <Row>
-                  <Col sm={1}>
-                    <h4>No</h4>
-                  </Col>
-                  <Col sm={5}>
-                    <h4>List Product</h4>
-                  </Col>
-
-                  <Col sm={2}>
-                    <h4>Date</h4>
-                  </Col>
-                  <Col sm={2}>
-                    <h4>Total</h4>
-                  </Col>
-                  <Col sm={2}>
-                    <h4>Status</h4>
-                  </Col>
-                </Row>
               </div>
               {/* history shopping cart */}
               <div className="history__content">
+                <div className="history-title">
+                  <Row>
+                    <Col sm={1}>
+                      <p>No</p>
+                    </Col>
+                    <Col sm={5}>
+                      <p>List Product</p>
+                    </Col>
+
+                    <Col sm={2}>
+                      <p>Date</p>
+                    </Col>
+                    <Col sm={2}>
+                      <p>Total</p>
+                    </Col>
+                    <Col sm={2}>
+                      <p>Status</p>
+                    </Col>
+                  </Row>
+                </div>
                 <div className="history-item">
                   <Row>
                     <Col sm={1}>
@@ -71,9 +79,8 @@ const HistoryCart = () => {
                           <img src="logo.png" alt="" height="80px" />
                         </div>
                         <div className="item-info">
-                          <h4>Name products</h4>
+                          <p className="p1">Name products</p>
                           <p className="p2 createdBy">Created by: aaa</p>
-                          <p className="p2 quantity">Quantity: 2</p>
                           <p className="p2 priceItem">Price: 5.84</p>
                         </div>
                       </div>
@@ -82,9 +89,8 @@ const HistoryCart = () => {
                           <img src="logo.png" alt="" height="80px" />
                         </div>
                         <div className="item-info">
-                          <h4>Name products</h4>
+                          <p className="p1">Name products</p>
                           <p className="p2 createdBy">Created by: aaa</p>
-                          <p className="p2 quantity">Quantity: 2</p>
                           <p className="p2 priceItem">Price: 5.84</p>
                         </div>
                       </div>
@@ -113,9 +119,8 @@ const HistoryCart = () => {
                           <img src="logo.png" alt="" height="80px" />
                         </div>
                         <div className="item-info">
-                          <h4>Name products</h4>
+                          <p className="p1">Name products</p>
                           <p className="p2 createdBy">Created by: aaa</p>
-                          <p className="p2 quantity">Quantity: 2</p>
                           <p className="p2 priceItem">Price: 5.84</p>
                         </div>
                       </div>
@@ -124,9 +129,8 @@ const HistoryCart = () => {
                           <img src="logo.png" alt="" height="80px" />
                         </div>
                         <div className="item-info">
-                          <h4>Name products</h4>
+                          <p className="p1">Name products</p>
                           <p className="p2 createdBy">Created by: aaa</p>
-                          <p className="p2 quantity">Quantity: 2</p>
                           <p className="p2 priceItem">Price: 5.84</p>
                         </div>
                       </div>

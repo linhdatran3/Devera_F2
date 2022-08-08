@@ -8,6 +8,9 @@ import "./Navbar.css";
 import Navbar from "react-bootstrap/Navbar";
 import Nav from "react-bootstrap/Nav";
 import NavDropdown from "react-bootstrap/NavDropdown";
+
+import { Link } from "react-router-dom";
+
 const Navbarr = () => {
   return (
     <React.Fragment>
@@ -59,27 +62,38 @@ const Navbarr = () => {
                       </div>
                       <div className="user__icon circleClasses">
                         {/* icon user */}
-                        <Nav.Link href="/user">
-                          <UserOutlined className="circleItemCenter" />
-                        </Nav.Link>
+                        <Link to={"/user"}>
+                          <Nav.Link href="/user">
+                            <UserOutlined className="circleItemCenter" />
+                          </Nav.Link>
+                        </Link>
                       </div>
                       <div className="user__more">
                         {/* icon click more */}
                         <NavDropdown title="" id="basic-nav-dropdown">
                           {/* href="history/:id" */}
-                          <NavDropdown.Item href="/history">
-                            History
-                          </NavDropdown.Item>
-                          <NavDropdown.Item href="/products">
-                            Change password
-                          </NavDropdown.Item>
-                          <NavDropdown.Item href="/products">
-                            Setting
-                          </NavDropdown.Item>
+                          <Link to={"/history"}>
+                            <NavDropdown.Item href="/history">
+                              History
+                            </NavDropdown.Item>
+                          </Link>
+
+                          <Link to={"/user"}>
+                            <NavDropdown.Item href="/products">
+                              Change password
+                            </NavDropdown.Item>
+                          </Link>
+                          <Link to={"/user"}>
+                            <NavDropdown.Item href="/products">
+                              Setting
+                            </NavDropdown.Item>
+                          </Link>
                           <NavDropdown.Divider />
-                          <NavDropdown.Item href="/products">
-                            Log out
-                          </NavDropdown.Item>
+                          <Link to={"/user"}>
+                            <NavDropdown.Item href="/products">
+                              Log out
+                            </NavDropdown.Item>
+                          </Link>
                         </NavDropdown>
                       </div>
                     </div>

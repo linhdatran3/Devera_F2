@@ -4,6 +4,7 @@ import Footer from "../../components/Footer/Footer";
 import MenuCategories from "../../components/MenuCategories/MenuCategories";
 import PreviewItem from "../../components/PreviewItem/PreviewItem";
 import PreviewStore from "../../components/PreviewStore/PreviewStore";
+import Filter from "../../components/Filter/Filter";
 import { Pagination } from "antd";
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
@@ -69,7 +70,9 @@ const Store = () => {
                 <MenuCategories />
               </Col>
               <Col md={10} className="list-products">
-                <div className="list-products__filter"></div>
+                <div className="list-products__filter">
+                  <Filter />
+                </div>
                 <Row>
                   <Col xs={6} md={3}>
                     <PreviewItem />

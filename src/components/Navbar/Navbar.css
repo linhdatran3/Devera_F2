@@ -75,6 +75,8 @@
 
 .user__more{
     font-size: 12px;
+    display: flex;
+    justify-content: center;
 }
 .dropdown-menu[data-bs-popper] {
     left: auto !important; 
