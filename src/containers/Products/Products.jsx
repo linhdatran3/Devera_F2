@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Navbar from "../../components/Navbar/Navbar";
 import Footer from "../../components/Footer/Footer";
 import MenuCategories from "../../components/MenuCategories/MenuCategories";
@@ -8,7 +8,7 @@ import { Pagination } from "antd";
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
 import styled from "styled-components";
-// import { useDispatch, useSelector } from "../../hooks";
+import { useDispatch, useSelector } from "../../hooks";
 const StyledProduct = styled.div`
   .products .categories ul {
     width: 100% !important;
@@ -25,17 +25,17 @@ const StyledProduct = styled.div`
   }
 `;
 const Products = () => {
-  // const getListProducts = useDispatch(({ productModel }) => ({
-  //   getListProducts: productModel.getListProducts,
-  // }));
+  const { getListProducts } = useDispatch(({ productModel }) => ({
+    getListProducts: productModel.getListProducts,
+  }));
 
-  // const { products } = useSelector(({ productModel }) => ({
-  //   products: productModel.products,
-  // })); // lấy data từ store ra sài
+  const { products } = useSelector(({ productModel }) => ({
+    products: productModel.products,
+  })); // lấy data từ store ra sài
 
-  // useEffect(() => {
-  //   getListProducts();
-  // }, [getListProducts]);
+  useEffect(() => {
+    getListProducts();
+  }, [getListProducts]);
   return (
     <React.Fragment>
       <StyledProduct>
