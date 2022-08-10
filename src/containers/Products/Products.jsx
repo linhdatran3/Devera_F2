@@ -36,6 +36,10 @@ const Products = () => {
   useEffect(() => {
     getListProducts();
   }, [getListProducts]);
+  // const productsSate=(state)=>({state:state.productModel})
+  // const productsDispatch=(dispatch)=>({
+  //   getListProducts:()=>dispatch.productModel.getListProducts()
+  // })
   return (
     <React.Fragment>
       <StyledProduct>
@@ -49,66 +53,25 @@ const Products = () => {
               <h3>Categories</h3>
               <MenuCategories />
             </Col>
+
             <Col md={10} className="list-products">
               <div className="list-products__filter">
                 <Filter />
               </div>
               <Row>
-                <Col xs={6} md={3}>
-                  <PreviewItem />
-                </Col>
-                <Col xs={6} md={3}>
-                  <PreviewItem />
-                </Col>
-                <Col xs={6} md={3}>
-                  <PreviewItem />
-                </Col>
-                <Col xs={6} md={3}>
-                  <PreviewItem />
-                </Col>
+                {products.map((pro) => (
+                  <Col xs={6} md={3}>
+                    <PreviewItem
+                      Name={pro.Name}
+                      Price={pro.Price}
+                      store={pro.store.Name}
+                      Image={pro.Image.map((img) => img.url)}
+                      id={pro.id}
+                    />
+                  </Col>
+                ))}
               </Row>
-              <Row>
-                <Col xs={6} md={3}>
-                  <PreviewItem />
-                </Col>
-                <Col xs={6} md={3}>
-                  <PreviewItem />
-                </Col>
-                <Col xs={6} md={3}>
-                  <PreviewItem />
-                </Col>
-                <Col xs={6} md={3}>
-                  <PreviewItem />
-                </Col>
-              </Row>
-              <Row>
-                <Col xs={6} md={3}>
-                  <PreviewItem />
-                </Col>
-                <Col xs={6} md={3}>
-                  <PreviewItem />
-                </Col>
-                <Col xs={6} md={3}>
-                  <PreviewItem />
-                </Col>
-                <Col xs={6} md={3}>
-                  <PreviewItem />
-                </Col>
-              </Row>
-              <Row>
-                <Col xs={6} md={3}>
-                  <PreviewItem />
-                </Col>
-                <Col xs={6} md={3}>
-                  <PreviewItem />
-                </Col>
-                <Col xs={6} md={3}>
-                  <PreviewItem />
-                </Col>
-                <Col xs={6} md={3}>
-                  <PreviewItem />
-                </Col>
-              </Row>
+
               <div className="list-products__pagination">
                 <Pagination defaultCurrent={1} total={50} />
               </div>

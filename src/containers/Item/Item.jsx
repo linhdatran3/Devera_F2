@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Navbar from "../../components/Navbar/Navbar";
 import Footer from "../../components/Footer/Footer";
 import Col from "react-bootstrap/Col";
@@ -6,6 +6,8 @@ import Row from "react-bootstrap/Row";
 import styled from "styled-components";
 import Button from "../../components/Button/Button";
 import SwiperCustomize from "../../components/Swiper/Swiper";
+import { useDispatch, useSelector } from "../../hooks";
+import { useParams } from "react-router-dom";
 const StyledItem = styled.div`
   .item {
     padding-top: 1rem;
@@ -41,6 +43,18 @@ const listProduct = [
   },
 ];
 const Item = () => {
+  const { id } = useParams();
+  console.log(id);
+  const { product } = useSelector(({ productModel }) => ({
+    product: productModel.product,
+  }));
+  const { getSingleProductById } = useDispatch(({ productModel }) => ({
+    getSingleProductById: productModel.getSingleProductById,
+  }));
+  console.log(product);
+  useEffect(() => {
+    getSingleProductById(id);
+  }, [id]);
   return (
     <React.Fragment>
       <StyledItem>
@@ -60,10 +74,10 @@ const Item = () => {
               <Col md={{ span: 5, offset: 2 }}>
                 <div className="item__info">
                   <div className="item__info-name">
-                    <h5>Name NFT</h5>
+                    <h5>{product.Name}</h5>
                   </div>
                   <div className="item__info-price">
-                    <h5>Price: 84.97 $</h5>
+                    <h5>Price:{product.Price} ICX</h5>
                   </div>
                   <div className="item__info-des">
                     <p className="p1">

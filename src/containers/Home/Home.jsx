@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Button from "../../components/Button/Button";
 import Input from "../../components/Input/Input";
 import Navbar from "../../components/Navbar/Navbar";
@@ -14,7 +14,20 @@ import {
 } from "@ant-design/icons";
 import "./Home.css";
 import PreviewItem from "../../components/PreviewItem/PreviewItem";
+import { useDispatch, useSelector } from "../../hooks";
+
 const Home = () => {
+  const { getListProducts } = useDispatch(({ productModel }) => ({
+    getListProducts: productModel.getListProducts,
+  }));
+
+  const { products } = useSelector(({ productModel }) => ({
+    products: productModel.products,
+  })); // lấy data từ store ra sài
+
+  useEffect(() => {
+    getListProducts();
+  }, [getListProducts]);
   return (
     <React.Fragment>
       <div>
@@ -132,32 +145,15 @@ const Home = () => {
           </div>
           <div className="popular__content">
             <Row>
-              <Col xs={6} md={3}>
-                <PreviewItem />
-              </Col>
-              <Col xs={6} md={3}>
-                <PreviewItem />
-              </Col>
-              <Col xs={6} md={3}>
-                <PreviewItem />
-              </Col>
-              <Col xs={6} md={3}>
-                <PreviewItem />
-              </Col>
-            </Row>
-            <Row>
-              <Col xs={6} md={3}>
-                <PreviewItem />
-              </Col>
-              <Col xs={6} md={3}>
-                <PreviewItem />
-              </Col>
-              <Col xs={6} md={3}>
-                <PreviewItem />
-              </Col>
-              <Col xs={6} md={3}>
-                <PreviewItem />
-              </Col>
+              {products.slice(0, 8).map((pro) => (
+                <Col xs={6} md={3}>
+                  <PreviewItem
+                    Name={pro.Name}
+                    Price={pro.Price}
+                    Image={pro.Image.map((img) => img.url)}
+                  />
+                </Col>
+              ))}
             </Row>
           </div>
         </section>
@@ -170,32 +166,15 @@ const Home = () => {
           </div>
           <div className="sales__content">
             <Row>
-              <Col xs={6} md={3}>
-                <PreviewItem />
-              </Col>
-              <Col xs={6} md={3}>
-                <PreviewItem />
-              </Col>
-              <Col xs={6} md={3}>
-                <PreviewItem />
-              </Col>
-              <Col xs={6} md={3}>
-                <PreviewItem />
-              </Col>
-            </Row>
-            <Row>
-              <Col xs={6} md={3}>
-                <PreviewItem />
-              </Col>
-              <Col xs={6} md={3}>
-                <PreviewItem />
-              </Col>
-              <Col xs={6} md={3}>
-                <PreviewItem />
-              </Col>
-              <Col xs={6} md={3}>
-                <PreviewItem />
-              </Col>
+              {products.slice(8, 16).map((pro) => (
+                <Col xs={6} md={3}>
+                  <PreviewItem
+                    Name={pro.Name}
+                    Price={pro.Price}
+                    Image={pro.Image.map((img) => img.url)}
+                  />
+                </Col>
+              ))}
             </Row>
           </div>
         </section>

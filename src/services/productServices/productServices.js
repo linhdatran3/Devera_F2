@@ -6,9 +6,9 @@ import { ENDPOINT } from '../../utils/constant';
 export async function getSingleProductById(id) {
     // await new Promise((resolve) => setTimeout(resolve, 1000));
     // return `avatar url ${name}`;
-    fetchAPI(`products/${id}`, {baseURL: ENDPOINT})
+    return fetchAPI(`/products/${id}`, {baseURL: ENDPOINT})
 }
 
 export async function getListProducts() {
-    fetchAPI(`products`, {baseURL: ENDPOINT})
+    return fetchAPI(`/products`, {baseURL: ENDPOINT})
 }

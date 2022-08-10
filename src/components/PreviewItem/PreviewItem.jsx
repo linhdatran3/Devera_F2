@@ -2,21 +2,23 @@ import React from "react";
 import "./PreviewItem.css";
 import { DollarCircleFilled } from "@ant-design/icons";
 import { Link } from "react-router-dom";
+import { ENDPOINT } from "../../utils/constant";
 const PreviewItem = (props) => {
-  const { Name, Price, unit, store, Image } = props;
+  const { Name, Price, unit, store, Image, id } = props;
   return (
     <React.Fragment>
       <div className="previewItem">
         <div className="image">
-          <Link to={"/products/1"}>
+          <Link to={`/products/${id}`}>
             <img
               src={
                 Image
-                  ? Image
+                  ? ENDPOINT + Image
                   : "https://i.pinimg.com/564x/d0/cf/56/d0cf56a5ef9ca810288289c7dc7be7ed.jpg"
               }
               alt=""
               width={"100%"}
+              style={{ maxHeight: "250px" }}
             />
           </Link>
         </div>
@@ -50,7 +52,7 @@ const PreviewItem = (props) => {
             {/* img user */}
             <div className="user__icon circleClasses">
               <img
-                src={Image}
+                src={ENDPOINT + Image}
                 alt=""
                 className="circleItemCenter"
                 height={"100%"}

@@ -129,6 +129,7 @@ const Checkout = () => {
                     <span className="p2">1</span>
                   </div>
                 </Col>
+
                 <Col sm={2}>
                   <h5>5.00</h5>
                 </Col>
