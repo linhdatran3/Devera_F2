@@ -29,7 +29,7 @@ export const productModel = {
     async getSingleProductById(id) {
       try {
         const res = await getSingleProductById(id);
-        this.setProduct(id);
+        this.setProduct(res);
         return res;
       } catch (error) {
         console.log(error);

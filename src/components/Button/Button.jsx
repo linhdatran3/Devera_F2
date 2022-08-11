@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+import PropTypes from "prop-types";
 const StyledButton = styled.button`
   outline: none;
   cursor: pointer;
@@ -22,18 +23,19 @@ const StyledButton = styled.button`
     `;
   }};
 `;
-const Button = ({
-  txtColor,
-  children,
-  bgColor,
-  height,
-  width,
-  borderRadius,
-  type,
-  border,
-  onClick,
-  padding,
-}) => {
+const Button = (props) => {
+  const {
+    txtColor,
+    children,
+    bgColor,
+    height,
+    width,
+    borderRadius,
+    type,
+    border,
+    onClick,
+    padding,
+  } = props;
   return (
     <StyledButton
       txtColor={txtColor}
@@ -45,9 +47,13 @@ const Button = ({
       border={border}
       onClick={onClick}
       padding={padding}
+      {...props}
     >
       {children}
     </StyledButton>
   );
+};
+Button.propTypes = {
+  type: PropTypes.oneOf(["button", "submit"]),
 };
 export default Button;

@@ -9,6 +9,7 @@ import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
 import styled from "styled-components";
 import { useDispatch, useSelector } from "../../hooks";
+import { ENDPOINT } from "../../utils/constant";
 const StyledProduct = styled.div`
   .products .categories ul {
     width: 100% !important;
@@ -65,7 +66,7 @@ const Products = () => {
                       Name={pro.Name}
                       Price={pro.Price}
                       store={pro.store.Name}
-                      Image={pro.Image.map((img) => img.url)}
+                      Image={pro.Image.map((img) => ENDPOINT + img.url)}
                       id={pro.id}
                     />
                   </Col>

@@ -5,6 +5,7 @@ import Navbar from "../../components/Navbar/Navbar";
 import Footer from "../../components/Footer/Footer";
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
+import { ENDPOINT } from "../../utils/constant";
 import { Link } from "react-router-dom";
 import {
   LeftOutlined,
@@ -150,7 +151,8 @@ const Home = () => {
                   <PreviewItem
                     Name={pro.Name}
                     Price={pro.Price}
-                    Image={pro.Image.map((img) => img.url)}
+                    Image={pro.Image.map((img) => ENDPOINT + img.url)}
+                    id={pro.id}
                   />
                 </Col>
               ))}

@@ -8,6 +8,7 @@ import Button from "../../components/Button/Button";
 import SwiperCustomize from "../../components/Swiper/Swiper";
 import { useDispatch, useSelector } from "../../hooks";
 import { useParams } from "react-router-dom";
+import { ENDPOINT } from "../../utils/constant";
 const StyledItem = styled.div`
   .item {
     padding-top: 1rem;
@@ -18,28 +19,32 @@ const StyledItem = styled.div`
 `;
 const listProduct = [
   {
-    image:
+    Image:
       "https://i.pinimg.com/564x/7e/31/9b/7e319bd60fcaef53122fbdee52c2e0b3.jpg",
-    price: 3.6,
-    store: "store of LADA",
+    Price: 3.6,
+    Store: "store of LADA",
+    id: "1",
   },
   {
-    image:
+    Image:
       "https://i.pinimg.com/564x/4f/7f/38/4f7f385b7639b9a0e3e6446271102020.jpg",
-    price: 3.6,
-    store: "store of LADA",
+    Price: 3.6,
+    Store: "store of LADA",
+    id: "1",
   },
   {
-    image:
+    Image:
       "https://i.pinimg.com/564x/83/cd/5b/83cd5b6a654978055f79e4e903f085c8.jpg",
-    price: 3.6,
-    store: "store of LADA",
+    Price: 3.6,
+    Store: "store of LADA",
+    id: "1",
   },
   {
-    image:
+    Image:
       "https://i.pinimg.com/564x/83/cd/5b/83cd5b6a654978055f79e4e903f085c8.jpg",
-    price: 3.6,
-    store: "store of LADA",
+    Price: 3.6,
+    Store: "store of LADA",
+    id: "1",
   },
 ];
 const Item = () => {
@@ -65,7 +70,11 @@ const Item = () => {
               <Col md={5}>
                 <div className="item__image">
                   <img
-                    src="https://i.pinimg.com/564x/70/f4/f5/70f4f5cbee08d3dc5bf6b8e698a2db97.jpg"
+                    src={
+                      product.Image
+                        ? ENDPOINT + product.Image.map((img) => img.url)
+                        : "https://i.pinimg.com/564x/70/f4/f5/70f4f5cbee08d3dc5bf6b8e698a2db97.jpg"
+                    }
                     alt=""
                     style={{ width: "100%" }}
                   />
@@ -114,4 +123,5 @@ const Item = () => {
     </React.Fragment>
   );
 };
+
 export default Item;

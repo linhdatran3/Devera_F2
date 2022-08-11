@@ -2,7 +2,6 @@ import React from "react";
 import "./PreviewItem.css";
 import { DollarCircleFilled } from "@ant-design/icons";
 import { Link } from "react-router-dom";
-import { ENDPOINT } from "../../utils/constant";
 const PreviewItem = (props) => {
   const { Name, Price, unit, store, Image, id } = props;
   return (
@@ -11,11 +10,7 @@ const PreviewItem = (props) => {
         <div className="image">
           <Link to={`/products/${id}`}>
             <img
-              src={
-                Image
-                  ? ENDPOINT + Image
-                  : "https://i.pinimg.com/564x/d0/cf/56/d0cf56a5ef9ca810288289c7dc7be7ed.jpg"
-              }
+              src={Image}
               alt=""
               width={"100%"}
               style={{ maxHeight: "250px" }}
@@ -26,12 +21,12 @@ const PreviewItem = (props) => {
           <div className="left">
             <div className="name__item">
               {/* name item */}
-              <h3>{Name ? Name : "Name NFT"}</h3>
+              <h3>{Name}</h3>
             </div>
             <div className="create_by__item">
               <span>Create by: </span>
               {/* name creator */}
-              <span>{store ? store : "hx45 ... 250"} </span>
+              <span>{store} </span>
             </div>
             <div className="price__item">
               <div className="price-icon">
@@ -44,15 +39,15 @@ const PreviewItem = (props) => {
                 />
               </div>
               {/* price item */}
-              <span className="p1">Price: {Price ? Price : "6.8"} </span>
-              <span className="p1">{unit}ICX</span>
+              <span className="p1">Price: {Price} </span>
+              <span className="p1">{unit}</span>
             </div>
           </div>
           <div className="right">
             {/* img user */}
             <div className="user__icon circleClasses">
               <img
-                src={ENDPOINT + Image}
+                src={Image}
                 alt=""
                 className="circleItemCenter"
                 height={"100%"}
@@ -64,5 +59,13 @@ const PreviewItem = (props) => {
       </div>
     </React.Fragment>
   );
+};
+PreviewItem.defaultProps = {
+  Image:
+    "https://i.pinimg.com/564x/d0/cf/56/d0cf56a5ef9ca810288289c7dc7be7ed.jpg",
+  Name: "Name NFT",
+  Price: "45.2",
+  unit: "ICX",
+  store: "hx45...74",
 };
 export default PreviewItem;

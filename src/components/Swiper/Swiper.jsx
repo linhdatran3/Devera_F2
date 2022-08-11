@@ -11,6 +11,7 @@ import "swiper/css/navigation";
 import { Navigation } from "swiper";
 import PreviewItem from "../PreviewItem/PreviewItem";
 const SwiperCustomize = ({ listProduct }) => {
+  console.log(listProduct);
   return (
     <Swiper
       slidesPerView={3}
@@ -24,7 +25,12 @@ const SwiperCustomize = ({ listProduct }) => {
     >
       {listProduct.map((pro) => (
         <SwiperSlide>
-          <PreviewItem Image={pro.image} Price={pro.price} store={pro.store} />
+          <PreviewItem
+            Image={pro.Image}
+            Price={pro.Price}
+            store={pro.Store}
+            id={pro.id}
+          />
         </SwiperSlide>
       ))}
     </Swiper>
