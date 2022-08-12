@@ -1,9 +1,8 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import Navbar from "../../components/Navbar/Navbar";
 import Footer from "../../components/Footer/Footer";
-import Input from "../../components/Input/Input";
+// import Input from "../../components/Input/Input";
 import Button from "../../components/Button/Button";
-import PreviewItem from "../../components/PreviewItem/PreviewItem";
 import PreviewStore from "../../components/PreviewStore/PreviewStore";
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
@@ -15,6 +14,9 @@ const StyledCreateNFT = styled.div`
   }
   .top-creators h4 {
     padding: 1rem 0;
+  }
+  .previewImg img {
+    height: 300px;
   }
 `;
 const ListStore = [
@@ -56,6 +58,21 @@ const ListStore = [
   },
 ];
 const CreateNFT = () => {
+  const [selectedImage, setSelectedImage] = useState();
+  const [name, setName] = useState("");
+  const [price, setPrice] = useState(0);
+  // This function will be triggered when the file field change
+  const imageChange = (e) => {
+    if (e.target.files && e.target.files.length > 0) {
+      setSelectedImage(e.target.files[0]);
+    }
+  };
+
+  // This function will be triggered when the "Remove This Image" button is clicked
+  const removeSelectedImage = () => {
+    setSelectedImage();
+  };
+  useEffect(() => {}, [name, price]);
   return (
     <React.Fragment>
       <StyledCreateNFT>
@@ -66,19 +83,37 @@ const CreateNFT = () => {
             <Row>
               <Col md={5}>
                 <p className="p1">Upload:</p>
-                <Input type={"file"} /> <br />
+                <input
+                  type={"file"}
+                  accept="image/*"
+                  onChange={imageChange}
+                />{" "}
+                <br />
                 <p className="p1">Name</p>
-                <Input border={"1px #d6d6d6 solid"} />
+                <input
+                  border={"1px #d6d6d6 solid"}
+                  onChange={(e) => setName(e.target.value)}
+                />
                 <p className="p1">Price</p>
-                <Input type={"number"} border={"1px #d6d6d6 solid"} /> <br />
+                <input
+                  type={"number"}
+                  border={"1px #d6d6d6 solid"}
+                  onChange={(e) => setPrice(e.target.value)}
+                />{" "}
+                <br />
                 <Button>Create</Button>
               </Col>
               <Col md={{ span: 4, offset: 1 }}>
-                <PreviewItem
-                  Image={
-                    "https://i.pinimg.com/564x/5d/ef/87/5def874cf1625d3b55ab0ebda14175fd.jpg"
-                  }
-                />
+                {selectedImage && (
+                  <div className="previewImg">
+                    <img src={URL.createObjectURL(selectedImage)} alt="Thumb" />
+                    <button onClick={removeSelectedImage}>
+                      Remove This Image
+                    </button>
+                  </div>
+                )}
+                <h3>{name}</h3>
+                <h4>Price: {price}</h4>
               </Col>
             </Row>
           </section>

@@ -59,7 +59,7 @@ const Item = () => {
   console.log(product);
   useEffect(() => {
     getSingleProductById(id);
-  }, [id]);
+  }, [id, getSingleProductById]);
   return (
     <React.Fragment>
       <StyledItem>

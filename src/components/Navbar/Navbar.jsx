@@ -1,4 +1,5 @@
-import React from "react";
+/* eslint-disable */ // dòng này để nhắn nhủ tớiesessslint rằng: bạn làm ơn hãy bỏ qua file này :v, nếu ghét mấy cái warning quá thì tạm thời xài nó, code xong dùng lại
+import React, { useState } from "react";
 import {
   HeartOutlined,
   ShoppingCartOutlined,
@@ -10,8 +11,10 @@ import Nav from "react-bootstrap/Nav";
 import NavDropdown from "react-bootstrap/NavDropdown";
 
 import { Link } from "react-router-dom";
+import { connectWallet, hashShortener, disConnect } from "../../sdk/iconSDK"; // khai báo mà hông xài nè :v chwua xài,bị lỗi package nên chưa kịp xài, ừa
 
 const Navbarr = () => {
+  const [address, setAddress] = useState(localStorage.getItem("address"));
   return (
     <React.Fragment>
       <div className="navbar">
@@ -55,48 +58,104 @@ const Navbarr = () => {
                     </div>
                   </Nav.Link>
                   <Nav.Link>
-                    <div className="user">
-                      <div className="user__name">
-                        <span className="p2">Hello, </span>
-                        <span className="username p1">Linhda</span>
-                      </div>
-                      <div className="user__icon circleClasses">
-                        {/* icon user */}
-                        <Link to={"/user"}>
-                          <Nav.Link href="/user">
-                            <UserOutlined className="circleItemCenter" />
-                          </Nav.Link>
-                        </Link>
-                      </div>
-                      <div className="user__more">
-                        {/* icon click more */}
-                        <NavDropdown title="" id="basic-nav-dropdown">
-                          {/* href="history/:id" */}
-                          <Link to={"/history"}>
-                            <NavDropdown.Item href="/history">
-                              History
-                            </NavDropdown.Item>
+                    {address ? (
+                      <div className="user">
+                        <div className="user__name">
+                          <span className="p2">Hello, </span>
+                          <span className="username p1">
+                            {" "}
+                            {hashShortener(address)}
+                          </span>
+                        </div>
+                        <div className="user__icon circleClasses">
+                          {/* icon user */}
+                          <Link to={"/user"}>
+                            <Nav.Link href="/user">
+                              <UserOutlined className="circleItemCenter" />
+                            </Nav.Link>
                           </Link>
+                        </div>
+                        <div className="user__more">
+                          {/* icon click more */}
+                          <NavDropdown title="" id="basic-nav-dropdown">
+                            {/* href="history/:id" */}
+                            <Link to={"/history"}>
+                              <NavDropdown.Item href="/history">
+                                History
+                              </NavDropdown.Item>
+                            </Link>
 
-                          <Link to={"/user"}>
-                            <NavDropdown.Item href="/products">
-                              Change password
+                            <Link to={"/user"}>
+                              <NavDropdown.Item href="/products">
+                                Change password
+                              </NavDropdown.Item>
+                            </Link>
+                            <Link to={"/user"}>
+                              <NavDropdown.Item href="/products">
+                                Setting
+                              </NavDropdown.Item>
+                            </Link>
+                            <NavDropdown.Divider />
+
+                            <NavDropdown.Item>
+                              <button
+                                className="connect-btn"
+                                onClick={() => disConnect(setAddress)}
+                              >
+                                Disconnect
+                              </button>
                             </NavDropdown.Item>
-                          </Link>
-                          <Link to={"/user"}>
-                            <NavDropdown.Item href="/products">
-                              Setting
-                            </NavDropdown.Item>
-                          </Link>
-                          <NavDropdown.Divider />
-                          <Link to={"/user"}>
-                            <NavDropdown.Item href="/products">
-                              Log out
-                            </NavDropdown.Item>
-                          </Link>
-                        </NavDropdown>
+                          </NavDropdown>
+                        </div>
                       </div>
-                    </div>
+                    ) : (
+                      <div className="user">
+                        <div className="user__name">
+                          <span className="p2">Hello, </span>
+                          <span className="username p1">Linhda</span>
+                        </div>
+                        <div className="user__icon circleClasses">
+                          {/* icon user */}
+                          <Link to={"/user"}>
+                            <Nav.Link href="/user">
+                              <UserOutlined className="circleItemCenter" />
+                            </Nav.Link>
+                          </Link>
+                        </div>
+                        <div className="user__more">
+                          {/* icon click more */}
+                          <NavDropdown title="" id="basic-nav-dropdown">
+                            {/* href="history/:id" */}
+                            <Link to={"/history"}>
+                              <NavDropdown.Item href="/history">
+                                History
+                              </NavDropdown.Item>
+                            </Link>
+
+                            <Link to={"/user"}>
+                              <NavDropdown.Item href="/products">
+                                Change password
+                              </NavDropdown.Item>
+                            </Link>
+                            <Link to={"/user"}>
+                              <NavDropdown.Item href="/products">
+                                Setting
+                              </NavDropdown.Item>
+                            </Link>
+                            <NavDropdown.Divider />
+
+                            <NavDropdown.Item>
+                              <button
+                                className="connect-btn"
+                                onClick={() => connectWallet(setAddress)}
+                              >
+                                Connect
+                              </button>
+                            </NavDropdown.Item>
+                          </NavDropdown>
+                        </div>
+                      </div>
+                    )}
                   </Nav.Link>
                 </div>
               </Nav>

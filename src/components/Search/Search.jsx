@@ -18,6 +18,7 @@ const Search = () => {
     //dispatch(fetchAsyncProduct(term))
     //setTerm("")
   };
+  //debounce
   return (
     <React.Fragment>
       <StyledSearch>
