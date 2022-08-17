@@ -63,10 +63,9 @@ const Products = () => {
                 {products.map((pro) => (
                   <Col xs={6} md={3}>
                     <PreviewItem
-                      Name={pro.Name}
-                      Price={pro.Price}
-                      store={pro.store.Name}
-                      Image={pro.Image.map((img) => ENDPOINT + img.url)}
+                      name={pro.name}
+                      price={pro.price}
+                      image={pro.image.map((img) => ENDPOINT + img.url)}
                       id={pro.id}
                     />
                   </Col>

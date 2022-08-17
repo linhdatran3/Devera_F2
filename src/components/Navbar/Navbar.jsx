@@ -15,13 +15,14 @@ import { connectWallet, hashShortener, disConnect } from "../../sdk/iconSDK"; //
 
 const Navbarr = () => {
   const [address, setAddress] = useState(localStorage.getItem("address"));
+
   return (
     <React.Fragment>
       <div className="navbar">
         <Navbar bg="none" expand="lg" fixed="top" style={{ width: "100%" }}>
           <div className="container">
             <Navbar.Brand href="/">
-              <img src="logo1.png" alt="logo" height={"70px"} />
+              <img src="F2Store512.png" alt="logo" height={"70px"} />
             </Navbar.Brand>
             <Navbar.Toggle aria-controls="navbarScroll" />
             <Navbar.Collapse id="navbarScroll">

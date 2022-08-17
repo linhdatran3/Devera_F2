@@ -27,7 +27,7 @@ const StylePreviewStore = styled.div`
   }
 `;
 const PreviewStore = (props) => {
-  const { Name, Widget, Image, unit, id } = props;
+  const { name, widget, image, unit, id } = props;
   return (
     <React.Fragment>
       <StylePreviewStore>
@@ -36,8 +36,8 @@ const PreviewStore = (props) => {
             <Link to={id ? `/stores/${id}` : `/stores/1`}>
               <img
                 src={
-                  Image
-                    ? Image
+                  image
+                    ? image
                     : "https://i.pinimg.com/564x/d0/cf/56/d0cf56a5ef9ca810288289c7dc7be7ed.jpg"
                 }
                 alt=""
@@ -46,7 +46,7 @@ const PreviewStore = (props) => {
             </Link>
           </div>
           <div className="previewStore__content">
-            <p className="p1">{Name ? Name : "hx408..4679"}</p>
+            <p className="p1">{name ? name : "hx408..4679"}</p>
             <p className="p1 previewStore__widget">
               <div className="previewStore__widget-icon">
                 <DollarCircleFilled
@@ -58,7 +58,7 @@ const PreviewStore = (props) => {
                 />
               </div>
               <div className="previewStore__widget-price">
-                {Widget ? Widget : "14.082.730  "}
+                {widget ? widget : "14.082.730  "}
               </div>
               <div className="previewStore__widget-unit">
                 {unit ? unit : "  ICX"}

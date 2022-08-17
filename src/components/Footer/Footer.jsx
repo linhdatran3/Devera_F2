@@ -19,7 +19,7 @@ const Footer = () => {
           <Row className="row">
             <Col sm={4} className="footer__col1">
               <div className="footer_logo">
-                <img src="logo1.png" alt="" height={"70px"} />
+                <img src="F2Store512.png" alt="" height={"70px"} />
               </div>
               <br />
               <div className="footer_content">
