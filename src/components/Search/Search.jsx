@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-import Button from "../Button/Button";
+import { Button } from "../Button";
 const StyledSearch = styled.div`
   input {
     padding: 0.2rem 1rem;
@@ -9,7 +9,7 @@ const StyledSearch = styled.div`
   }
 `;
 
-const Search = () => {
+export const Search = () => {
   const [term, setTerm] = useState("");
   const submitHandler = (e) => {
     e.preventDefault();
@@ -42,4 +42,3 @@ const Search = () => {
     </React.Fragment>
   );
 };
-export default Search;

@@ -26,7 +26,7 @@ const StylePreviewStore = styled.div`
     margin-top: 0.7rem;
   }
 `;
-const PreviewStore = (props) => {
+export const PreviewStore = (props) => {
   const { name, widget, image, unit, id } = props;
   return (
     <React.Fragment>
@@ -70,4 +70,3 @@ const PreviewStore = (props) => {
     </React.Fragment>
   );
 };
-export default PreviewStore;

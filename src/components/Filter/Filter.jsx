@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
-import Search from "../Search/Search";
+import { Search } from "../Search";
 import { Dropdown, Menu, Button } from "antd";
 import {
   SortAscendingOutlined,
@@ -39,7 +39,7 @@ const StyledFilter = styled.div`
   }
 `;
 
-const Filter = () => {
+export const Filter = () => {
   const [sort, setSort] = useState("increase");
   const [sortName, setSortName] = useState("Ascending");
 
@@ -125,4 +125,3 @@ const Filter = () => {
     </React.Fragment>
   );
 };
-export default Filter;

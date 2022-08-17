@@ -1,63 +1,113 @@
 import React from "react";
-import "./PreviewItem.css";
 import { DollarCircleFilled } from "@ant-design/icons";
 import { Link } from "react-router-dom";
-const PreviewItem = (props) => {
+import styled from "styled-components";
+const StyledPreviewItem = styled.div`
+  .previewItem {
+    position: relative;
+    background-color: #fff;
+    border-radius: 15px;
+    width: 100%;
+    padding-bottom: 1rem;
+    /* border: 1.5px solid #f4f4f4; */
+  }
+
+  .image {
+    position: relative;
+    top: 100%;
+    left: 50%;
+    transform: translate(-50%, 0%);
+    /* height: 220px; */
+    width: 100%;
+    background-color: #fff;
+  }
+  .user__icon img {
+    height: 36px;
+    width: 36px;
+    border-radius: 50%;
+  }
+
+  .content {
+    display: flex;
+    margin: 0 1rem;
+    justify-content: space-around;
+  }
+  .content .right {
+    padding-top: 2rem;
+    position: relative;
+    top: 100%;
+    right: 0%;
+  }
+  .content .price__item {
+    display: flex;
+  }
+  .content .price-icon {
+    background-color: "#fff";
+    border-radius: "50%";
+    color: "#40AA54";
+    width: 18px;
+    height: 18px;
+  }
+`;
+export const PreviewItem = (props) => {
   const { name, price, unit, store, image, id } = props;
   return (
-    <React.Fragment>
-      <div className="previewItem">
-        <div className="image">
-          <Link to={`/products/${id}`}>
-            <img
-              src={image}
-              alt=""
-              width={"100%"}
-              style={{ maxHeight: "250px" }}
-            />
-          </Link>
-        </div>
-        <div className="content">
-          <div className="left">
-            <div className="name__item">
-              {/* name item */}
-              <h3>{name}</h3>
-            </div>
-            <div className="create_by__item">
-              <span>Create by: </span>
-              {/* name creator */}
-              <span>{store} </span>
-            </div>
-            <div className="price__item">
-              <div className="price-icon">
-                <DollarCircleFilled
-                  style={{
-                    backgroundColor: "#fff",
-                    borderRadius: "50%",
-                    color: "#40AA54",
-                  }}
-                />
-              </div>
-              {/* price item */}
-              <span className="p1">Price: {price} </span>
-              <span className="p1">{unit}</span>
-            </div>
-          </div>
-          <div className="right">
-            {/* img user */}
-            <div className="user__icon circleClasses">
+    <StyledPreviewItem>
+      {" "}
+      <React.Fragment>
+        <div className="previewItem">
+          <div className="image">
+            <Link to={`/products/${id}`}>
               <img
                 src={image}
                 alt=""
-                className="circleItemCenter"
-                height={"100%"}
                 width={"100%"}
+                style={{ maxHeight: "250px" }}
               />
+            </Link>
+          </div>
+          <div className="content">
+            <div className="left">
+              <div className="name__item">
+                {/* name item */}
+                <h3>{name}</h3>
+              </div>
+              <div className="create_by__item">
+                <span>Create by: </span>
+                {/* name creator */}
+                <span>{store} </span>
+              </div>
+              <div className="price__item">
+                <div className="price-icon">
+                  <DollarCircleFilled
+                    style={{
+                      backgroundColor: "#fff",
+                      borderRadius: "50%",
+                      color: "#40AA54",
+                    }}
+                  />
+                </div>
+                {/* price item */}
+                <span className="p1">Price: {price} </span>
+                <span className="p1">{unit}</span>
+              </div>
+            </div>
+            <div className="right">
+              {/* img user */}
+              <div className="user__icon circleClasses">
+                <img
+                  src={image}
+                  alt=""
+                  className="circleItemCenter"
+                  height={"100%"}
+                  width={"100%"}
+                />
+              </div>
             </div>
           </div>
         </div>
-      </div>
-    </React.Fragment>
+      </React.Fragment>
+    </StyledPreviewItem>
   );
 };
 PreviewItem.defaultProps = {
@@ -68,4 +118,3 @@ PreviewItem.defaultProps = {
   unit: "ICX",
   store: "hx45...74",
 };
-export default PreviewItem;

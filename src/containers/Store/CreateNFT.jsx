@@ -1,12 +1,13 @@
+/* eslint-disable */
 import React, { useState, useEffect } from "react";
-import Navbar from "../../components/Navbar/Navbar";
-import Footer from "../../components/Footer/Footer";
-// import Input from "../../components/Input/Input";
-import Button from "../../components/Button/Button";
-import PreviewStore from "../../components/PreviewStore/PreviewStore";
+// import { Button } from "../../components/Button";
+// import { Input } from "../../components/Input";
+import { PrimaryLayout } from "../../components/Layout";
+import { PreviewStore } from "../../components/PreviewStore";
+import styled from "styled-components";
+
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
-import styled from "styled-components";
 
 const StyledCreateNFT = styled.div`
   .top-creators {
@@ -100,27 +101,27 @@ const CreateNFT = () => {
   };
   return (
     <React.Fragment>
-      <StyledCreateNFT>
-        <div>
-          <Navbar />
-          <section className="createNFT container">
-            <h4>Create and Sell Your NFTs</h4>
-            <Row>
-              <Col md={5}>
-                <form
-                  onSubmit={(e) => handleSubmit(e)}
-                  method="post"
-                  enctype="multipart/form-data"
-                >
-                  <p className="p1">Upload:</p>
-                  <input
-                    name="files"
-                    type={"file"}
-                    accept="image/*"
-                    onChange={imageChange}
-                  />{" "}
-                  <br />
-                  {/* <p className="p1">Name</p>
+      <PrimaryLayout>
+        <StyledCreateNFT>
+          <div>
+            <section className="createNFT container">
+              <h4>Create and Sell Your NFTs</h4>
+              <Row>
+                <Col md={5}>
+                  <form
+                    onSubmit={(e) => handleSubmit(e)}
+                    method="post"
+                    enctype="multipart/form-data"
+                  >
+                    <p className="p1">Upload:</p>
+                    <input
+                      name="files"
+                      type={"file"}
+                      accept="image/*"
+                      onChange={imageChange}
+                    />{" "}
+                    <br />
+                    {/* <p className="p1">Name</p>
                   <input
                     name="name"
                     border={"1px #d6d6d6 solid"}
@@ -134,45 +135,46 @@ const CreateNFT = () => {
                     onChange={(e) => setPrice(e.target.value)}
                   />{" "}
                   <br /> */}
-                  <input type={"submit"} value={"create"} />
-                </form>
-              </Col>
+                    <input type={"submit"} value={"create"} />
+                  </form>
+                </Col>
 
-              <Col md={{ span: 4, offset: 1 }}>
-                {selectedImage && (
-                  <div className="previewImg">
-                    <img src={URL.createObjectURL(selectedImage)} alt="Thumb" />
-                    <button onClick={removeSelectedImage}>
-                      Remove This Image
-                    </button>
-                  </div>
-                )}
-                <h3>{name}</h3>
-                <h4>Price: {price}</h4>
-              </Col>
-            </Row>
-          </section>
-          <section className="top-creators">
-            <h4 className="container">Top creators of the week</h4>
-            <div className="container">
-              <Row>
-                {ListStore?.map((store) => (
-                  <Col md={4}>
-                    <PreviewStore
-                      name={store.name}
-                      image={store.image}
-                      wdget={store.widget}
-                    />
-                  </Col>
-                ))}
+                <Col md={{ span: 4, offset: 1 }}>
+                  {selectedImage && (
+                    <div className="previewImg">
+                      <img
+                        src={URL.createObjectURL(selectedImage)}
+                        alt="Thumb"
+                      />
+                      <button onClick={removeSelectedImage}>
+                        Remove This Image
+                      </button>
+                    </div>
+                  )}
+                  <h3>{name}</h3>
+                  <h4>Price: {price}</h4>
+                </Col>
               </Row>
-            </div>
-          </section>
-          <footer>
-            <Footer />
-          </footer>
-        </div>
-      </StyledCreateNFT>
+            </section>
+            <section className="top-creators">
+              <h4 className="container">Top creators of the week</h4>
+              <div className="container">
+                <Row>
+                  {ListStore?.map((store) => (
+                    <Col md={4}>
+                      <PreviewStore
+                        name={store.name}
+                        image={store.image}
+                        wdget={store.widget}
+                      />
+                    </Col>
+                  ))}
+                </Row>
+              </div>
+            </section>
+          </div>
+        </StyledCreateNFT>
+      </PrimaryLayout>
     </React.Fragment>
   );
 };

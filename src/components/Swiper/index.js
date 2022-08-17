@@ -1,0 +1,1 @@
+export { SwiperCustomize } from "./Swiper";

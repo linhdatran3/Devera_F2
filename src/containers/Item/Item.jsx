@@ -1,11 +1,12 @@
 import React, { useEffect } from "react";
-import Navbar from "../../components/Navbar/Navbar";
-import Footer from "../../components/Footer/Footer";
+import { Button } from "../../components/Button";
+import { PrimaryLayout } from "../../components/Layout";
+import { SwiperCustomize } from "../../components/Swiper";
+import styled from "styled-components";
+
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
-import styled from "styled-components";
-import Button from "../../components/Button/Button";
-import SwiperCustomize from "../../components/Swiper/Swiper";
+
 import { useDispatch, useSelector } from "../../hooks";
 import { useParams } from "react-router-dom";
 import { ENDPOINT } from "../../utils/constant";
@@ -78,72 +79,70 @@ const Item = () => {
   }, [id, getSingleProductById]);
   return (
     <React.Fragment>
-      <StyledItem>
-        <div>
-          <Navbar />
-          <div className="item container">
-            <Row>
-              <Col md={5}>
-                <div className="item__image">
-                  <img
-                    src={
-                      product.image
-                        ? ENDPOINT + product.image.map((img) => img.url)
-                        : "https://i.pinimg.com/564x/70/f4/f5/70f4f5cbee08d3dc5bf6b8e698a2db97.jpg"
-                    }
-                    alt=""
-                    style={{ width: "100%" }}
-                  />
-                </div>
-              </Col>
-              <Col md={{ span: 5, offset: 2 }}>
-                <div className="item__info">
-                  <form onSubmit={(e) => onSubmit(e)}>
-                    <div className="item__info-name">
-                      <h5>{product.name}</h5>
-                    </div>
-
-                    <div className="item__info-price">
-                      <h5>
-                        <input name="price" value={product.price} />
-                      </h5>
-                    </div>
-
-                    <div className="item__info-des">
-                      <p className="p1">
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                        Itaque expedita, nam molestias architecto aspernatur aut
-                        perspiciatis nobis quae maxime minus repellat libero
-                        quis dolore minima, velit veritatis corrupti fugit amet.
-                      </p>
-                    </div>
-                    <div className="item__info-createBy">
-                      <h5>Created by: store of LADA</h5>
-                    </div>
-
-                    <div className="item__buy">
-                      {/* <Button>BUY NOW</Button> */}
-                      <Button>BUY NOW</Button>
-                    </div>
-                  </form>
-                </div>
-              </Col>
-            </Row>
-          </div>
-          <div className="recommend">
-            <div className="container">
+      <PrimaryLayout>
+        <StyledItem>
+          <div>
+            <div className="item container">
               <Row>
-                <h4>More from this user</h4>
-                <SwiperCustomize listProduct={listProduct} />
+                <Col md={5}>
+                  <div className="item__image">
+                    <img
+                      src={
+                        product.image
+                          ? ENDPOINT + product.image.map((img) => img.url)
+                          : "https://i.pinimg.com/564x/70/f4/f5/70f4f5cbee08d3dc5bf6b8e698a2db97.jpg"
+                      }
+                      alt=""
+                      style={{ width: "100%" }}
+                    />
+                  </div>
+                </Col>
+                <Col md={{ span: 5, offset: 2 }}>
+                  <div className="item__info">
+                    <form onSubmit={(e) => onSubmit(e)}>
+                      <div className="item__info-name">
+                        <h5>{product.name}</h5>
+                      </div>
+
+                      <div className="item__info-price">
+                        <h5>
+                          <input name="price" value={product.price} />
+                        </h5>
+                      </div>
+
+                      <div className="item__info-des">
+                        <p className="p1">
+                          Lorem ipsum dolor sit amet consectetur adipisicing
+                          elit. Itaque expedita, nam molestias architecto
+                          aspernatur aut perspiciatis nobis quae maxime minus
+                          repellat libero quis dolore minima, velit veritatis
+                          corrupti fugit amet.
+                        </p>
+                      </div>
+                      <div className="item__info-createBy">
+                        <h5>Created by: store of LADA</h5>
+                      </div>
+
+                      <div className="item__buy">
+                        {/* <Button>BUY NOW</Button> */}
+                        <Button>BUY NOW</Button>
+                      </div>
+                    </form>
+                  </div>
+                </Col>
               </Row>
             </div>
+            <div className="recommend">
+              <div className="container">
+                <Row>
+                  <h4>More from this user</h4>
+                  <SwiperCustomize listProduct={listProduct} />
+                </Row>
+              </div>
+            </div>
           </div>
-
-          <footer>
-            <Footer />
-          </footer>
-        </div>
-      </StyledItem>
+        </StyledItem>
+      </PrimaryLayout>
     </React.Fragment>
   );
 };

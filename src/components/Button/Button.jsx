@@ -23,7 +23,7 @@ const StyledButton = styled.button`
     `;
   }};
 `;
-const Button = (props) => {
+export const Button = (props) => {
   const {
     txtColor,
     children,
@@ -56,4 +56,3 @@ const Button = (props) => {
 Button.propTypes = {
   type: PropTypes.oneOf(["button", "submit"]),
 };
-export default Button;

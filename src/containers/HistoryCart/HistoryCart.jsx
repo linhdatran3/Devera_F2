@@ -1,6 +1,5 @@
 import React from "react";
-import Navbar from "../../components/Navbar/Navbar";
-import Footer from "../../components/Footer/Footer";
+import { PrimaryLayout } from "../../components/Layout";
 import { CheckCircleOutlined, CloseCircleOutlined } from "@ant-design/icons";
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
@@ -35,12 +34,8 @@ const StyledHistoryCart = styled.div`
 const HistoryCart = () => {
   return (
     <React.Fragment>
-      <StyledHistoryCart>
-        <div>
-          <header>
-            <Navbar />
-          </header>
-
+      <PrimaryLayout>
+        <StyledHistoryCart>
           <section className="historyCart container">
             <div className="temp">
               <div className="history__head">
@@ -151,12 +146,8 @@ const HistoryCart = () => {
               </div>
             </div>
           </section>
-
-          <footer>
-            <Footer />
-          </footer>
-        </div>
-      </StyledHistoryCart>
+        </StyledHistoryCart>
+      </PrimaryLayout>
     </React.Fragment>
   );
 };

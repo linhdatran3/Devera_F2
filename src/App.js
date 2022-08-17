@@ -1,14 +1,13 @@
 import "./App.css";
 
 import { Routes, Route } from "react-router-dom";
-import Home from "./containers/Home/Home";
-import Products from "./containers/Products/Products";
-import Cart from "./containers/Cart/Cart";
-import Checkout from "./containers/Checkout/Checkout";
-import User from "./containers/User/User";
-import HistoryCart from "./containers/HistoryCart/HistoryCart";
-import Store from "./containers/Store/Store";
-import Item from "./containers/Item/Item";
+import Home from "./containers/Home";
+import Products from "./containers/Products";
+import Cart from "./containers/Cart";
+import Checkout from "./containers/Checkout";
+import User from "./containers/User";
+import HistoryCart from "./containers/HistoryCart";
+import Item from "./containers/Item";
 import CreateNFT from "./containers/Store/CreateNFT";
 import "antd/dist/antd.min.css";
 // Bootstrap CSS
@@ -32,7 +31,6 @@ function App() {
           {/* path="/history/:id" */}
           <Route path="/history" element={<HistoryCart />} />
           {/* path="/store/:id" */}
-          <Route path="/stores/:id" element={<Store />} />
           <Route path="/stores/create" element={<CreateNFT />} />
           <Route path="/" element={<Home />} />
         </Routes>

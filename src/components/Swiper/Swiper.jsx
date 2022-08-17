@@ -9,8 +9,8 @@ import "swiper/css/navigation";
 
 // import required modules
 import { Navigation } from "swiper";
-import PreviewItem from "../PreviewItem/PreviewItem";
-const SwiperCustomize = ({ listProduct }) => {
+import { PreviewItem } from "../PreviewItem";
+export const SwiperCustomize = ({ listProduct }) => {
   console.log(listProduct);
   return (
     <Swiper
@@ -36,4 +36,3 @@ const SwiperCustomize = ({ listProduct }) => {
     </Swiper>
   );
 };
-export default SwiperCustomize;

@@ -8,7 +8,14 @@ const StyledInput = styled.input`
     return `border: ${border}`;
   }}
 `;
-const Input = ({ type, placeholder, onChange, value, border, disabled }) => {
+export const Input = ({
+  type,
+  placeholder,
+  onChange,
+  value,
+  border,
+  disabled,
+}) => {
   const handleChange = (e) => {
     onChange(e.target.value);
   };
@@ -35,4 +42,3 @@ Input.defaultProps = {
   type: "text",
   border: "none",
 };
-export default Input;

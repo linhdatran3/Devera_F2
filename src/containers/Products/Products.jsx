@@ -1,13 +1,15 @@
 import React, { useEffect } from "react";
-import Navbar from "../../components/Navbar/Navbar";
-import Footer from "../../components/Footer/Footer";
-import MenuCategories from "../../components/MenuCategories/MenuCategories";
-import PreviewItem from "../../components/PreviewItem/PreviewItem";
-import Filter from "../../components/Filter/Filter";
-import { Pagination } from "antd";
+import { Filter } from "../../components/Filter";
+import { MenuCategories } from "../../components/MenuCategories";
+import { PrimaryLayout } from "../../components/Layout";
+import { PreviewItem } from "../../components/PreviewItem";
+import styled from "styled-components";
+
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
-import styled from "styled-components";
+
+import { Pagination } from "antd";
+
 import { useDispatch, useSelector } from "../../hooks";
 import { ENDPOINT } from "../../utils/constant";
 const StyledProduct = styled.div`
@@ -43,46 +45,40 @@ const Products = () => {
   // })
   return (
     <React.Fragment>
-      <StyledProduct>
-        <header>
-          <Navbar />
-        </header>
+      <PrimaryLayout>
+        <StyledProduct>
+          <section className="products container">
+            <Row>
+              <Col md={2} className="categories">
+                <h3>Categories</h3>
+                <MenuCategories />
+              </Col>
 
-        <section className="products container">
-          <Row>
-            <Col md={2} className="categories">
-              <h3>Categories</h3>
-              <MenuCategories />
-            </Col>
+              <Col md={10} className="list-products">
+                <div className="list-products__filter">
+                  <Filter />
+                </div>
+                <Row>
+                  {products.map((pro) => (
+                    <Col xs={6} md={3}>
+                      <PreviewItem
+                        name={pro.name}
+                        price={pro.price}
+                        image={pro.image.map((img) => ENDPOINT + img.url)}
+                        id={pro.id}
+                      />
+                    </Col>
+                  ))}
+                </Row>
 
-            <Col md={10} className="list-products">
-              <div className="list-products__filter">
-                <Filter />
-              </div>
-              <Row>
-                {products.map((pro) => (
-                  <Col xs={6} md={3}>
-                    <PreviewItem
-                      name={pro.name}
-                      price={pro.price}
-                      image={pro.image.map((img) => ENDPOINT + img.url)}
-                      id={pro.id}
-                    />
-                  </Col>
-                ))}
-              </Row>
-
-              <div className="list-products__pagination">
-                <Pagination defaultCurrent={1} total={50} />
-              </div>
-            </Col>
-          </Row>
-        </section>
-
-        <footer>
-          <Footer />
-        </footer>
-      </StyledProduct>
+                <div className="list-products__pagination">
+                  <Pagination defaultCurrent={1} total={50} />
+                </div>
+              </Col>
+            </Row>
+          </section>
+        </StyledProduct>
+      </PrimaryLayout>
     </React.Fragment>
   );
 };
