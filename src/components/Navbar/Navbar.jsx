@@ -178,9 +178,9 @@ export const Navbarr = () => {
                                   Change password
                                 </NavDropdown.Item>
                               </Link>
-                              <Link to={"/user"}>
-                                <NavDropdown.Item href="/products">
-                                  Setting
+                              <Link to={"/auth/login"}>
+                                <NavDropdown.Item href="/auth/login">
+                                  Login
                                 </NavDropdown.Item>
                               </Link>
                               <NavDropdown.Divider />
@@ -225,9 +225,9 @@ export const Navbarr = () => {
                                   Change password
                                 </NavDropdown.Item>
                               </Link>
-                              <Link to={"/user"}>
-                                <NavDropdown.Item href="/products">
-                                  Setting
+                              <Link to={"/auth/login"}>
+                                <NavDropdown.Item href="/auth/login">
+                                  Login
                                 </NavDropdown.Item>
                               </Link>
                               <NavDropdown.Divider />

@@ -3,14 +3,15 @@ import { Button } from "../../components/Button";
 import { PrimaryLayout } from "../../components/Layout";
 import { SwiperCustomize } from "../../components/Swiper";
 import styled from "styled-components";
-
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
-
+//Toastify CSS
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import { useDispatch, useSelector } from "../../hooks";
 import { useParams } from "react-router-dom";
 import { ENDPOINT } from "../../utils/constant";
-import { transfer } from "../../sdk/iconSDK";
+import { signTx, transfer } from "../../sdk/iconSDK";
 const StyledItem = styled.div`
   .item {
     padding-top: 1rem;
@@ -59,12 +60,22 @@ const Item = () => {
   }));
 
   const sendToken = (price, addressVendor) => {
-    transfer({
-      // to: "hx4568c57cdb8feaacf80cb5250eb1ca256502b35e",hx2890ea3b972be6c05757dc6417a42b800744d1e9
-      //product.ownerAddress
-      to: "hx2890ea3b972be6c05757dc6417a42b800744d1e9",
-      value: price,
-    });
+    const from = localStorage.getItem("address");
+    if (!from) {
+      toast.warning("Connect wallet first !", {
+        position: toast.POSITION.TOP_RIGHT,
+      });
+    } else {
+      console.log(from);
+      const tx = transfer({
+        // to: "hx4568c57cdb8feaacf80cb5250eb1ca256502b35e",hx2890ea3b972be6c05757dc6417a42b800744d1e9
+        //product.ownerAddress
+        from: from,
+        to: "hx2890ea3b972be6c05757dc6417a42b800744d1e9",
+        value: price,
+      });
+      signTx(tx);
+    }
   };
   const onSubmit = (e) => {
     e.preventDefault();
@@ -82,6 +93,7 @@ const Item = () => {
       <PrimaryLayout>
         <StyledItem>
           <div>
+            <ToastContainer />
             <div className="item container">
               <Row>
                 <Col md={5}>

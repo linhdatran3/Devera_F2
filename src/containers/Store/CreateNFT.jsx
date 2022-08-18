@@ -5,6 +5,9 @@ import React, { useState, useEffect } from "react";
 import { PrimaryLayout } from "../../components/Layout";
 import { PreviewStore } from "../../components/PreviewStore";
 import styled from "styled-components";
+//Toastify CSS
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
@@ -73,37 +76,37 @@ const CreateNFT = () => {
   const removeSelectedImage = () => {
     setSelectedImage();
   };
-  useEffect(() => {}, [name, price]);
   const handleSubmit = (e) => {
-    // let formData = new FormData(); //formdata object
-
-    // formData.append("name", "ABC"); //append the values with key, value pair
-    // formData.append("age", 20);
-
-    // const config = {
-    //   headers: { "content-type": "multipart/form-data" },
-    // };
-
-    // axios
-    //   .post(url, formData, config)
-    //   .then((response) => {
-    //     console.log(response);
-    //   })
-    //   .catch((error) => {
-    //     console.log(error);
-    //   });
     e.preventDefault();
+    const isLoggin = localStorage.getItem("isLoggin");
+    console.log(isLoggin);
+    if (isLoggin === true) {
+      const request = new XMLHttpRequest();
+      const formData = new FormData();
+      const data = {
+        price: price,
+        name: name,
+      };
+      //console.log(e.target.image.files[0]);
+      formData.append(`files.image`, e.target.image.files[0]);
+      formData.append("data", JSON.stringify(data));
 
-    const request = new XMLHttpRequest();
-    request.open("POST", "http://localhost:1337/upload");
-
-    request.send(new FormData(e.target));
+      request.open("POST", "http://localhost:1337/products");
+      request.send(formData);
+    } else {
+      toast.warning("Please login account first !", {
+        position: toast.POSITION.TOP_RIGHT,
+      });
+    }
   };
+  useEffect(() => {}, [name, price]);
+
   return (
     <React.Fragment>
       <PrimaryLayout>
         <StyledCreateNFT>
           <div>
+            <ToastContainer />
             <section className="createNFT container">
               <h4>Create and Sell Your NFTs</h4>
               <Row>
@@ -115,26 +118,26 @@ const CreateNFT = () => {
                   >
                     <p className="p1">Upload:</p>
                     <input
-                      name="files"
+                      name="image"
                       type={"file"}
                       accept="image/*"
                       onChange={imageChange}
                     />{" "}
                     <br />
-                    {/* <p className="p1">Name</p>
-                  <input
-                    name="name"
-                    border={"1px #d6d6d6 solid"}
-                    onChange={(e) => setName(e.target.value)}
-                  />
-                  <p className="p1">Price</p>
-                  <input
-                    name="price"
-                    type={"number"}
-                    border={"1px #d6d6d6 solid"}
-                    onChange={(e) => setPrice(e.target.value)}
-                  />{" "}
-                  <br /> */}
+                    <p className="p1">Name</p>
+                    <input
+                      name="name"
+                      border={"1px #d6d6d6 solid"}
+                      onChange={(e) => setName(e.target.value)}
+                    />
+                    <p className="p1">Price</p>
+                    <input
+                      name="price"
+                      type={"number"}
+                      border={"1px #d6d6d6 solid"}
+                      onChange={(e) => setPrice(e.target.value)}
+                    />{" "}
+                    <br />
                     <input type={"submit"} value={"create"} />
                   </form>
                 </Col>

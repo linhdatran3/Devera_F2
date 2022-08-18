@@ -1,3 +1,3 @@
-import { userInfo } from "./userInfo";
+import { userModel } from "./userModel";
 import { productModel } from "./productModel";
-export { userInfo, productModel };
+export { userModel, productModel };

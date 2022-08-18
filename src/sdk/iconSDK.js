@@ -73,11 +73,11 @@ export const connectWallet = (setAddress) => {
 };
 
 export const transfer = (transaction) => {
-  const { from = localStorage.getItem('address'), to, value } = transaction;
-  if (!from) {
-    console.log('Connect wallet first!');
-    return;
-  }
+  const { from , to, value } = transaction;
+  // if (!from) {
+  //   console.log('Connect wallet first!');
+  //   return ;
+  // }
 
   const txObj = new IcxTransactionBuilder()
     .from(from)
@@ -96,7 +96,7 @@ export const transfer = (transaction) => {
     params: rawTxObj,
     id: 50889,
   };
-  signTx(tx);
+  return tx;
 };
 
 export const checkRs = async (txHash) => {

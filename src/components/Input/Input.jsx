@@ -15,9 +15,10 @@ export const Input = ({
   value,
   border,
   disabled,
+  name,
 }) => {
   const handleChange = (e) => {
-    onChange(e.target.value);
+    // onChange(e.target.value);
   };
   return (
     <React.Fragment>
@@ -28,6 +29,7 @@ export const Input = ({
         onChange={handleChange}
         border={border}
         disabled={disabled}
+        name={name}
       ></StyledInput>
     </React.Fragment>
   );
