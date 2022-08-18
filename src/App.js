@@ -11,7 +11,7 @@ import Item from "./containers/Item";
 import CreateNFT from "./containers/Store/CreateNFT";
 import Reg from "./containers/Auth/Reg"
 import Login from "./containers/Auth/Login"
-
+import PageNotFound from "./containers/pageNotFound/pageNotFound";
 import "antd/dist/antd.min.css";
 // Bootstrap CSS
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -39,6 +39,7 @@ function App() {
           <Route path="/stores/create" element={<CreateNFT />} />
           <Route path="/auth/register" element={<Reg />} />
           <Route path="/auth/login" element={<Login />} />
+          <Route path="*" element={<PageNotFound />} />
           <Route path="/" element={<Home />} />
         </Routes>
       </div>
