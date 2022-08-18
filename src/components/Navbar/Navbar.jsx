@@ -1,5 +1,5 @@
 /* eslint-disable */ // dòng này để nhắn nhủ tớiesessslint rằng: bạn làm ơn hãy bỏ qua file này :v, nếu ghét mấy cái warning quá thì tạm thời xài nó, code xong dùng lại
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   HeartOutlined,
   ShoppingCartOutlined,
@@ -99,9 +99,18 @@ const StyledNav = styled.div`
     background-color: #40aa54;
   }
 `;
+const handleLogout = () => {
+  localStorage.setItem("isLoggin", false);
+  localStorage.setItem("userModel", "{}");
+  disConnect();
+};
 export const Navbarr = () => {
   const [address, setAddress] = useState(localStorage.getItem("address"));
-
+  const [isLoggin, setIsLoggin] = useState(
+    JSON.parse(localStorage.getItem("isLoggin"))
+  );
+  const [user, setUser] = useState("");
+  useEffect((handleLogout) => {}, [address, isLoggin, handleLogout]);
   return (
     <StyledNav>
       <React.Fragment>
@@ -151,9 +160,11 @@ export const Navbarr = () => {
                           <div className="user__name">
                             <span className="p2">Hello, </span>
                             <span className="username p1">
-                              {" "}
                               {hashShortener(address)}
                             </span>
+                            <br />
+                            <span className="p2">Wallet: </span>
+                            <span className="username p1">number</span>
                           </div>
                           <div className="user__icon circleClasses">
                             {/* icon user */}
@@ -172,17 +183,24 @@ export const Navbarr = () => {
                                   History
                                 </NavDropdown.Item>
                               </Link>
+                              {isLoggin === true ? (
+                                <NavDropdown.Item>
+                                  <button onClick={handleLogout}>Logout</button>
+                                </NavDropdown.Item>
+                              ) : (
+                                <Link to={"/auth/login"}>
+                                  <NavDropdown.Item href="/auth/login">
+                                    Login
+                                  </NavDropdown.Item>
+                                </Link>
+                              )}
 
                               <Link to={"/user"}>
                                 <NavDropdown.Item href="/products">
                                   Change password
                                 </NavDropdown.Item>
                               </Link>
-                              <Link to={"/auth/login"}>
-                                <NavDropdown.Item href="/auth/login">
-                                  Login
-                                </NavDropdown.Item>
-                              </Link>
+
                               <NavDropdown.Divider />
 
                               <NavDropdown.Item>
@@ -200,7 +218,10 @@ export const Navbarr = () => {
                         <div className="user">
                           <div className="user__name">
                             <span className="p2">Hello, </span>
-                            <span className="username p1">Linhda</span>
+                            <span>User</span>
+                            <br />
+                            <span className="p2">Wallet: </span>
+                            <span className="username p1">0 ICX</span>
                           </div>
                           <div className="user__icon circleClasses">
                             {/* icon user */}
@@ -211,27 +232,29 @@ export const Navbarr = () => {
                             </Link>
                           </div>
                           <div className="user__more">
-                            {/* icon click more */}
                             <NavDropdown title="" id="basic-nav-dropdown">
-                              {/* href="history/:id" */}
                               <Link to={"/history"}>
                                 <NavDropdown.Item href="/history">
                                   History
                                 </NavDropdown.Item>
                               </Link>
-
+                              {isLoggin === true ? (
+                                <NavDropdown.Item>
+                                  <button onClick={handleLogout}>Logout</button>
+                                </NavDropdown.Item>
+                              ) : (
+                                <Link to={"/auth/login"}>
+                                  <NavDropdown.Item href="/auth/login">
+                                    Login
+                                  </NavDropdown.Item>
+                                </Link>
+                              )}
                               <Link to={"/user"}>
                                 <NavDropdown.Item href="/products">
                                   Change password
                                 </NavDropdown.Item>
                               </Link>
-                              <Link to={"/auth/login"}>
-                                <NavDropdown.Item href="/auth/login">
-                                  Login
-                                </NavDropdown.Item>
-                              </Link>
                               <NavDropdown.Divider />
-
                               <NavDropdown.Item>
                                 <button
                                   className="connect-btn"

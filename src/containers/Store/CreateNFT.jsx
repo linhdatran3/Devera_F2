@@ -78,9 +78,10 @@ const CreateNFT = () => {
   };
   const handleSubmit = (e) => {
     e.preventDefault();
-    const isLoggin = localStorage.getItem("isLoggin");
-    console.log(isLoggin);
+    const isLoggin = JSON.parse(localStorage.getItem("isLoggin"));
+
     if (isLoggin === true) {
+      console.log(isLoggin);
       const request = new XMLHttpRequest();
       const formData = new FormData();
       const data = {

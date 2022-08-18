@@ -7,8 +7,9 @@ export async function getUserByAddress(address) {
 export async function getUserById(id) {
     fetchAPI(`users/${id}`, {baseURL: ENDPOINT,})
 }
-export async function login(user) {
+export async function login(identifier,password) {
     // await new Promise((resolve) => setTimeout(resolve, 1000));
     // return `avatar url ${name}`;
-    fetchAPI(`auth/local`, user,{baseURL: ENDPOINT,})
+    const data={identifier,password}
+    fetchAPI(`auth/local`, data,{baseURL: ENDPOINT,})
 }

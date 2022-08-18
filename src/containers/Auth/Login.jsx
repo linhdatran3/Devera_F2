@@ -1,3 +1,4 @@
+/* eslint-disable */
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { Input } from "../../components/Input";
@@ -23,9 +24,10 @@ const handleLogin = (e) => {
   })
     .then((response) => response.json())
     .then((data) => {
-      console.log(data);
       localStorage.setItem("isLoggin", true);
       // Handle data
+      localStorage.setItem("userModel", JSON.stringify(data.user));
+      localStorage.setItem("jwt", data.jwt);
     })
     .catch((err) => {
       console.log(err.message);
