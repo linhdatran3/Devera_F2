@@ -70,7 +70,6 @@ export const connectWallet = async (setAddress) => {
         localStorage.setItem(ADDRESS, payload);
         sessionStorage.setItem("isConnected", "connected");
         setAddress(payload); //connect wallet completed!
-
         //login account
         loginAccount(payload);
       }

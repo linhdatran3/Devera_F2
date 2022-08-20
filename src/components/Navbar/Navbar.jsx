@@ -10,7 +10,12 @@ import Nav from "react-bootstrap/Nav";
 import NavDropdown from "react-bootstrap/NavDropdown";
 
 import { Link } from "react-router-dom";
-import { connectWallet, hashShortener, disConnect } from "../../sdk/iconSDK";
+import {
+  connectWallet,
+  hashShortener,
+  disConnect,
+  getBalance,
+} from "../../sdk/iconSDK";
 
 import styled from "styled-components";
 const StyledNav = styled.div`
@@ -103,11 +108,15 @@ const StyledNav = styled.div`
 
 export const Navbarr = () => {
   const [address, setAddress] = useState(localStorage.getItem("address"));
+  const [balance, setBalance] = useState(0);
   const handleDisconnect = () => {
     disConnect(setAddress);
   };
   const handleConnect = () => {
     connectWallet(setAddress);
+  };
+  const handleBalance = (address) => {
+    getBalance(address).then((data) => setBalance(data));
   };
   return (
     <StyledNav>
@@ -162,7 +171,11 @@ export const Navbarr = () => {
                             </span>
                             <br />
                             <span className="p2">Wallet: </span>
-                            <span className="username p1">number</span>
+                            <span className="username p1">
+                              {handleBalance(address)}
+                              {balance}
+                            </span>
+                            <span className="p1"> ICX</span>
                           </div>
                           <div className="user__icon circleClasses">
                             {/* icon user */}
