@@ -80,28 +80,31 @@ export const connectWallet = async (setAddress) => {
 };
 const loginAccount = (address) => {
   const connect = sessionStorage.getItem("isConnected");
-  console.log("Address " + address);
-  if (connect && address) {
+
+  //check connect wallet?
+  if (connect === "connected") {
     console.log("connect wallet completed");
-    axios.get(`${ENDPOINT}/accounts/findByAddress/${address}`).then((res) => {
-      //check account is validate
-      const accountId = res.data.id;
-      if (res.status === 404) {
-        //create new account by address of wallet
-        axios
-          .post(`${ENDPOINT}/accounts`, {
-            body: {
+    //check account is validate
+    axios
+      .get(`${ENDPOINT}/accounts/findByAddress/${address}`)
+      .then((res) => {
+        localStorage.setItem("accountId", res.data.id);
+      })
+      .catch((err) => {
+        if (err.response.status === 404) {
+          console.log("start create account");
+          axios
+            .post(`${ENDPOINT}/accounts`, {
               walletAddress: address,
-            },
-          })
-          .then((res) => {
-            console.log("create account completed!");
-            accountId = res.data.id;
-          });
-      }
-      localStorage.setItem("accountId", accountId);
-      console.log("connect account completed");
-    });
+              //users_permissions_role:6 //default - id=6 is customer
+            })
+            .then((res) => {
+              console.log("create account completed!");
+              localStorage.setItem("accountId", res.data.id);
+              console.log("connect account completed");
+            });
+        }
+      });
   }
 };
 export const transfer = (transaction) => {
