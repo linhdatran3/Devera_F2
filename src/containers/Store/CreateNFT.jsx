@@ -12,6 +12,7 @@ import "react-toastify/dist/ReactToastify.css";
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
 
+import { ENDPOINT } from "../../utils/constant";
 const StyledCreateNFT = styled.div`
   .top-creators {
     border-top: 1px solid #f4f4f4;
@@ -79,21 +80,26 @@ const CreateNFT = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     const isLoggin = JSON.parse(localStorage.getItem("isLoggin"));
-
-    if (isLoggin === true) {
+    const token = localStorage.getItem("jwt");
+    if (isLoggin === true && token) {
       console.log(isLoggin);
-      const request = new XMLHttpRequest();
       const formData = new FormData();
       const data = {
         price: price,
         name: name,
+        users_permissions_user: localStorage.getItem("userModel"),
       };
       //console.log(e.target.image.files[0]);
       formData.append(`files.image`, e.target.image.files[0]);
       formData.append("data", JSON.stringify(data));
 
-      request.open("POST", "http://localhost:1337/products");
-      request.send(formData);
+      fetch(`${ENDPOINT}/products`, {
+        method: "POST",
+        headers: {
+          Authorization: "Bearer " + token,
+        },
+        body: formData,
+      });
     } else {
       toast.warning("Please login account first !", {
         position: toast.POSITION.TOP_RIGHT,

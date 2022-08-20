@@ -1,11 +1,12 @@
 //import IconService from 'icon-sdk-js';
-import IconService from 'icon-sdk-js';
+import IconService from "icon-sdk-js";
+
 const { IconConverter, IconBuilder, IconAmount, HttpProvider } = IconService;
 const { IcxTransactionBuilder } = IconBuilder;
 
 export default class Request {
   constructor(id, method, params) {
-    this.jsonrpc = '2.0';
+    this.jsonrpc = "2.0";
     this.id = id;
     this.method = method;
     this.params = params;
@@ -14,12 +15,12 @@ export default class Request {
 
 export const NETWORKS = {
   sejong: {
-    name: 'Sejong Testnet',
-    endpoint: 'https://sejong.net.solidwallet.io/api/v3',
-    nid: '0x53',
+    name: "Sejong Testnet",
+    endpoint: "https://sejong.net.solidwallet.io/api/v3",
+    nid: "0x53",
   },
 };
-const ADDRESS = 'address';
+const ADDRESS = "address";
 //const rawTransaction = 'rawTransaction';
 
 export const httpProvider = new HttpProvider(NETWORKS.sejong.endpoint);
@@ -27,7 +28,7 @@ export const httpProvider = new HttpProvider(NETWORKS.sejong.endpoint);
 const iconService = new IconService(httpProvider);
 
 export const hashShortener = (hashStr) => {
-  if (!hashStr) return '';
+  if (!hashStr) return "";
   const len = hashStr.length;
   return `${hashStr.substring(0, 6)}...${hashStr.substring(len - 4)}`;
 };
@@ -40,40 +41,45 @@ export const convertToICX = (balance) => {
 
 export const getBalance = (address) => {
   return iconService
-    .getBalance(address || localStorage.getItem('ADDRESS'))
+    .getBalance(address || localStorage.getItem("ADDRESS"))
     .execute()
-    .then(balance => {
+    .then((balance) => {
       return convertToICX(balance);
     });
 };
 
-export const disConnect = (setAddress) => {
-  sessionStorage.setItem('isConnected', '');
-  localStorage.setItem('address', '');
+export const disConnect = (setAddress,setConnect) => {
+  sessionStorage.setItem("isConnected", "");
+  localStorage.setItem("address", "");
+  localStorage.setItem("isLoggin", false);
+  sessionStorage.setItem("userId", "");
+  localStorage.setItem("jwt", "");
   setAddress(null);
-}
-export const connectWallet = (setAddress) => {
+  setConnect(null)
+};
+export const connectWallet = async (setAddress, setConnect) => {
   if (window) {
-    const customEvent = new CustomEvent('ICONEX_RELAY_REQUEST', {
+    const customEvent = new CustomEvent("ICONEX_RELAY_REQUEST", {
       detail: {
-        type: 'REQUEST_ADDRESS',
+        type: "REQUEST_ADDRESS",
       },
     });
     window.dispatchEvent(customEvent);
     const eventHandler = (event) => {
       const { type, payload } = event?.detail;
-      if (type === 'RESPONSE_ADDRESS') {
+      if (type === "RESPONSE_ADDRESS") {
         localStorage.setItem(ADDRESS, payload);
-        sessionStorage.setItem('isConnected', 'connected');
+        sessionStorage.setItem("isConnected", "connected");
         setAddress(payload);
+        setConnect("connected");
       }
     };
-    window.addEventListener('ICONEX_RELAY_RESPONSE', eventHandler);
+    window.addEventListener("ICONEX_RELAY_RESPONSE", eventHandler);
   }
 };
 
 export const transfer = (transaction) => {
-  const { from , to, value } = transaction;
+  const { from, to, value } = transaction;
   // if (!from) {
   //   console.log('Connect wallet first!');
   //   return ;
@@ -89,10 +95,10 @@ export const transfer = (transaction) => {
     .version(IconConverter.toBigNumber(3))
     .timestamp(new Date().getTime() * 1000)
     .build();
-  const rawTxObj = IconConverter.toRawTransaction(txObj)
+  const rawTxObj = IconConverter.toRawTransaction(txObj);
   const tx = {
-    jsonrpc: '2.0',
-    method: 'icx_sendTransaction',
+    jsonrpc: "2.0",
+    method: "icx_sendTransaction",
     params: rawTxObj,
     id: 50889,
   };
@@ -101,33 +107,34 @@ export const transfer = (transaction) => {
 
 export const checkRs = async (txHash) => {
   try {
-    const transactionResult = await iconService.getTransactionResult(txHash).execute();
-    if(transactionResult.status === 1) {
-      console.log('Done!')
+    const transactionResult = await iconService
+      .getTransactionResult(txHash)
+      .execute();
+    if (transactionResult.status === 1) {
+      console.log("Done!");
     }
-  } catch (error) {
-  }
-}
+  } catch (error) {}
+};
 
 export const signTx = async (transaction) => {
   return new Promise((resolve, reject) => {
     window.dispatchEvent(
-      new CustomEvent('ICONEX_RELAY_REQUEST', {
+      new CustomEvent("ICONEX_RELAY_REQUEST", {
         detail: {
-          type: 'REQUEST_JSON-RPC',
+          type: "REQUEST_JSON-RPC",
           payload: transaction,
         },
       })
     );
 
     window.addEventListener(
-      'ICONEX_RELAY_RESPONSE',
+      "ICONEX_RELAY_RESPONSE",
       function (event) {
         const type = event.detail.type;
         const payload = event.detail.payload;
-        if (type === 'RESPONSE_JSON-RPC') {
+        if (type === "RESPONSE_JSON-RPC") {
           resolve(payload);
-          console.log('Done');
+          console.log("Done");
         }
       },
       { once: true }

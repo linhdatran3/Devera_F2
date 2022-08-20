@@ -90,7 +90,7 @@ const User = () => {
                   <div className="personal-detail__content">
                     <Row className="personal-detail__content-name">
                       <Col md={{ span: 3, offset: 3 }}>
-                        <span classname="p1">Name</span>
+                        <span className="p1">Name</span>
                       </Col>
                       <Col>
                         <span className="p1">Linh Da Tran</span>
@@ -98,7 +98,7 @@ const User = () => {
                     </Row>
                     <Row className="personal-detail__content-address">
                       <Col md={{ span: 3, offset: 3 }}>
-                        <span classname="p1">Address</span>
+                        <span className="p1">Address</span>
                       </Col>
                       <Col>
                         <p className="p2">Vinhomes grand park</p>
@@ -110,7 +110,7 @@ const User = () => {
                     </Row>
                     <Row className="personal-detail__content-email">
                       <Col md={{ span: 3, offset: 3 }}>
-                        <span classname="p1">Email</span>
+                        <span className="p1">Email</span>
                       </Col>
                       <Col>
                         <p className="p2">linhdatran3@gmail.com</p>
@@ -118,7 +118,7 @@ const User = () => {
                     </Row>
                     <Row className="personal-detail__content-phone">
                       <Col md={{ span: 3, offset: 3 }}>
-                        <span classname="p1">Phone</span>
+                        <span className="p1">Phone</span>
                       </Col>
                       <Col>
                         <p className="p2">0582158064</p>
@@ -158,7 +158,7 @@ const User = () => {
                 <div className="account-setting__content">
                   <Row className="account-setting__content-username">
                     <Col md={{ span: 3, offset: 3 }}>
-                      <span classname="p1">Username</span>
+                      <span className="p1">Username</span>
                     </Col>
                     <Col>
                       <Input
@@ -170,7 +170,7 @@ const User = () => {
                   </Row>
                   <Row className="account-setting__content-password">
                     <Col md={{ span: 3, offset: 3 }}>
-                      <span classname="p1">Password</span>
+                      <span className="p1">Password</span>
                     </Col>
                     <Col>
                       <Input

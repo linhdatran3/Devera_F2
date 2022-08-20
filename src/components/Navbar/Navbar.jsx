@@ -11,6 +11,9 @@ import NavDropdown from "react-bootstrap/NavDropdown";
 
 import { Link } from "react-router-dom";
 import { connectWallet, hashShortener, disConnect } from "../../sdk/iconSDK";
+import { ENDPOINT } from "../../utils/constant";
+import axios from "axios";
+
 import styled from "styled-components";
 const StyledNav = styled.div`
   .navbar {
@@ -99,18 +102,52 @@ const StyledNav = styled.div`
     background-color: #40aa54;
   }
 `;
-const handleLogout = () => {
-  localStorage.setItem("isLoggin", false);
-  localStorage.setItem("userModel", "{}");
-  disConnect();
-};
+
 export const Navbarr = () => {
   const [address, setAddress] = useState(localStorage.getItem("address"));
+  const [connect, setConnect] = useState(sessionStorage.getItem("isConnected"));
   const [isLoggin, setIsLoggin] = useState(
     JSON.parse(localStorage.getItem("isLoggin"))
   );
-  const [user, setUser] = useState("");
-  useEffect((handleLogout) => {}, [address, isLoggin, handleLogout]);
+  const handleDisconnect = () => {
+    disConnect(setAddress, setConnect);
+  };
+  const handleConnect = async () => {
+    connectWallet(setAddress, setConnect);
+    console.log("connect account here");
+    loginAccount();
+  };
+  const loginAccount = async () => {
+    console.log("isConnect: " + connect);
+    console.log("Address " + address);
+    if (connect && address) {
+      console.log("connect wallet completed");
+      await axios
+        .get(`${ENDPOINT}/accounts/findByAddress/${address}`)
+        .then((res) => {
+          //check account is validate
+          const userId = res.data.id;
+          if (res.status === 404) {
+            //create new account by address of wallet
+            axios
+              .post(`${ENDPOINT}/accounts`, {
+                body: {
+                  walletAddress: address,
+                },
+              })
+              .then((res) => {
+                console.log("create account completed!");
+                userId = res.data.id;
+              });
+          }
+          console.log("connect account completed");
+        });
+    }
+  };
+  const handleLogout = () => {
+    //sai
+  };
+  useEffect(() => {}, [address, connect]);
   return (
     <StyledNav>
       <React.Fragment>
@@ -206,7 +243,7 @@ export const Navbarr = () => {
                               <NavDropdown.Item>
                                 <button
                                   className="connect-btn"
-                                  onClick={() => disConnect(setAddress)}
+                                  onClick={handleDisconnect}
                                 >
                                   Disconnect
                                 </button>
@@ -258,7 +295,7 @@ export const Navbarr = () => {
                               <NavDropdown.Item>
                                 <button
                                   className="connect-btn"
-                                  onClick={() => connectWallet(setAddress)}
+                                  onClick={handleConnect}
                                 >
                                   Connect
                                 </button>
