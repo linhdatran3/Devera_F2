@@ -1,5 +1,7 @@
-//import IconService from 'icon-sdk-js';
+/* eslint-disable */
 import IconService from "icon-sdk-js";
+import axios from "axios";
+import { ENDPOINT } from "../utils/constant";
 
 const { IconConverter, IconBuilder, IconAmount, HttpProvider } = IconService;
 const { IcxTransactionBuilder } = IconBuilder;
@@ -48,16 +50,13 @@ export const getBalance = (address) => {
     });
 };
 
-export const disConnect = (setAddress,setConnect) => {
+export const disConnect = (setAddress) => {
   sessionStorage.setItem("isConnected", "");
   localStorage.setItem("address", "");
-  localStorage.setItem("isLoggin", false);
-  sessionStorage.setItem("userId", "");
   localStorage.setItem("jwt", "");
   setAddress(null);
-  setConnect(null)
 };
-export const connectWallet = async (setAddress, setConnect) => {
+export const connectWallet = async (setAddress) => {
   if (window) {
     const customEvent = new CustomEvent("ICONEX_RELAY_REQUEST", {
       detail: {
@@ -70,14 +69,41 @@ export const connectWallet = async (setAddress, setConnect) => {
       if (type === "RESPONSE_ADDRESS") {
         localStorage.setItem(ADDRESS, payload);
         sessionStorage.setItem("isConnected", "connected");
-        setAddress(payload);
-        setConnect("connected");
+        setAddress(payload); //connect wallet completed!
+
+        //login account
+        loginAccount(payload);
       }
     };
     window.addEventListener("ICONEX_RELAY_RESPONSE", eventHandler);
   }
 };
-
+const loginAccount = (address) => {
+  const connect = sessionStorage.getItem("isConnected");
+  console.log("Address " + address);
+  if (connect && address) {
+    console.log("connect wallet completed");
+    axios.get(`${ENDPOINT}/accounts/findByAddress/${address}`).then((res) => {
+      //check account is validate
+      const accountId = res.data.id;
+      if (res.status === 404) {
+        //create new account by address of wallet
+        axios
+          .post(`${ENDPOINT}/accounts`, {
+            body: {
+              walletAddress: address,
+            },
+          })
+          .then((res) => {
+            console.log("create account completed!");
+            accountId = res.data.id;
+          });
+      }
+      localStorage.setItem("accountId", accountId);
+      console.log("connect account completed");
+    });
+  }
+};
 export const transfer = (transaction) => {
   const { from, to, value } = transaction;
   // if (!from) {

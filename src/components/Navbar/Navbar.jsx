@@ -1,5 +1,5 @@
 /* eslint-disable */ // dòng này để nhắn nhủ tớiesessslint rằng: bạn làm ơn hãy bỏ qua file này :v, nếu ghét mấy cái warning quá thì tạm thời xài nó, code xong dùng lại
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import {
   HeartOutlined,
   ShoppingCartOutlined,
@@ -11,8 +11,6 @@ import NavDropdown from "react-bootstrap/NavDropdown";
 
 import { Link } from "react-router-dom";
 import { connectWallet, hashShortener, disConnect } from "../../sdk/iconSDK";
-import { ENDPOINT } from "../../utils/constant";
-import axios from "axios";
 
 import styled from "styled-components";
 const StyledNav = styled.div`
@@ -105,49 +103,12 @@ const StyledNav = styled.div`
 
 export const Navbarr = () => {
   const [address, setAddress] = useState(localStorage.getItem("address"));
-  const [connect, setConnect] = useState(sessionStorage.getItem("isConnected"));
-  const [isLoggin, setIsLoggin] = useState(
-    JSON.parse(localStorage.getItem("isLoggin"))
-  );
   const handleDisconnect = () => {
-    disConnect(setAddress, setConnect);
+    disConnect(setAddress);
   };
-  const handleConnect = async () => {
-    connectWallet(setAddress, setConnect);
-    console.log("connect account here");
-    loginAccount();
+  const handleConnect = () => {
+    connectWallet(setAddress);
   };
-  const loginAccount = async () => {
-    console.log("isConnect: " + connect);
-    console.log("Address " + address);
-    if (connect && address) {
-      console.log("connect wallet completed");
-      await axios
-        .get(`${ENDPOINT}/accounts/findByAddress/${address}`)
-        .then((res) => {
-          //check account is validate
-          const userId = res.data.id;
-          if (res.status === 404) {
-            //create new account by address of wallet
-            axios
-              .post(`${ENDPOINT}/accounts`, {
-                body: {
-                  walletAddress: address,
-                },
-              })
-              .then((res) => {
-                console.log("create account completed!");
-                userId = res.data.id;
-              });
-          }
-          console.log("connect account completed");
-        });
-    }
-  };
-  const handleLogout = () => {
-    //sai
-  };
-  useEffect(() => {}, [address, connect]);
   return (
     <StyledNav>
       <React.Fragment>
@@ -220,17 +181,6 @@ export const Navbarr = () => {
                                   History
                                 </NavDropdown.Item>
                               </Link>
-                              {isLoggin === true ? (
-                                <NavDropdown.Item>
-                                  <button onClick={handleLogout}>Logout</button>
-                                </NavDropdown.Item>
-                              ) : (
-                                <Link to={"/auth/login"}>
-                                  <NavDropdown.Item href="/auth/login">
-                                    Login
-                                  </NavDropdown.Item>
-                                </Link>
-                              )}
 
                               <Link to={"/user"}>
                                 <NavDropdown.Item href="/products">
@@ -275,17 +225,7 @@ export const Navbarr = () => {
                                   History
                                 </NavDropdown.Item>
                               </Link>
-                              {isLoggin === true ? (
-                                <NavDropdown.Item>
-                                  <button onClick={handleLogout}>Logout</button>
-                                </NavDropdown.Item>
-                              ) : (
-                                <Link to={"/auth/login"}>
-                                  <NavDropdown.Item href="/auth/login">
-                                    Login
-                                  </NavDropdown.Item>
-                                </Link>
-                              )}
+
                               <Link to={"/user"}>
                                 <NavDropdown.Item href="/products">
                                   Change password
