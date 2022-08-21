@@ -8,7 +8,9 @@ export async function getSingleProductById(id) {
     // return `avatar url ${name}`;
     return fetchAPI(`/products/${id}`, {baseURL: ENDPOINT})
 }
-
+export async function setProductSoldOut(id) {
+    return fetchAPI(`/products/${id}`, {baseURL: ENDPOINT})
+}
 export async function getListProducts() {
     return fetchAPI(`/products`, {baseURL: ENDPOINT})
 }

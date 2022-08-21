@@ -1,5 +1,4 @@
 import React from "react";
-import { DollarCircleFilled } from "@ant-design/icons";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 const StyledPreviewItem = styled.div`
@@ -20,6 +19,9 @@ const StyledPreviewItem = styled.div`
     /* height: 220px; */
     width: 100%;
     background-color: #fff;
+  }
+  .image img {
+    border-radius: 5px;
   }
   .user__icon img {
     height: 36px;
@@ -50,7 +52,7 @@ const StyledPreviewItem = styled.div`
   }
 `;
 export const PreviewItem = (props) => {
-  const { name, price, unit, store, image, id } = props;
+  const { name, price, walletAddress, image, id } = props;
   return (
     <StyledPreviewItem>
       {" "}
@@ -75,21 +77,19 @@ export const PreviewItem = (props) => {
               <div className="create_by__item">
                 <span>Create by: </span>
                 {/* name creator */}
-                <span>{store} </span>
+                <span>{walletAddress} </span>
               </div>
               <div className="price__item">
                 <div className="price-icon">
-                  <DollarCircleFilled
-                    style={{
-                      backgroundColor: "#fff",
-                      borderRadius: "50%",
-                      color: "#40AA54",
-                    }}
+                  <img
+                    src="https://cryptologos.cc/logos/icon-icx-logo.png"
+                    height={16}
+                    width={16}
+                    alt=""
                   />
                 </div>
                 {/* price item */}
-                <span className="p1">Price: {price} </span>
-                <span className="p1">{unit}</span>
+                <span className="p1"> {price} ICX </span>
               </div>
             </div>
             <div className="right">
@@ -115,6 +115,5 @@ PreviewItem.defaultProps = {
     "https://i.pinimg.com/564x/d0/cf/56/d0cf56a5ef9ca810288289c7dc7be7ed.jpg",
   name: "Name NFT",
   price: "45.2",
-  unit: "ICX",
-  store: "hx45...74",
+  walletAddress: "hx45...74",
 };

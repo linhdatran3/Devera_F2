@@ -85,15 +85,17 @@ const CreateNFT = () => {
     const role = JSON.parse(localStorage.getItem("role"));
     const id = JSON.parse(localStorage.getItem("userId"));
     const headers = { Authorization: "Bearer " + token };
+    let customerRole = 6;
+    let vendorRole = 8;
     if (isLoggin === true) {
       console.log(isLoggin);
       console.log(role);
-      if (role === 6) {
+      if (role === customerRole) {
         // set role from customer to vendor
         axios.put(
           `${ENDPOINT}/users/${id}`,
           {
-            role: 8,
+            role: vendorRole,
           },
           { headers: headers }
         );
@@ -119,7 +121,7 @@ const CreateNFT = () => {
           console.log(err);
           //set role to customer
           axios.put(`${ENDPOINT}/users/${id}`, {
-            role: 6,
+            role: customerRole,
           });
         });
       // fetch(`${ENDPOINT}/products`, {
