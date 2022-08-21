@@ -55,7 +55,8 @@ export const disConnect = (setAddress) => {
   localStorage.setItem("address", "");
   localStorage.setItem("jwt", "");
   localStorage.setItem("isLoggin", false);
-
+  localStorage.setItem("userId", "");
+  localStorage.setItem("role", "");
   setAddress(null);
 };
 export const connectWallet = async (setAddress) => {
@@ -94,6 +95,9 @@ const loginAccount = (address) => {
         //console.log(res.data);
         localStorage.setItem("isLoggin", true);
         localStorage.setItem("jwt", res.data.jwt);
+        localStorage.setItem("userId", res.data.user.id);
+        localStorage.setItem("role", res.data.user.role.id);
+
       })
       .catch((err) => {
         //console.log(address);
@@ -109,6 +113,8 @@ const loginAccount = (address) => {
               // console.log(res.data);
               localStorage.setItem("isLoggin", true);
               localStorage.setItem("jwt", res.data.jwt);
+              localStorage.setItem("userId", res.data.user.id);
+              localStorage.setItem("role", res.data.user.role.id);
               //console.log("connect account completed");
             });
         }

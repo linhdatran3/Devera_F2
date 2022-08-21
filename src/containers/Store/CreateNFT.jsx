@@ -13,6 +13,7 @@ import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
 
 import { ENDPOINT } from "../../utils/constant";
+import axios from "axios";
 const StyledCreateNFT = styled.div`
   .top-creators {
     border-top: 1px solid #f4f4f4;
@@ -81,25 +82,53 @@ const CreateNFT = () => {
     e.preventDefault();
     const isLoggin = JSON.parse(localStorage.getItem("isLoggin"));
     const token = localStorage.getItem("jwt");
+    const role = JSON.parse(localStorage.getItem("role"));
+    const id = JSON.parse(localStorage.getItem("userId"));
+    const headers = { Authorization: "Bearer " + token };
     if (isLoggin === true) {
       console.log(isLoggin);
+      console.log(role);
+      if (role === 6) {
+        // set role from customer to vendor
+        axios.put(
+          `${ENDPOINT}/users/${id}`,
+          {
+            role: 8,
+          },
+          { headers: headers }
+        );
+      }
       const formData = new FormData();
+
       const data = {
         price: price,
         name: name,
-        users_permissions_user: localStorage.getItem("userModel"),
+        users_permissions_user: localStorage.getItem("userId"),
       };
       //console.log(e.target.image.files[0]);
       formData.append(`files.image`, e.target.image.files[0]);
       formData.append("data", JSON.stringify(data));
-
-      fetch(`${ENDPOINT}/products`, {
-        method: "POST",
-        headers: {
-          Authorization: "Bearer " + token,
-        },
-        body: formData,
-      });
+      axios
+        .post(`${ENDPOINT}/products`, formData, { headers: headers })
+        .then(() => {
+          toast.success("Create product completed !", {
+            position: toast.POSITION.TOP_RIGHT,
+          });
+        })
+        .catch((err) => {
+          console.log(err);
+          //set role to customer
+          axios.put(`${ENDPOINT}/users/${id}`, {
+            role: 6,
+          });
+        });
+      // fetch(`${ENDPOINT}/products`, {
+      //   method: "POST",
+      //   headers: {
+      //     Authorization: "Bearer " + token,
+      //   },
+      //   body: formData,
+      // });
     } else {
       toast.warning("Please login account first !", {
         position: toast.POSITION.TOP_RIGHT,
