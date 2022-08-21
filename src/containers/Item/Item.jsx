@@ -59,8 +59,9 @@ const Item = () => {
     getSingleProductById: productModel.getSingleProductById,
   }));
 
-  const sendToken = (price, addressVendor) => {
+  const sendToken = (price) => {
     const from = localStorage.getItem("address");
+    const to = product.users_permissions_user.walletAddress;
     if (!from) {
       toast.warning("Connect wallet first !", {
         position: toast.POSITION.TOP_RIGHT,
@@ -69,9 +70,8 @@ const Item = () => {
       console.log(from);
       const tx = transfer({
         // to: "hx4568c57cdb8feaacf80cb5250eb1ca256502b35e",hx2890ea3b972be6c05757dc6417a42b800744d1e9
-        //product.ownerAddress
         from: from,
-        to: "hx2890ea3b972be6c05757dc6417a42b800744d1e9",
+        to: to,
         value: price,
       });
       signTx(tx);
@@ -79,6 +79,7 @@ const Item = () => {
   };
   const onSubmit = (e) => {
     e.preventDefault();
+    console.log(product);
     console.log(product.price);
     console.log(e.target.price.value);
     console.log(parseInt(e.target.price.value));
