@@ -81,7 +81,7 @@ const CreateNFT = () => {
     e.preventDefault();
     const isLoggin = JSON.parse(localStorage.getItem("isLoggin"));
     const token = localStorage.getItem("jwt");
-    if (isLoggin === true && token) {
+    if (isLoggin === true) {
       console.log(isLoggin);
       const formData = new FormData();
       const data = {
