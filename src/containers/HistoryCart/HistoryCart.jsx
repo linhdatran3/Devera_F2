@@ -35,7 +35,7 @@ const StyledHistoryCart = styled.div`
     color: #eb4d4b;
   }
 `;
-const HistoryCart = async () => {
+const HistoryCart = () => {
   const id = localStorage.getItem("userId");
   // const token = localStorage.getItem("jwt");
   const { carts } = useSelector(({ cartModel }) => ({
@@ -81,7 +81,7 @@ const HistoryCart = async () => {
                     </Col>
                   </Row>
                 </div>
-                {/* {carts?.map((cart, index) => (
+                {carts.map((cart, index) => (
                   <div className="history-item" key={index}>
                     <Row>
                       <Col sm={1}>
@@ -93,14 +93,14 @@ const HistoryCart = async () => {
                             <img src="logo.png" alt="" height="80px" />
                           </div>
                           <div className="item-info">
-                            <p className="p1">{cart.product.name}</p>
+                            <p className="p1">{cart?.product?.name}</p>
                             <p className="p2 createdBy">
                               Created by:{" "}
-                              {cart.users_permissions_user.walletAddress}
+                              {cart?.users_permissions_user?.walletAddress}
                             </p>
                             <p className="p2 priceItem">
                               Price:
-                              {cart.product.price}
+                              {cart?.product?.price}
                             </p>
                           </div>
                         </div>
@@ -118,7 +118,7 @@ const HistoryCart = async () => {
                       </Col>
                     </Row>
                   </div>
-                ))} */}
+                ))}
               </div>
             </div>
           </section>

@@ -1,6 +1,6 @@
-import { getListCarts } from "../../services/cartServices/cartServices";
-// import { ENDPOINT } from "../../utils/constant";
-// import axios from "axios";
+//import { getListCarts } from "../../services/cartServices/cartServices";
+import { ENDPOINT } from "../../utils/constant";
+import axios from "axios";
 export const cartModel = {
   state: {
     carts: [],
@@ -19,14 +19,13 @@ export const cartModel = {
     // use async/await for async actions
     async getListCarts(id) {
       try {
-        //const token = localStorage.getItem("jwt");
-        // const res = await axios
-        //   .get(`${ENDPOINT}/carts/user/${id}`, {
-        //     headers: { Authorization: "Bearer " + token },
-        //   })
-        //   .then((res) => res.data);
-        const res = await getListCarts(id);
-        this.setCarts(res);
+        const token = localStorage.getItem("jwt");
+        await axios
+          .get(`${ENDPOINT}/carts/user/${id}`, {
+            headers: { Authorization: "Bearer " + token },
+          })
+          .then((res) => res.data);
+       
       } catch (error) {
         console.log(error);
       }
