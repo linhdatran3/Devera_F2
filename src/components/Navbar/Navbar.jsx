@@ -8,6 +8,7 @@ import {
 import Navbar from "react-bootstrap/Navbar";
 import Nav from "react-bootstrap/Nav";
 import NavDropdown from "react-bootstrap/NavDropdown";
+import { ENDPOINT } from "../../utils/constant";
 
 import { Link } from "react-router-dom";
 import {
@@ -125,7 +126,11 @@ export const Navbarr = () => {
           <Navbar bg="none" expand="lg" fixed="top" style={{ width: "100%" }}>
             <div className="container">
               <Navbar.Brand href="/">
-                <img src="F2Store512.png" alt="logo" height={"70px"} />
+                <img
+                  src={`${ENDPOINT}/uploads/F2_Store512_dbc086bfc0.png?582352.3999999762`}
+                  alt="logo"
+                  height={"70px"}
+                />
               </Navbar.Brand>
               <Navbar.Toggle aria-controls="navbarScroll" />
               <Navbar.Collapse id="navbarScroll">

@@ -312,12 +312,13 @@ const Home = () => {
               </div>
               <div className="sales__content">
                 <Row>
-                  {products.slice(8, 16).map((pro) => (
+                  {products.slice(8, 17).map((pro) => (
                     <Col xs={6} md={3}>
                       <PreviewItem
                         name={pro.name}
                         price={pro.price}
-                        image={pro.image.map((img) => img.url)}
+                        image={pro.image.map((img) => ENDPOINT + img.url)}
+                        id={pro.id}
                       />
                     </Col>
                   ))}

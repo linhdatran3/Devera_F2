@@ -2,6 +2,7 @@ import React from "react";
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
 import { Link } from "react-router-dom";
+import { ENDPOINT } from "../../utils/constant";
 import {
   TwitterOutlined,
   InstagramOutlined,
@@ -59,7 +60,11 @@ export const Footer = () => {
             <Row className="row">
               <Col sm={4} className="footer__col1">
                 <div className="footer_logo">
-                  <img src="F2Store512.png" alt="" height={"70px"} />
+                  <img
+                    src={`${ENDPOINT}/uploads/F2_Store512_dbc086bfc0.png?582352.3999999762`}
+                    alt=""
+                    height={"70px"}
+                  />
                 </div>
                 <br />
                 <div className="footer_content">

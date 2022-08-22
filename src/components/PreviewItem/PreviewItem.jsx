@@ -8,6 +8,7 @@ const StyledPreviewItem = styled.div`
     border-radius: 15px;
     width: 100%;
     padding-bottom: 1rem;
+    margin-bottom: 1rem;
     /* border: 1.5px solid #f4f4f4; */
   }
 
@@ -64,7 +65,7 @@ export const PreviewItem = (props) => {
                 src={image}
                 alt=""
                 width={"100%"}
-                style={{ maxHeight: "250px" }}
+                style={{ maxHeight: "250px", maxWidth: "285px" }}
               />
             </Link>
           </div>

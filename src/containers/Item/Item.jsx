@@ -146,25 +146,45 @@ const Item = () => {
         value: price,
       });
       await signTx(tx);
+      let token = localStorage.getItem("jwt");
+      const headers = { Authorization: "Bearer " + token };
 
       //set product : sold out
-      let token = localStorage.getItem("jwt");
       await axios
         .put(
           `${ENDPOINT}/products/${id}`,
           {
             isStock: false,
           },
-          {
-            headers: { Authorization: "Bearer " + token },
-          }
+          { headers: headers }
         )
-        .then(() => {
-          toast.success("Buy product completed !", {
-            position: toast.POSITION.TOP_RIGHT,
-          });
-          setTimeout(window.location.reload(), 10000);
-        });
+        .catch((err) => err);
+
+      //create cart
+      let userId = localStorage.getItem("userId");
+      await axios
+        .post(
+          `${ENDPOINT}/carts`,
+          {
+            total: product?.price,
+            product: id,
+            users_permissions_user: userId,
+          },
+          { headers: headers }
+        )
+        .catch((err) => err);
+
+      //notify buy product completed
+      toast.success("Buy product completed !", {
+        position: "top-right",
+        autoClose: 10000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        onClose: setTimeout(window.location.reload(), 10000),
+      });
     }
   };
   const onSubmit = (e) => {
@@ -184,7 +204,17 @@ const Item = () => {
       <PrimaryLayout>
         <StyledItem>
           <div>
-            <ToastContainer />
+            <ToastContainer
+              position="top-right"
+              autoClose={5000}
+              hideProgressBar={false}
+              newestOnTop={false}
+              closeOnClick
+              rtl={false}
+              pauseOnFocusLoss
+              draggable
+              pauseOnHover
+            />
             <div className="item container">
               <Row>
                 <Col md={5}>
@@ -213,6 +243,7 @@ const Item = () => {
                               Owner by:{" "}
                               <span className="item__info-createBy__content">
                                 {localStorage.getItem("address")}
+                                {/* {product.users_permissions_user.walletAddress} */}
                               </span>
                             </span>
                           </div>

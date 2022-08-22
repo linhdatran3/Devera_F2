@@ -8,12 +8,12 @@
       "type": "image/x-icon"
     },
     {
-      "src": "F2Store192.png",
+      "src": "http://localhost:1337/uploads/F2_Store192_f233a9d4da.png?579840.8000000715",
       "type": "image/png",
       "sizes": "192x192"
     },
     {
-      "src": "F2Store512.png",
+      "src": "http://localhost:1337/uploads/F2_Store512_dbc086bfc0.png?582352.3999999762",
       "type": "image/png",
       "sizes": "512x512"
     }
