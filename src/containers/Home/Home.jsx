@@ -297,6 +297,10 @@ const Home = () => {
                         price={pro.price}
                         image={pro.image.map((img) => ENDPOINT + img.url)}
                         id={pro.id}
+                        // avatar={
+                        //   ENDPOINT + pro?.users_permissions_user?.avatar?.url
+                        // }
+                        avatar={pro.image.map((img) => ENDPOINT + img.url)}
                       />
                     </Col>
                   ))}

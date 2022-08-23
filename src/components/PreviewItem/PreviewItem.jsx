@@ -53,7 +53,7 @@ const StyledPreviewItem = styled.div`
   }
 `;
 export const PreviewItem = (props) => {
-  const { name, price, walletAddress, image, id } = props;
+  const { name, price, walletAddress, image, id, avatar } = props;
   return (
     <StyledPreviewItem>
       {" "}
@@ -97,7 +97,7 @@ export const PreviewItem = (props) => {
               {/* img user */}
               <div className="user__icon circleClasses">
                 <img
-                  src={image}
+                  src={avatar}
                   alt=""
                   className="circleItemCenter"
                   height={"100%"}

@@ -93,6 +93,7 @@ const loginAccount = (address) => {
       })
       .then((res) => {
         //console.log(res.data);
+        console.log("login")
         localStorage.setItem("isLoggin", true);
         localStorage.setItem("jwt", res.data.jwt);
         localStorage.setItem("userId", res.data.user.id);

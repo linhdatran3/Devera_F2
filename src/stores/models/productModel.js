@@ -2,6 +2,8 @@ import {
   getListProducts,
   getSingleProductById,
 } from "../../services/productServices/productServices";
+import axios from "axios";
+import { ENDPOINT } from "../../utils/constant";
 export const productModel = {
   state: {
     products: [],
@@ -18,7 +20,7 @@ export const productModel = {
     setProduct(state, payload) {
       return {
         ...state,
-        product:{...payload}
+        product: { ...payload },
       };
     },
   },
@@ -40,6 +42,19 @@ export const productModel = {
       try {
         const res = await getListProducts();
         this.setProducts(res);
+      } catch (error) {
+        console.log(error);
+      }
+    },
+
+    async getListCreatedByUserId(id) {
+      try {
+        let token = localStorage.getItem("jwt");
+        const res = await axios.get(
+          `${ENDPOINT}/products/getlistcreated/${id}`,
+          { headers: { Authorization: "Bearer " + token } }
+        );
+        this.setProducts(res.data);
       } catch (error) {
         console.log(error);
       }

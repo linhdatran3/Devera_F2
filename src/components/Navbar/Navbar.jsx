@@ -9,7 +9,7 @@ import Navbar from "react-bootstrap/Navbar";
 import Nav from "react-bootstrap/Nav";
 import NavDropdown from "react-bootstrap/NavDropdown";
 import { ENDPOINT } from "../../utils/constant";
-
+import { Search } from "../Search";
 import { Link } from "react-router-dom";
 import {
   connectWallet,
@@ -31,6 +31,7 @@ const StyledNav = styled.div`
   .menu {
     justify-content: right;
     display: flex;
+    align-items: center;
   }
 
   .menu a {
@@ -88,6 +89,7 @@ const StyledNav = styled.div`
   .user__icon {
     background-color: #d5fbdc;
     margin-left: 1rem;
+    transform: translateY(50%);
   }
   .user__icon .circleItemCenter {
     transform: translate(-50%, -37%) !important;
@@ -97,6 +99,7 @@ const StyledNav = styled.div`
     font-size: 12px;
     display: flex;
     justify-content: center;
+    transform: translateY(25%);
   }
   .dropdown-menu[data-bs-popper] {
     left: auto !important;
@@ -104,6 +107,18 @@ const StyledNav = styled.div`
   }
   .dropdown-menu a:focus {
     background-color: #40aa54;
+  }
+  .ant-input-search > .ant-input-group > .ant-input-group-addon:last-child {
+    transform: translateX(-220px);
+  }
+  .ant-input-search
+    > .ant-input-group
+    > .ant-input-group-addon:last-child
+    .ant-input-search-button:not(.ant-btn-primary) {
+    border-raius: 5px !important;
+  }
+  .ant-input-search input {
+    border-radius: 7px !important;
   }
 `;
 
@@ -138,19 +153,19 @@ export const Navbarr = () => {
                 <Nav className="justify-content-end">
                   <div className="menu">
                     <Nav.Link href="/">Home</Nav.Link>
-                    <Nav.Link href="/products">Product</Nav.Link>
-                    <Nav.Link href="/history">Popular</Nav.Link>
-                    <Nav.Link href="/user">Contact</Nav.Link>
+                    <Nav.Link href="/products">Explore</Nav.Link>
+                    <Nav.Link href="/products">Favorite</Nav.Link>
+                    <Nav.Link href="/stores/create">Create</Nav.Link>
                   </div>
 
                   <div className="icon">
-                    <Nav.Link>
+                    {/* <Nav.Link>
                       <div className="icon__heart">
                         <div className="icon__heart-icon circleClasses ">
                           <HeartOutlined className="circleItemCenter" />
                         </div>
                         <div className="icon__heart-num p2 circleClasses ">
-                          {/* number heart */}
+                     
                           <div className="circleItemCenter">n</div>
                         </div>
                       </div>
@@ -161,11 +176,12 @@ export const Navbarr = () => {
                           <ShoppingCartOutlined className="circleItemCenter" />
                         </div>
                         <div className="icon__cart-num p2 circleClasses ">
-                          {/* number cart */}
+                      
                           <div className="circleItemCenter">n</div>
                         </div>
                       </div>
-                    </Nav.Link>
+                    </Nav.Link> */}
+
                     <Nav.Link>
                       {address ? (
                         <div className="user">
@@ -193,8 +209,8 @@ export const Navbarr = () => {
                           <div className="user__more">
                             {/* icon click more */}
                             <NavDropdown title="" id="basic-nav-dropdown">
-                              {/* href="history/:id" */}
                               <Link to={"/history"}>
+                                {" "}
                                 <NavDropdown.Item href="/history">
                                   History
                                 </NavDropdown.Item>
@@ -223,7 +239,7 @@ export const Navbarr = () => {
                         <div className="user">
                           <div className="user__name">
                             <span className="p2">Hello, </span>
-                            <span>User</span>
+                            <span className="p1">User</span>
                             <br />
                             <span className="p2">Wallet: </span>
                             <span className="username p1">0 ICX</span>
@@ -239,13 +255,14 @@ export const Navbarr = () => {
                           <div className="user__more">
                             <NavDropdown title="" id="basic-nav-dropdown">
                               <Link to={"/history"}>
+                                {" "}
                                 <NavDropdown.Item href="/history">
                                   History
                                 </NavDropdown.Item>
                               </Link>
 
                               <Link to={"/user"}>
-                                <NavDropdown.Item href="/products">
+                                <NavDropdown.Item>
                                   Change password
                                 </NavDropdown.Item>
                               </Link>

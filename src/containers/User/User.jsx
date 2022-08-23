@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import { Button } from "../../components/Button";
 import { Input } from "../../components/Input";
 import { Input as InputAnt } from "antd";
+import { Link } from "react-router-dom";
+import { Search } from "../../components/Search";
 import {
   InstagramOutlined,
   GithubOutlined,
@@ -13,11 +15,15 @@ import styled from "styled-components";
 
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
-import { EditOutlined, CheckCircleOutlined } from "@ant-design/icons";
+import { CheckCircleOutlined } from "@ant-design/icons";
+//Toastify CSS
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 import { useDispatch, useSelector } from "../../hooks";
 import { ENDPOINT } from "../../utils/constant";
 import { hashShortener } from "../../sdk/iconSDK";
+import axios from "axios";
 
 const StyledUser = styled.div`
   .user__info {
@@ -28,7 +34,11 @@ const StyledUser = styled.div`
     border: 1.5px solid #dbdada;
   }
   .user__info__avatar {
-    text-align: center;
+    margin-left: 1rem;
+  }
+  .user__info__content {
+    border-top: 1px solid #dadada;
+    margin: 0.5rem 0;
   }
   .user__setting {
     padding: 1rem;
@@ -114,40 +124,100 @@ const StyledUser = styled.div`
 `;
 const User = () => {
   const [change, setChange] = useState(false);
-  // const [user, setUser] = useState({ username: "", email: "", avatar: "" });
-  const handleUpdateUser = (e) => {};
+  const [userTempt, setUserTempt] = useState({
+    username: "",
+    email: "",
+  });
+  const [selectedImage, setSelectedImage] = useState();
+  // This function will be triggered when the file field change
+  const imageChange = (e) => {
+    if (e.target.files && e.target.files.length > 0) {
+      setSelectedImage(e.target.files[0]);
+    }
+    setChange(true);
+  };
+
+  // This function will be triggered when the "Remove This Image" button is clicked
+  const removeSelectedImage = () => {
+    setSelectedImage();
+  };
+  const handleUpdateUser = async (e) => {
+    e.preventDefault();
+    user.username =
+      userTempt.username !== "" ? userTempt.username : user.username;
+    user.email = userTempt.email !== "" ? userTempt.email : user.email;
+    try {
+      let id = localStorage.getItem("userId");
+      let token = localStorage.getItem("jwt");
+      const data = {
+        username: user.username,
+        email: user.email,
+      };
+      const formData = new FormData();
+      formData.append("data", JSON.stringify(data));
+      formData.append("files.avatar", e.target.image.files[0]);
+      axios
+        .put(`${ENDPOINT}/users/${id}`, formData, {
+          headers: { Authorization: "Bearer " + token },
+        })
+        .then((res) => {
+          toast.success("Update completed !", {
+            position: toast.POSITION.TOP_RIGHT,
+          });
+          return res.data;
+        });
+    } catch (error) {
+      console.log(error);
+      toast.warning("Update failured !", {
+        position: toast.POSITION.TOP_RIGHT,
+      });
+    }
+  };
+
   const id = localStorage.getItem("userId");
   const { user } = useSelector(({ userModel }) => ({
     user: userModel.user,
   }));
-  const { getUserById } = useDispatch(({ userModel }) => ({
-    getUserById: userModel.getUserById,
-  }));
   const { carts } = useSelector(({ cartModel }) => ({
     carts: cartModel.carts,
   }));
-
+  const { products } = useSelector(({ productModel }) => ({
+    products: productModel.products,
+  }));
+  const { getUserById } = useDispatch(({ userModel }) => ({
+    getUserById: userModel.getUserById,
+  }));
   const { getListCarts } = useDispatch(({ cartModel }) => ({
     getListCarts: cartModel.getListCarts,
+  }));
+  const { getListCreatedByUserId } = useDispatch(({ productModel }) => ({
+    getListCreatedByUserId: productModel.getListCreatedByUserId,
   }));
   useEffect(() => {
     getUserById(id);
     getListCarts(id);
-  }, [id, getUserById, getListCarts]);
+    getListCreatedByUserId(id);
+    // setUserTempt(user);
+    // userTemp.username = user.username;
+    // userTemp.email = user.email;
+  }, [id, getUserById, getListCarts, userTempt, getListCreatedByUserId]);
   return (
     <React.Fragment>
       <PrimaryLayout>
+        <ToastContainer />
         <StyledUser>
           <div className="container">
+            {/* personal detail */}
             <form
               onSubmit={(e) => handleUpdateUser(e)}
-              method="post"
+              method="put"
               enctype="multipart/form-data"
+              action={`${ENDPOINT}/users`}
             >
               <Row>
                 <Col md={3} xs={2} className="user__info">
                   <div className="user__info__avatar">
-                    <img
+                    {/* <img
                       src={
                         user?.avatar?.url
                           ? `${ENDPOINT}${user?.avatar?.url}`
@@ -156,15 +226,51 @@ const User = () => {
                       alt=""
                       height={"200px"}
                     />
-                    <EditOutlined />
-                    <h5>{user.username ? user.username : "No name"}</h5>
-                    <p>
-                      Address:{" "}
-                      {user.walletAddress
-                        ? hashShortener(user.walletAddress)
-                        : "hx2....4d1e9"}
-                    </p>
-                    <p>Join: {user.created_at} </p>
+                    <EditOutlined /> */}
+                    {selectedImage && (
+                      <div className="previewImg">
+                        <img
+                          src={URL.createObjectURL(selectedImage)}
+                          alt="Thumb"
+                          height={200}
+                        />
+                        <button onClick={removeSelectedImage}>
+                          Remove This Image
+                        </button>
+                      </div>
+                    )}
+                    {!selectedImage && (
+                      <img
+                        src={
+                          user?.avatar?.url
+                            ? `${ENDPOINT}${user?.avatar?.url}`
+                            : "https://png.pngtree.com/png-vector/20191027/ourlarge/pngtree-avatar-vector-icon-white-background-png-image_1884971.jpg"
+                        }
+                        alt=""
+                        height={200}
+                      />
+                    )}
+                    <input
+                      name="image"
+                      type={"file"}
+                      accept="image/*"
+                      onChange={imageChange}
+                    />
+                    <div className="user__info__content">
+                      <p>
+                        Username:{" "}
+                        <strong>
+                          {user.username ? user.username : "No name"}
+                        </strong>
+                      </p>
+                      <p>
+                        Address:{" "}
+                        {user.walletAddress
+                          ? hashShortener(user.walletAddress)
+                          : "hx2....4d1e9"}
+                      </p>
+                      <p>Join: {user.created_at} </p>
+                    </div>
                   </div>
                 </Col>
                 <Col className="user__setting">
@@ -190,10 +296,21 @@ const User = () => {
                         </Col>
                         <Col>
                           <Input
+                            name={"username"}
                             border={"1px solid #dadada"}
-                            value={user?.username ? user?.username : ""}
+                            value={
+                              userTempt.username === ""
+                                ? user.username
+                                : userTempt.username
+                            }
                             placeholder={"Enter username"}
-                            onChange={() => setChange(true)}
+                            onChange={(e) => {
+                              setChange(true);
+                              setUserTempt({
+                                ...userTempt,
+                                username: e.target.value,
+                              });
+                            }}
                           />
                         </Col>
                       </Row>
@@ -204,11 +321,22 @@ const User = () => {
                         </Col>
                         <Col>
                           <Input
-                            disabled={"disabled"}
+                            name={"email"}
+                            // disabled={"disabled"}
                             border={"1px solid #dadada"}
-                            value={user?.email ? user?.email : ""}
+                            value={
+                              userTempt.email === ""
+                                ? user.email
+                                : userTempt.email
+                            }
                             placeholder={"Enter email"}
-                            onChange={() => setChange(true)}
+                            onChange={(e) => {
+                              setChange(true);
+                              setUserTempt({
+                                ...userTempt,
+                                email: e.target.value,
+                              });
+                            }}
                           />
                         </Col>
                       </Row>
@@ -256,6 +384,8 @@ const User = () => {
                 </Col>
               </Row>
             </form>
+
+            {/* list product was created by user */}
             <Row>
               <Col md={3} xs={2}></Col>
               <Col className="col__created">
@@ -265,11 +395,13 @@ const User = () => {
                       <h3>Created</h3>
                     </div>
                     <div className="created__head-add">
-                      <AppstoreAddOutlined />
+                      <Link to={"/stores/create"}>
+                        <AppstoreAddOutlined />
+                      </Link>
                     </div>
                   </div>
                   <div className="created__content">
-                    {carts.map((cart, index) => (
+                    {products.map((product, index) => (
                       <div className="history-item" key={index}>
                         <Row>
                           <Col sm={1}>
@@ -280,8 +412,8 @@ const User = () => {
                               <div className="item-image">
                                 <img
                                   src={
-                                    cart?.product?.image[0].url
-                                      ? ENDPOINT + cart?.product?.image[0].url
+                                    product?.image[0].url
+                                      ? ENDPOINT + product?.image[0].url
                                       : "http://localhost:1337/uploads/F2_Store512_dbc086bfc0.png?582352.3999999762"
                                   }
                                   alt=""
@@ -289,23 +421,20 @@ const User = () => {
                                 />
                               </div>
                               <div className="item-info">
-                                <p className="p1">{cart?.product?.name}</p>
+                                <p className="p1">{product?.name}</p>
                                 <p className="p2 createdBy">
                                   Created by:{" "}
                                   {hashShortener(
-                                    cart?.users_permissions_user?.walletAddress
+                                    product?.users_permissions_user
+                                      ?.walletAddress
                                   )}
                                 </p>
-                                {/* <p className="p2 priceItem">
-                              Price:
-                              {cart?.product?.price}
-                            </p> */}
                               </div>
                             </div>
                           </Col>
 
                           <Col sm={3}>
-                            <span className="p2">{cart.created_at}</span>
+                            <span className="p2">{product.created_at}</span>
                           </Col>
                           <Col sm={2}>
                             <p className="p1">
@@ -315,13 +444,33 @@ const User = () => {
                                 height={16}
                                 width={16}
                               />{" "}
-                              {cart.total}
+                              {product.price}
                               {" ICX"}
                             </p>
                           </Col>
                           <Col sm={2} className="history__status-success">
-                            <CheckCircleOutlined />
-                            <span className="p1"> Completed!</span>
+                            <div className="p1">
+                              {" "}
+                              {product.isStock === true ? (
+                                <div>
+                                  <img
+                                    src="https://cdn1.vectorstock.com/i/thumb-large/27/75/grunge-green-in-stock-word-square-rubber-seal-vector-27922775.jpg"
+                                    alt="in stock"
+                                    height={50}
+                                  />
+                                  <p style={{ color: "gray" }}>(in stock)</p>
+                                </div>
+                              ) : (
+                                <div>
+                                  <img
+                                    src="https://cdn-icons-png.flaticon.com/512/2331/2331975.png"
+                                    alt="sold out"
+                                    height={40}
+                                  />
+                                  <p style={{ color: "gray" }}>(sold out)</p>
+                                </div>
+                              )}
+                            </div>
                           </Col>
                         </Row>
                       </div>
@@ -330,7 +479,7 @@ const User = () => {
                 </div>
               </Col>
             </Row>
-
+            {/* history shopping cart of user */}
             <Row>
               <Col md={3} xs={2}></Col>
               <Col className="col__created">
@@ -340,7 +489,7 @@ const User = () => {
                       <h3>History shopping cart</h3>
                     </div>
                     <div className="created__head-add">
-                      <AppstoreAddOutlined />
+                      <Search />
                     </div>
                   </div>
                   <div className="created__content">
@@ -371,10 +520,6 @@ const User = () => {
                                     cart?.users_permissions_user?.walletAddress
                                   )}
                                 </p>
-                                {/* <p className="p2 priceItem">
-                              Price:
-                              {cart?.product?.price}
-                            </p> */}
                               </div>
                             </div>
                           </Col>

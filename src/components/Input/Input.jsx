@@ -17,16 +17,13 @@ export const Input = ({
   disabled,
   name,
 }) => {
-  const handleChange = (e) => {
-    // onChange(e.target.value);
-  };
   return (
     <React.Fragment>
       <StyledInput
         type={type || "text"}
         placeholder={placeholder || ""}
         value={value}
-        onChange={handleChange}
+        onChange={onChange}
         border={border}
         disabled={disabled}
         name={name}
