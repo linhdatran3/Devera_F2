@@ -24,6 +24,8 @@ import { useDispatch, useSelector } from "../../hooks";
 import { ENDPOINT } from "../../utils/constant";
 import { hashShortener } from "../../sdk/iconSDK";
 import axios from "axios";
+import { Tabs } from "antd";
+const { TabPane } = Tabs;
 
 const StyledUser = styled.div`
   .user__info {
@@ -32,6 +34,7 @@ const StyledUser = styled.div`
     padding-bottom: 1rem;
     border-radius: 20px;
     border: 1.5px solid #dbdada;
+    heigh: 100% !important;
   }
   .user__info__avatar {
     margin-left: 1rem;
@@ -127,8 +130,10 @@ const User = () => {
   const [userTempt, setUserTempt] = useState({
     username: "",
     email: "",
+    status: "",
   });
   const [selectedImage, setSelectedImage] = useState();
+  const [published, setPublished] = useState("");
   // This function will be triggered when the file field change
   const imageChange = (e) => {
     if (e.target.files && e.target.files.length > 0) {
@@ -140,6 +145,34 @@ const User = () => {
   // This function will be triggered when the "Remove This Image" button is clicked
   const removeSelectedImage = () => {
     setSelectedImage();
+  };
+  const handlePublish = async (e, proId) => {
+    try {
+      let token = localStorage.getItem("jwt");
+      console.log(e);
+      console.log(proId);
+      await axios
+        .put(
+          `${ENDPOINT}/products/${proId}`,
+          {
+            status: e,
+          },
+          { headers: { Authorization: "Bearer " + token } }
+        )
+        .then((res) => {
+          toast.success("Publish completed !", {
+            position: toast.POSITION.TOP_RIGHT,
+          });
+          if (e === true) {
+            setPublished("Unpublish");
+          } else {
+            setPublished("Publish");
+          }
+          return res.data;
+        });
+    } catch (error) {
+      console.log(error);
+    }
   };
   const handleUpdateUser = async (e) => {
     e.preventDefault();
@@ -200,14 +233,20 @@ const User = () => {
     // setUserTempt(user);
     // userTemp.username = user.username;
     // userTemp.email = user.email;
-  }, [id, getUserById, getListCarts, userTempt, getListCreatedByUserId]);
+  }, [
+    id,
+    getUserById,
+    getListCarts,
+    userTempt,
+    getListCreatedByUserId,
+    published,
+  ]);
   return (
     <React.Fragment>
       <PrimaryLayout>
         <ToastContainer />
         <StyledUser>
           <div className="container">
-            {/* personal detail */}
             <form
               onSubmit={(e) => handleUpdateUser(e)}
               method="put"
@@ -273,283 +312,299 @@ const User = () => {
                     </div>
                   </div>
                 </Col>
-                <Col className="user__setting">
-                  <div className="personal-detail">
-                    <div className="personal-detail__head">
-                      <div className="personal-detail__head-title">
-                        <h3>Personal detail</h3>
-                      </div>
-                      <div className="personal-detail__head-edit">
-                        {change === false ? (
-                          <Button bgColor="#d6d6d6" type={"button"}>
-                            Save
-                          </Button>
-                        ) : (
-                          <Button type={"submit"}>Save</Button>
-                        )}
-                      </div>
-                    </div>
-                    <div className="personal-detail__content">
-                      <Row className="personal-detail__content-name">
-                        <Col md={{ span: 3, offset: 2 }}>
-                          <span className="p1">Username</span>
-                        </Col>
-                        <Col>
-                          <Input
-                            name={"username"}
-                            border={"1px solid #dadada"}
-                            value={
-                              userTempt.username === ""
-                                ? user.username
-                                : userTempt.username
-                            }
-                            placeholder={"Enter username"}
-                            onChange={(e) => {
-                              setChange(true);
-                              setUserTempt({
-                                ...userTempt,
-                                username: e.target.value,
-                              });
-                            }}
-                          />
-                        </Col>
-                      </Row>
-
-                      <Row className="personal-detail__content-email">
-                        <Col md={{ span: 3, offset: 2 }}>
-                          <span className="p1">Email</span>
-                        </Col>
-                        <Col>
-                          <Input
-                            name={"email"}
-                            // disabled={"disabled"}
-                            border={"1px solid #dadada"}
-                            value={
-                              userTempt.email === ""
-                                ? user.email
-                                : userTempt.email
-                            }
-                            placeholder={"Enter email"}
-                            onChange={(e) => {
-                              setChange(true);
-                              setUserTempt({
-                                ...userTempt,
-                                email: e.target.value,
-                              });
-                            }}
-                          />
-                        </Col>
-                      </Row>
-                      <Row className="personal-detail__content-bio instagram">
-                        <Col md={{ span: 3, offset: 2 }}>
-                          <span className="p1">Bio</span>
-                        </Col>
-                        <Col>
-                          <InputAnt
-                            prefix={<InstagramOutlined />}
-                            size="large"
-                            placeholder="Your instagram"
-                          />
-                        </Col>
-                      </Row>
-                      <Row className="personal-detail__content-bio github">
-                        <Col md={{ span: 3, offset: 2 }}>
-                          <span className="p1"></span>
-                        </Col>
-                        <Col>
-                          <InputAnt
-                            prefix={<GithubOutlined />}
-                            size="large"
-                            placeholder="Your github"
-                          />
-                        </Col>
-                      </Row>
-                      <Row className="personal-detail__content-address">
-                        <Col md={{ span: 3, offset: 2 }}>
-                          <span className="p1">Wallet address</span>
-                        </Col>
-                        <Col>
-                          <div className="walletAddress">
-                            <div className="walletAddress-info">
-                              {user?.walletAddress ? user?.walletAddress : ""}
-                            </div>
-                            <div className="iconCopy">
-                              <CopyOutlined />
-                            </div>
+                <Col>
+                  <Tabs defaultActiveKey="1">
+                    <TabPane tab="Tab 1" key="1">
+                      <div className="personal-detail user__setting">
+                        <div className="personal-detail__head">
+                          <div className="personal-detail__head-title">
+                            <h3>Personal detail</h3>
                           </div>
-                        </Col>
-                      </Row>
-                    </div>
-                  </div>
+                          <div className="personal-detail__head-edit">
+                            {change === false ? (
+                              <Button bgColor="#d6d6d6" type={"button"}>
+                                Save
+                              </Button>
+                            ) : (
+                              <Button type={"submit"}>Save</Button>
+                            )}
+                          </div>
+                        </div>
+                        <div className="personal-detail__content">
+                          <Row className="personal-detail__content-name">
+                            <Col md={{ span: 3, offset: 2 }}>
+                              <span className="p1">Username</span>
+                            </Col>
+                            <Col>
+                              <Input
+                                name={"username"}
+                                border={"1px solid #dadada"}
+                                value={
+                                  userTempt.username === ""
+                                    ? user.username
+                                    : userTempt.username
+                                }
+                                placeholder={"Enter username"}
+                                onChange={(e) => {
+                                  setChange(true);
+                                  setUserTempt({
+                                    ...userTempt,
+                                    username: e.target.value,
+                                  });
+                                }}
+                              />
+                            </Col>
+                          </Row>
+
+                          <Row className="personal-detail__content-email">
+                            <Col md={{ span: 3, offset: 2 }}>
+                              <span className="p1">Email</span>
+                            </Col>
+                            <Col>
+                              <Input
+                                name={"email"}
+                                // disabled={"disabled"}
+                                border={"1px solid #dadada"}
+                                value={
+                                  userTempt.email === ""
+                                    ? user.email
+                                    : userTempt.email
+                                }
+                                placeholder={"Enter email"}
+                                onChange={(e) => {
+                                  setChange(true);
+                                  setUserTempt({
+                                    ...userTempt,
+                                    email: e.target.value,
+                                  });
+                                }}
+                              />
+                            </Col>
+                          </Row>
+                          <Row className="personal-detail__content-bio instagram">
+                            <Col md={{ span: 3, offset: 2 }}>
+                              <span className="p1">Bio</span>
+                            </Col>
+                            <Col>
+                              <InputAnt
+                                prefix={<InstagramOutlined />}
+                                size="large"
+                                placeholder="Your instagram"
+                              />
+                            </Col>
+                          </Row>
+                          <Row className="personal-detail__content-bio github">
+                            <Col md={{ span: 3, offset: 2 }}>
+                              <span className="p1"></span>
+                            </Col>
+                            <Col>
+                              <InputAnt
+                                prefix={<GithubOutlined />}
+                                size="large"
+                                placeholder="Your github"
+                              />
+                            </Col>
+                          </Row>
+                          <Row className="personal-detail__content-address">
+                            <Col md={{ span: 3, offset: 2 }}>
+                              <span className="p1">Wallet address</span>
+                            </Col>
+                            <Col>
+                              <div className="walletAddress">
+                                <div className="walletAddress-info">
+                                  {user?.walletAddress
+                                    ? user?.walletAddress
+                                    : ""}
+                                </div>
+                                <div className="iconCopy">
+                                  <CopyOutlined />
+                                </div>
+                              </div>
+                            </Col>
+                          </Row>
+                        </div>
+                      </div>
+                    </TabPane>
+                    <TabPane tab="Tab 2" key="2">
+                      <div className="created">
+                        <div className="created__head">
+                          <div className="created__head-title">
+                            <h3>Created</h3>
+                          </div>
+                          <div className="created__head-add">
+                            <Link to={"/stores/create"}>
+                              <AppstoreAddOutlined />
+                            </Link>
+                          </div>
+                        </div>
+                        <div className="created__content">
+                          {products.map((product, index) => (
+                            <div className="history-item" key={index}>
+                              <Row>
+                                <Col sm={1}>
+                                  <h5>#{index + 1}</h5>
+                                </Col>
+                                <Col sm={4}>
+                                  <div className="item-products">
+                                    <div className="item-image">
+                                      <img
+                                        src={
+                                          product?.image[0].url
+                                            ? ENDPOINT + product?.image[0].url
+                                            : "http://localhost:1337/uploads/F2_Store512_dbc086bfc0.png?582352.3999999762"
+                                        }
+                                        alt=""
+                                        height="80px"
+                                      />
+                                    </div>
+                                    <div className="item-info">
+                                      <p className="p1">{product?.name}</p>
+                                      <p className="p2 createdBy">
+                                        Created by:{" "}
+                                        {hashShortener(
+                                          product?.created_by_user
+                                            ?.walletAddress
+                                        )}
+                                      </p>
+                                      <span className="p2">Status: </span>
+                                      <span className="p2">
+                                        {product.status === true
+                                          ? "published"
+                                          : product.num_owners === 1
+                                          ? "draft"
+                                          : "memoried"}
+                                      </span>
+                                    </div>
+                                  </div>
+                                </Col>
+
+                                <Col sm={3}>
+                                  <span className="p2">
+                                    {product.created_at}
+                                  </span>
+                                </Col>
+                                <Col sm={2}>
+                                  <p className="p1">
+                                    <img
+                                      src="https://cryptologos.cc/logos/icon-icx-logo.png"
+                                      alt="icx"
+                                      height={16}
+                                      width={16}
+                                    />{" "}
+                                    {product.price}
+                                    {" ICX"}
+                                  </p>
+                                </Col>
+                                <Col sm={2} className="history__status-success">
+                                  <div className="p1">
+                                    {product.status === false ? (
+                                      <Button
+                                        type={"button"}
+                                        onClick={() =>
+                                          handlePublish(true, product?.id)
+                                        }
+                                      >
+                                        {published === ""
+                                          ? "Publish"
+                                          : published}
+                                      </Button>
+                                    ) : (
+                                      <Button
+                                        type={"button"}
+                                        bgColor={"#dadada"}
+                                        onClick={() =>
+                                          handlePublish(false, product?.id)
+                                        }
+                                      >
+                                        {published === ""
+                                          ? "Unpublish"
+                                          : published}
+                                      </Button>
+                                    )}
+                                    <div></div>
+                                  </div>
+                                </Col>
+                              </Row>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                    </TabPane>
+                    <TabPane tab="Tab 3" key="3">
+                      <div className="created">
+                        <div className="created__head">
+                          <div className="created__head-title">
+                            <h3>History shopping cart</h3>
+                          </div>
+                          <div className="created__head-add">
+                            <Search />
+                          </div>
+                        </div>
+                        <div className="created__content">
+                          {carts.map((cart, index) => (
+                            <div className="history-item" key={index}>
+                              <Row>
+                                <Col sm={1}>
+                                  <h5>#{index + 1}</h5>
+                                </Col>
+                                <Col sm={4}>
+                                  <div className="item-products">
+                                    <div className="item-image">
+                                      <img
+                                        src={
+                                          cart?.product?.image[0].url
+                                            ? ENDPOINT +
+                                              cart?.product?.image[0].url
+                                            : "http://localhost:1337/uploads/F2_Store512_dbc086bfc0.png?582352.3999999762"
+                                        }
+                                        alt=""
+                                        height="80px"
+                                      />
+                                    </div>
+                                    <div className="item-info">
+                                      <p className="p1">
+                                        {cart?.product?.name}
+                                      </p>
+                                      <p className="p2 createdBy">
+                                        Created by:{" "}
+                                        {hashShortener(
+                                          cart?.users_permissions_user
+                                            ?.walletAddress
+                                        )}
+                                      </p>
+                                    </div>
+                                  </div>
+                                </Col>
+
+                                <Col sm={3}>
+                                  <span className="p2">{cart.created_at}</span>
+                                </Col>
+                                <Col sm={2}>
+                                  <p className="p1">
+                                    <img
+                                      src="https://cryptologos.cc/logos/icon-icx-logo.png"
+                                      alt="icx"
+                                      height={16}
+                                      width={16}
+                                    />{" "}
+                                    {cart.total}
+                                    {" ICX"}
+                                  </p>
+                                </Col>
+                                <Col sm={2} className="history__status-success">
+                                  <CheckCircleOutlined />
+                                  <span className="p1"> Completed!</span>
+                                </Col>
+                              </Row>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                    </TabPane>
+                  </Tabs>
                 </Col>
               </Row>
             </form>
-
-            {/* list product was created by user */}
-            <Row>
-              <Col md={3} xs={2}></Col>
-              <Col className="col__created">
-                <div className="created">
-                  <div className="created__head">
-                    <div className="created__head-title">
-                      <h3>Created</h3>
-                    </div>
-                    <div className="created__head-add">
-                      <Link to={"/stores/create"}>
-                        <AppstoreAddOutlined />
-                      </Link>
-                    </div>
-                  </div>
-                  <div className="created__content">
-                    {products.map((product, index) => (
-                      <div className="history-item" key={index}>
-                        <Row>
-                          <Col sm={1}>
-                            <h5>#{index + 1}</h5>
-                          </Col>
-                          <Col sm={4}>
-                            <div className="item-products">
-                              <div className="item-image">
-                                <img
-                                  src={
-                                    product?.image[0].url
-                                      ? ENDPOINT + product?.image[0].url
-                                      : "http://localhost:1337/uploads/F2_Store512_dbc086bfc0.png?582352.3999999762"
-                                  }
-                                  alt=""
-                                  height="80px"
-                                />
-                              </div>
-                              <div className="item-info">
-                                <p className="p1">{product?.name}</p>
-                                <p className="p2 createdBy">
-                                  Created by:{" "}
-                                  {hashShortener(
-                                    product?.users_permissions_user
-                                      ?.walletAddress
-                                  )}
-                                </p>
-                              </div>
-                            </div>
-                          </Col>
-
-                          <Col sm={3}>
-                            <span className="p2">{product.created_at}</span>
-                          </Col>
-                          <Col sm={2}>
-                            <p className="p1">
-                              <img
-                                src="https://cryptologos.cc/logos/icon-icx-logo.png"
-                                alt="icx"
-                                height={16}
-                                width={16}
-                              />{" "}
-                              {product.price}
-                              {" ICX"}
-                            </p>
-                          </Col>
-                          <Col sm={2} className="history__status-success">
-                            <div className="p1">
-                              {" "}
-                              {product.isStock === true ? (
-                                <div>
-                                  <img
-                                    src="https://cdn1.vectorstock.com/i/thumb-large/27/75/grunge-green-in-stock-word-square-rubber-seal-vector-27922775.jpg"
-                                    alt="in stock"
-                                    height={50}
-                                  />
-                                  <p style={{ color: "gray" }}>(in stock)</p>
-                                </div>
-                              ) : (
-                                <div>
-                                  <img
-                                    src="https://cdn-icons-png.flaticon.com/512/2331/2331975.png"
-                                    alt="sold out"
-                                    height={40}
-                                  />
-                                  <p style={{ color: "gray" }}>(sold out)</p>
-                                </div>
-                              )}
-                            </div>
-                          </Col>
-                        </Row>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              </Col>
-            </Row>
-            {/* history shopping cart of user */}
-            <Row>
-              <Col md={3} xs={2}></Col>
-              <Col className="col__created">
-                <div className="created">
-                  <div className="created__head">
-                    <div className="created__head-title">
-                      <h3>History shopping cart</h3>
-                    </div>
-                    <div className="created__head-add">
-                      <Search />
-                    </div>
-                  </div>
-                  <div className="created__content">
-                    {carts.map((cart, index) => (
-                      <div className="history-item" key={index}>
-                        <Row>
-                          <Col sm={1}>
-                            <h5>#{index + 1}</h5>
-                          </Col>
-                          <Col sm={4}>
-                            <div className="item-products">
-                              <div className="item-image">
-                                <img
-                                  src={
-                                    cart?.product?.image[0].url
-                                      ? ENDPOINT + cart?.product?.image[0].url
-                                      : "http://localhost:1337/uploads/F2_Store512_dbc086bfc0.png?582352.3999999762"
-                                  }
-                                  alt=""
-                                  height="80px"
-                                />
-                              </div>
-                              <div className="item-info">
-                                <p className="p1">{cart?.product?.name}</p>
-                                <p className="p2 createdBy">
-                                  Created by:{" "}
-                                  {hashShortener(
-                                    cart?.users_permissions_user?.walletAddress
-                                  )}
-                                </p>
-                              </div>
-                            </div>
-                          </Col>
-
-                          <Col sm={3}>
-                            <span className="p2">{cart.created_at}</span>
-                          </Col>
-                          <Col sm={2}>
-                            <p className="p1">
-                              <img
-                                src="https://cryptologos.cc/logos/icon-icx-logo.png"
-                                alt="icx"
-                                height={16}
-                                width={16}
-                              />{" "}
-                              {cart.total}
-                              {" ICX"}
-                            </p>
-                          </Col>
-                          <Col sm={2} className="history__status-success">
-                            <CheckCircleOutlined />
-                            <span className="p1"> Completed!</span>
-                          </Col>
-                        </Row>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              </Col>
-            </Row>
           </div>
         </StyledUser>
       </PrimaryLayout>

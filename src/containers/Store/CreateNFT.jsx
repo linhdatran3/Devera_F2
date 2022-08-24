@@ -14,6 +14,7 @@ import Row from "react-bootstrap/Row";
 
 import { ENDPOINT } from "../../utils/constant";
 import axios from "axios";
+import { ConsoleSqlOutlined } from "@ant-design/icons";
 const StyledCreateNFT = styled.div`
   .top-creators {
     border-top: 1px solid #f4f4f4;
@@ -84,6 +85,7 @@ const CreateNFT = () => {
     const token = localStorage.getItem("jwt");
     const role = JSON.parse(localStorage.getItem("role"));
     const id = JSON.parse(localStorage.getItem("userId"));
+    const address = localStorage.getItem("address");
     const headers = { Authorization: "Bearer " + token };
     let customerRole = 6;
     let vendorRole = 8;
@@ -105,9 +107,11 @@ const CreateNFT = () => {
       const data = {
         price: price,
         name: name,
-        users_permissions_user: localStorage.getItem("userId"),
+        created_by_user: id,
+        owners_by: { 1: address },
+        num_owners: 1,
       };
-      //console.log(e.target.image.files[0]);
+      console.log(data); //console.log(e.target.image.files[0]);
       formData.append(`files.image`, e.target.image.files[0]);
       formData.append("data", JSON.stringify(data));
       axios

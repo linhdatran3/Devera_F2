@@ -97,7 +97,10 @@ export const PreviewItem = (props) => {
               {/* img user */}
               <div className="user__icon circleClasses">
                 <img
-                  src={avatar}
+                  src={
+                    avatar ||
+                    "https://png.pngtree.com/png-vector/20191027/ourlarge/pngtree-avatar-vector-icon-white-background-png-image_1884971.jpg"
+                  }
                   alt=""
                   className="circleItemCenter"
                   height={"100%"}
@@ -117,4 +120,6 @@ PreviewItem.defaultProps = {
   name: "Name NFT",
   price: "45.2",
   walletAddress: "hx45...74",
+  avatar:
+    "https://png.pngtree.com/png-vector/20191027/ourlarge/pngtree-avatar-vector-icon-white-background-png-image_1884971.jpg",
 };

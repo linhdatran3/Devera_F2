@@ -27,6 +27,17 @@ const StyledNav = styled.div`
     margin: 0 0.2rem;
     height: 14vh;
   }
+  .navbar-collapse {
+    &.show .navbar-nav {
+      display: block !important;
+      background: #fff;
+    }
+  }
+  .navbar-collapse {
+    &.show .menu {
+      display: block !important;
+    }
+  }
 
   .menu {
     justify-content: right;
@@ -92,14 +103,14 @@ const StyledNav = styled.div`
     transform: translateY(50%);
   }
   .user__icon .circleItemCenter {
-    transform: translate(-50%, -37%) !important;
+    transform: translate(-50%, -10%) !important;
   }
 
   .user__more {
     font-size: 12px;
     display: flex;
     justify-content: center;
-    transform: translateY(25%);
+    transform: translateY(35%);
   }
   .dropdown-menu[data-bs-popper] {
     left: auto !important;
@@ -119,6 +130,11 @@ const StyledNav = styled.div`
   }
   .ant-input-search input {
     border-radius: 7px !important;
+  }
+  @media (max-width: 990px) {
+    navbarScroll {
+      order: 1;
+    }
   }
 `;
 
@@ -157,132 +173,100 @@ export const Navbarr = () => {
                     <Nav.Link href="/products">Favorite</Nav.Link>
                     <Nav.Link href="/stores/create">Create</Nav.Link>
                   </div>
-
-                  <div className="icon">
-                    {/* <Nav.Link>
-                      <div className="icon__heart">
-                        <div className="icon__heart-icon circleClasses ">
-                          <HeartOutlined className="circleItemCenter" />
-                        </div>
-                        <div className="icon__heart-num p2 circleClasses ">
-                     
-                          <div className="circleItemCenter">n</div>
-                        </div>
-                      </div>
-                    </Nav.Link>
-                    <Nav.Link href="/cart">
-                      <div className="icon__cart" to="/cart">
-                        <div className="icon__cart-icon circleClasses">
-                          <ShoppingCartOutlined className="circleItemCenter" />
-                        </div>
-                        <div className="icon__cart-num p2 circleClasses ">
-                      
-                          <div className="circleItemCenter">n</div>
-                        </div>
-                      </div>
-                    </Nav.Link> */}
-
-                    <Nav.Link>
-                      {address ? (
-                        <div className="user">
-                          <div className="user__name">
-                            <span className="p2">Hello, </span>
-                            <span className="username p1">
-                              {hashShortener(address)}
-                            </span>
-                            <br />
-                            <span className="p2">Wallet: </span>
-                            <span className="username p1">
-                              {handleBalance(address)}
-                              {balance}
-                            </span>
-                            <span className="p1"> ICX</span>
-                          </div>
-                          <div className="user__icon circleClasses">
-                            {/* icon user */}
-                            <Link to={"/user"}>
-                              <Nav.Link href="/user">
-                                <UserOutlined className="circleItemCenter" />
-                              </Nav.Link>
-                            </Link>
-                          </div>
-                          <div className="user__more">
-                            {/* icon click more */}
-                            <NavDropdown title="" id="basic-nav-dropdown">
-                              <Link to={"/history"}>
-                                {" "}
-                                <NavDropdown.Item href="/history">
-                                  History
-                                </NavDropdown.Item>
-                              </Link>
-
-                              <Link to={"/user"}>
-                                <NavDropdown.Item href="/products">
-                                  Change password
-                                </NavDropdown.Item>
-                              </Link>
-
-                              <NavDropdown.Divider />
-
-                              <NavDropdown.Item>
-                                <button
-                                  className="connect-btn"
-                                  onClick={handleDisconnect}
-                                >
-                                  Disconnect
-                                </button>
-                              </NavDropdown.Item>
-                            </NavDropdown>
-                          </div>
-                        </div>
-                      ) : (
-                        <div className="user">
-                          <div className="user__name">
-                            <span className="p2">Hello, </span>
-                            <span className="p1">User</span>
-                            <br />
-                            <span className="p2">Wallet: </span>
-                            <span className="username p1">0 ICX</span>
-                          </div>
-                          <div className="user__icon circleClasses">
-                            {/* icon user */}
-                            <Link to={"/user"}>
-                              <Nav.Link href="/user">
-                                <UserOutlined className="circleItemCenter" />
-                              </Nav.Link>
-                            </Link>
-                          </div>
-                          <div className="user__more">
-                            <NavDropdown title="" id="basic-nav-dropdown">
-                              <Link to={"/history"}>
-                                {" "}
-                                <NavDropdown.Item href="/history">
-                                  History
-                                </NavDropdown.Item>
-                              </Link>
-
-                              <Link to={"/user"}>
-                                <NavDropdown.Item>
-                                  Change password
-                                </NavDropdown.Item>
-                              </Link>
-                              <NavDropdown.Divider />
-                              <NavDropdown.Item>
-                                <button
-                                  className="connect-btn"
-                                  onClick={handleConnect}
-                                >
-                                  Connect
-                                </button>
-                              </NavDropdown.Item>
-                            </NavDropdown>
-                          </div>
-                        </div>
-                      )}
-                    </Nav.Link>
-                  </div>
                 </Nav>
               </Navbar.Collapse>
+              <div className="icon">
+                <Nav.Link>
+                  {address ? (
+                    <div className="user">
+                      <div className="user__name">
+                        <span className="p2">Hello, </span>
+                        <span className="username p1">
+                          {hashShortener(address)}
+                        </span>
+                        <br />
+                        <span className="p2">Wallet: </span>
+                        <span className="username p1">
+                          {handleBalance(address)}
+                          {balance}
+                        </span>
+                        <span className="p1"> ICX</span>
+                      </div>
+                      <div className="user__icon circleClasses">
+                        {/* icon user */}
+                        <Link to={"/user"}>
+                          <Nav.Link href="/user">
+                            <UserOutlined className="circleItemCenter" />
+                          </Nav.Link>
+                        </Link>
+                      </div>
+                      <div className="user__more">
+                        {/* icon click more */}
+                        <NavDropdown title="" id="basic-nav-dropdown">
+                          <Link to={"/history"}>
+                            {" "}
+                            <NavDropdown.Item href="/history">
+                              History
+                            </NavDropdown.Item>
+                          </Link>
+
+                          <Link to={"/user"}>
+                            <NavDropdown.Item href="/products">
+                              Change password
+                            </NavDropdown.Item>
+                          </Link>
+
+                          <NavDropdown.Divider />
+
+                          <NavDropdown.Item>
+                            <button
+                              className="connect-btn"
+                              onClick={handleDisconnect}
+                            >
+                              Disconnect
+                            </button>
+                          </NavDropdown.Item>
+                        </NavDropdown>
+                      </div>
+                    </div>
+                  ) : (
+                    <div className="user">
+                      <div className="user__name">
+                        {/* <span className="p2">Hello, </span>
+                        <span className="p1">User</span>
+                        <br />
+                        <span className="p2">Wallet: </span>
+                        <span className="username p1">0 ICX</span> */}
+                        <button className="connect-btn" onClick={handleConnect}>
+                          Connect
+                        </button>
+                      </div>
+                      <div className="user__icon circleClasses">
+                        {/* icon user */}
+                        <Link to={"/user"}>
+                          <Nav.Link href="/user">
+                            <UserOutlined className="circleItemCenter" />
+                          </Nav.Link>
+                        </Link>
+                      </div>
+                      <div className="user__more">
+                        {/* <NavDropdown title="" id="basic-nav-dropdown">
+                          <Link to={"/history"}>
+                            {" "}
+                            <NavDropdown.Item href="/history">
+                              History
+                            </NavDropdown.Item>
+                          </Link>
+
+                          <Link to={"/user"}>
+                            <NavDropdown.Item>Change password</NavDropdown.Item>
+                          </Link>
+                        </NavDropdown> */}
+                      </div>
+                    </div>
+                  )}
+                </Nav.Link>
+              </div>
             </div>
           </Navbar>
         </div>

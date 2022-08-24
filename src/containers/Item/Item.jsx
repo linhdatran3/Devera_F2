@@ -138,9 +138,7 @@ const Item = () => {
         position: toast.POSITION.TOP_RIGHT,
       });
     } else {
-      //console.log(from);
       const tx = transfer({
-        // to: "hx4568c57cdb8feaacf80cb5250eb1ca256502b35e",hx2890ea3b972be6c05757dc6417a42b800744d1e9
         from: from,
         to: to,
         value: price,
@@ -166,9 +164,10 @@ const Item = () => {
         .post(
           `${ENDPOINT}/carts`,
           {
-            total: product?.price,
+            total: product?.price + product?.price * 0.02,
             product: id,
             users_permissions_user: userId,
+            serviceCharge: product?.price * 0.02,
           },
           { headers: headers }
         )
