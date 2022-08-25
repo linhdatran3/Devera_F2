@@ -1,15 +1,10 @@
-/* eslint-disable */ // dòng này để nhắn nhủ tớiesessslint rằng: bạn làm ơn hãy bỏ qua file này :v, nếu ghét mấy cái warning quá thì tạm thời xài nó, code xong dùng lại
-import React, { useState } from "react";
-import {
-  HeartOutlined,
-  ShoppingCartOutlined,
-  UserOutlined,
-} from "@ant-design/icons";
+// dòng này để nhắn nhủ tớiesessslint rằng: bạn làm ơn hãy bỏ qua file này :v, nếu ghét mấy cái warning quá thì tạm thời xài nó, code xong dùng lại
+import React, { useState, useEffect } from "react";
+import { UserOutlined } from "@ant-design/icons";
 import Navbar from "react-bootstrap/Navbar";
 import Nav from "react-bootstrap/Nav";
 import NavDropdown from "react-bootstrap/NavDropdown";
 import { ENDPOINT } from "../../utils/constant";
-import { Search } from "../Search";
 import { Link } from "react-router-dom";
 import {
   connectWallet,
@@ -17,6 +12,7 @@ import {
   disConnect,
   getBalance,
 } from "../../sdk/iconSDK";
+import { useDispatch, useSelector } from "../../hooks";
 
 import styled from "styled-components";
 const StyledNav = styled.div`
@@ -139,8 +135,15 @@ const StyledNav = styled.div`
 `;
 
 export const Navbarr = () => {
+  const id = localStorage.getItem("userId");
   const [address, setAddress] = useState(localStorage.getItem("address"));
   const [balance, setBalance] = useState(0);
+  const { user } = useSelector(({ userModel }) => ({
+    user: userModel.user,
+  }));
+  const { getUserById } = useDispatch(({ userModel }) => ({
+    getUserById: userModel.getUserById,
+  }));
   const handleDisconnect = () => {
     disConnect(setAddress);
   };
@@ -150,6 +153,12 @@ export const Navbarr = () => {
   const handleBalance = (address) => {
     getBalance(address).then((data) => setBalance(data));
   };
+  useEffect(() => {
+    getUserById(id);
+    if (address) {
+      handleBalance(address);
+    }
+  }, [id, getUserById, address]);
   return (
     <StyledNav>
       <React.Fragment>
@@ -182,14 +191,13 @@ export const Navbarr = () => {
                       <div className="user__name">
                         <span className="p2">Hello, </span>
                         <span className="username p1">
-                          {hashShortener(address)}
+                          {user.username
+                            ? user.username
+                            : hashShortener(address)}
                         </span>
                         <br />
                         <span className="p2">Wallet: </span>
-                        <span className="username p1">
-                          {handleBalance(address)}
-                          {balance}
-                        </span>
+                        <span className="username p1">{balance}</span>
                         <span className="p1"> ICX</span>
                       </div>
                       <div className="user__icon circleClasses">

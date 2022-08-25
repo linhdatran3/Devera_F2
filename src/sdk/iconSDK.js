@@ -46,6 +46,7 @@ export const getBalance = (address) => {
     .getBalance(address || localStorage.getItem("ADDRESS"))
     .execute()
     .then((balance) => {
+      // console.log("balance")
       return convertToICX(balance);
     });
 };
@@ -93,12 +94,11 @@ const loginAccount = (address) => {
       })
       .then((res) => {
         //console.log(res.data);
-        console.log("login")
+        console.log("login");
         localStorage.setItem("isLoggin", true);
         localStorage.setItem("jwt", res.data.jwt);
         localStorage.setItem("userId", res.data.user.id);
         localStorage.setItem("role", res.data.user.role.id);
-
       })
       .catch((err) => {
         //console.log(address);
@@ -170,12 +170,13 @@ export const signTx = async (transaction) => {
         },
       })
     );
-
     window.addEventListener(
       "ICONEX_RELAY_RESPONSE",
       function (event) {
         const type = event.detail.type;
+        console.log(type);
         const payload = event.detail.payload;
+        console.log(payload);
         if (type === "RESPONSE_JSON-RPC") {
           resolve(payload);
           console.log("Done");

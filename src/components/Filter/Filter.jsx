@@ -98,7 +98,7 @@ export const Filter = () => {
         <div className="filter">
           <div className="filter__sort">
             <div className="filter__sort-title">
-              <p className="p1">Sort by</p>
+              <p className="p1"></p>
             </div>
             <div className="filter__sort-content">
               <Dropdown onClick={handleButtonClick} overlay={menu}>

@@ -31,23 +31,22 @@ const StyledHome = styled.div`
     border-radius: 30px;
   }
   .banner__content {
-    width: 60%;
+    flex-basis: 60%;
+    padding-left: 3rem;
+    padding-top: 2.3rem;
   }
   .banner__content-title {
-    font-size: 60px;
+    font-size: 3rem;
+    font-weight: 700;
     line-height: 77px;
   }
   .banner__content-sub-title {
-    width: 300px;
-    height: 40px;
-    left: 62px;
-    top: 381px;
-
     font-family: "Poppins";
     font-style: normal;
     font-weight: 500;
-    font-size: 13px;
+    font-size: 20px;
     line-height: 20px;
+    margin-top: 2rem;
   }
   .banner__content-number {
     display: flex;
@@ -60,8 +59,17 @@ const StyledHome = styled.div`
   .banner__content-number .number-nft {
     margin-right: 68px;
   }
-  .banner__image {
-    width: 40%;
+  .banner__content-btn {
+    margin: 3rem 0;
+  }
+  .banner__content-btn-explore {
+    margin-right: 1rem;
+  }
+  .banner__content-btn-create {
+    width: 160px;
+  }
+  .banner__image img {
+    width: 100%;
   }
 
   .category {
@@ -176,19 +184,32 @@ const Home = () => {
               <div className="banner container">
                 <div className="banner__content">
                   <div className="banner__content-title">
-                    <h2>NFTs</h2>
+                    <div>Discover, collect, and sell extraordinary NFTs</div>
                   </div>
                   <div className="banner__content-sub-title">
                     <p>
-                      Digital marketplace for crypto collections and
-                      non-fungible tokens (NFTs)
+                      F2 Lorem ipsum dolor sit amet consectetur, adipisicing
+                      elit.
                     </p>
                   </div>
                   <div className="banner__content-btn">
-                    <Input />
-                    <Button width="199px" height="40px" borderRadius="20px">
-                      Discover Now
-                    </Button>
+                    <Link to={"/products"}>
+                      <Button
+                        width="199px"
+                        className={"banner__content-btn-explore"}
+                      >
+                        Explore
+                      </Button>
+                    </Link>
+                    <Link to={"/stores/create"}>
+                      <Button
+                        bgColor={"#fff"}
+                        txtColor={"#40aa54"}
+                        className={"banner__content-btn-create"}
+                      >
+                        Create
+                      </Button>
+                    </Link>
                   </div>
 
                   <div className="banner__content-number">
@@ -201,7 +222,8 @@ const Home = () => {
                       <p>Artists</p>
                     </div>
                   </div>
-                  <div
+
+                  {/* <div
                     className="tempt"
                     style={{ fontSize: "20px", color: "red" }}
                   >
@@ -229,7 +251,7 @@ const Home = () => {
                     <br />
                     <Link to={"/"}>10....</Link>
                     <br />
-                  </div>
+                  </div> */}
                 </div>
                 <div className="banner__image">
                   <img

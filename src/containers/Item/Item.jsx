@@ -1,4 +1,5 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
+import { Line } from "react-chartjs-2";
 import { Button } from "../../components/Button";
 import { PrimaryLayout } from "../../components/Layout";
 import {
@@ -6,6 +7,9 @@ import {
   ShareAltOutlined,
   MoreOutlined,
   WalletOutlined,
+  HeartOutlined,
+  EyeOutlined,
+  HeartFilled,
 } from "@ant-design/icons";
 import { SwiperCustomize } from "../../components/Swiper";
 import styled from "styled-components";
@@ -14,6 +18,7 @@ import Row from "react-bootstrap/Row";
 //Toastify CSS
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "../../hooks";
 import { useParams } from "react-router-dom";
 import { ENDPOINT } from "../../utils/constant";
@@ -90,6 +95,12 @@ const StyledItem = styled.div`
   .recommend__content {
     padding: 1rem;
   }
+  .historyPrice {
+    border-radius: 10px;
+    border: 1px #d6d6d6 solid;
+    margin-top: 2rem;
+    padding: 1rem;
+  }
 `;
 const listProduct = [
   {
@@ -121,18 +132,87 @@ const listProduct = [
     id: "1",
   },
 ];
-const Item = () => {
-  const { id } = useParams();
-  const { product } = useSelector(({ productModel }) => ({
-    product: productModel.product,
-  }));
-  const { getSingleProductById } = useDispatch(({ productModel }) => ({
-    getSingleProductById: productModel.getSingleProductById,
-  }));
 
+const Item = () => {
+  const address = localStorage.getItem("address");
+  const [favorite, setFavorite] = useState({
+    status: false,
+    count: 12,
+  });
+  const [published, setPublished] = useState("");
+  const { id } = useParams();
+  const { product, historyPrice } = useSelector(({ productModel }) => ({
+    product: productModel.product,
+    historyPrice: productModel.historyPriceOfProduct,
+  }));
+  const { getSingleProductById, historyPriceOfProduct } = useDispatch(
+    ({ productModel }) => ({
+      getSingleProductById: productModel.getSingleProductById,
+      historyPriceOfProduct: productModel.historyPriceOfProduct,
+    })
+  );
+  const handlePublish = async (status) => {
+    try {
+      let token = localStorage.getItem("jwt");
+
+      await axios
+        .put(
+          `${ENDPOINT}/products/${id}`,
+          {
+            status: status,
+          },
+          { headers: { Authorization: "Bearer " + token } }
+        )
+        .then((res) => {
+          toast.success("Update completed !", {
+            position: toast.POSITION.TOP_RIGHT,
+          });
+          setPublished(status);
+        });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  const getCurrentOwner = (list, num) => {
+    switch (num) {
+      case 1:
+        return list?.num1;
+      case 2:
+        return list?.num2;
+      case 3:
+        return list?.num3;
+      case 4:
+        return list?.num4;
+      case 5:
+        return list?.num5;
+      case 6:
+        return list?.num6;
+      default:
+      // code block
+    }
+  };
+  const setCurrentOwner = (list, num, value) => {
+    switch (num) {
+      case 1:
+        return { ...list, num1: value };
+      case 2:
+        return { ...list, num2: value };
+      case 3:
+        return { ...list, num3: value };
+      case 4:
+        return { ...list, num4: value };
+      case 5:
+        return { ...list, num5: value };
+      case 6:
+        return { ...list, num6: value };
+      default:
+      // code block
+    }
+  };
   const sendToken = async (price) => {
     const from = localStorage.getItem("address");
-    const to = product.users_permissions_user.walletAddress;
+    // const to = product.users_permissions_user.walletAddress;
+    const to = getCurrentOwner(product?.owners_by, product?.num_owners);
     if (!from) {
       toast.warning("Connect wallet first !", {
         position: toast.POSITION.TOP_RIGHT,
@@ -143,21 +223,31 @@ const Item = () => {
         to: to,
         value: price,
       });
+      console.log(from);
+      console.log(to);
       await signTx(tx);
+      console.log("connect wallet");
       let token = localStorage.getItem("jwt");
       const headers = { Authorization: "Bearer " + token };
-
-      //set product : sold out
+      console.log(headers);
+      //set product status: false, add address to owners_by
       await axios
         .put(
           `${ENDPOINT}/products/${id}`,
           {
-            isStock: false,
+            ...product,
+            status: false,
+            num_owners: product?.num_owners + 1,
+            owners_by: setCurrentOwner(
+              product?.owners_by,
+              product?.num_owners + 1,
+              from
+            ),
           },
           { headers: headers }
         )
         .catch((err) => err);
-
+      console.log("set status");
       //create cart
       let userId = localStorage.getItem("userId");
       await axios
@@ -166,11 +256,17 @@ const Item = () => {
           {
             total: product?.price + product?.price * 0.02,
             product: id,
-            users_permissions_user: userId,
+            new_owner: userId,
             serviceCharge: product?.price * 0.02,
+            last_owners: setCurrentOwner(
+              product?.owners_by,
+              product?.num_owners,
+              to
+            ),
           },
           { headers: headers }
         )
+        .then((res) => res.data)
         .catch((err) => err);
 
       //notify buy product completed
@@ -182,22 +278,19 @@ const Item = () => {
         pauseOnHover: true,
         draggable: true,
         progress: undefined,
-        onClose: setTimeout(window.location.reload(), 10000),
+        // onClose: setTimeout(window.location.reload(), 10000),
       });
     }
   };
   const onSubmit = (e) => {
     e.preventDefault();
-    // console.log(product);
-    // console.log(product.price);
-    // console.log(e.target.price.value);
-    // console.log(parseInt(e.target.price.value));
     sendToken(product.price);
   };
 
   useEffect(() => {
     getSingleProductById(id);
-  }, [id, getSingleProductById]);
+    historyPriceOfProduct(id);
+  }, [id, getSingleProductById, favorite, historyPriceOfProduct, published]);
   return (
     <React.Fragment>
       <PrimaryLayout>
@@ -238,12 +331,75 @@ const Item = () => {
                             <h3>{product.name}</h3>
                           </div>
                           <div className="item__info-createBy">
-                            <span>
+                            <p>
+                              <span>
+                                {product?.created_by_user?.username ? (
+                                  <div>
+                                    {JSON.stringify(
+                                      product?.created_by_user?.id
+                                    ) === localStorage.getItem("userId") ? (
+                                      <Link to={`../user`}>
+                                        Create by:{" "}
+                                        {product?.created_by_user?.username}
+                                      </Link>
+                                    ) : (
+                                      <Link
+                                        to={`../user/${product?.created_by_user?.id}`}
+                                      >
+                                        Create by:{" "}
+                                        {product?.created_by_user?.username}
+                                      </Link>
+                                    )}
+                                  </div>
+                                ) : (
+                                  <div>
+                                    {" "}
+                                    Create by:{" "}
+                                    {product?.created_by_user?.walletAddress}
+                                  </div>
+                                )}
+                              </span>
+                            </p>
+                            <p>
                               Owner by:{" "}
                               <span className="item__info-createBy__content">
-                                {localStorage.getItem("address")}
-                                {/* {product.users_permissions_user.walletAddress} */}
+                                {getCurrentOwner(
+                                  product?.owners_by,
+                                  product?.num_owners
+                                )}
                               </span>
+                            </p>
+                            <span>
+                              {" "}
+                              <EyeOutlined /> 5 view{"      "}
+                            </span>
+                            <span>
+                              {favorite.status === false ? (
+                                <span>
+                                  <HeartOutlined
+                                    onClick={() =>
+                                      setFavorite({
+                                        status: true,
+                                        count: favorite.count + 1,
+                                      })
+                                    }
+                                  />{" "}
+                                  {favorite.count} people
+                                </span>
+                              ) : (
+                                <span>
+                                  <HeartFilled
+                                    twoToneColor="red"
+                                    onClick={() => {
+                                      setFavorite({
+                                        status: false,
+                                        count: favorite.count - 1,
+                                      });
+                                    }}
+                                  />{" "}
+                                  {favorite.count} people
+                                </span>
+                              )}
                             </span>
                           </div>
                         </div>
@@ -284,19 +440,183 @@ const Item = () => {
 
                         <div className="item__buy">
                           {/* <Button>BUY NOW</Button> */}
-                          {product.isStock === true ? (
+                        </div>
+                        <div>
+                          {address ===
+                          getCurrentOwner(
+                            product?.owners_by,
+                            product?.num_owners
+                          ) ? (
+                            product?.status === false ? (
+                              <div>
+                                <p>You are owner of this NFT</p>
+                                <p>
+                                  Status of product:{" "}
+                                  {product?.num_owners === 1
+                                    ? "draft"
+                                    : "storage"}
+                                </p>
+                                <Button
+                                  type={"button"}
+                                  onClick={() => handlePublish(true)}
+                                >
+                                  Publish
+                                </Button>
+                              </div>
+                            ) : (
+                              <div>
+                                <p>You are owner of this NFT</p>
+                                <p>Status of product: sell</p>
+                                <Button
+                                  bgColor={"gray"}
+                                  type={"button"}
+                                  onClick={() => handlePublish(false)}
+                                >
+                                  Unpublish
+                                </Button>
+                              </div>
+                            )
+                          ) : product?.status === false ? (
+                            <Button bgColor={"gray"} type={"button"}>
+                              CAN NOT BUY
+                            </Button>
+                          ) : (
                             <Button>
                               <WalletOutlined />
                               BUY NOW
                             </Button>
-                          ) : (
-                            <Button bgColor={"gray"} type={"button"}>
-                              <WalletOutlined />
-                              SOLD OUT
-                            </Button>
                           )}
                         </div>
                       </div>
+                      <div className="historyPrice">
+                        {historyPrice === null ? (
+                          <Line
+                            data={{
+                              labels: ["1", "2"],
+                              datasets: [
+                                {
+                                  label: "Rainfall",
+                                  fill: false,
+                                  lineTension: 0.2,
+                                  backgroundColor: "rgba(75,192,192,1)",
+                                  borderColor: "rgba(0,0,0,1)",
+                                  borderWidth: 2,
+                                  data: ["5", "3"],
+                                },
+                              ],
+                            }}
+                            options={{
+                              title: {
+                                display: true,
+                                text: "Average Rainfall per month",
+                                fontSize: 20,
+                              },
+                              legend: {
+                                display: true,
+                                position: "right",
+                              },
+                            }}
+                          />
+                        ) : (
+                          <Line
+                            data={{
+                              labels: historyPrice?.date,
+                              datasets: [
+                                {
+                                  label: "ICX",
+                                  fill: false,
+                                  lineTension: 0.3,
+                                  backgroundColor: "rgba(75,192,192,1)",
+                                  borderColor: "rgba(0,0,0,1)",
+                                  borderWidth: 2,
+                                  data: historyPrice?.price,
+                                },
+                              ],
+                            }}
+                            options={{
+                              title: {
+                                display: true,
+                                text: "History of product's price",
+                                fontSize: 20,
+                              },
+                              legend: {
+                                display: true,
+                                position: "right",
+                              },
+                            }}
+                          />
+                        )}
+                      </div>
+                      {/* <div className="item__info__section2">
+                        <p>History owners: </p>
+                        <div className="item__info-price">
+                          <div className="item__info-price-icon">
+                            <img
+                              src="https://cryptologos.cc/logos/icon-icx-logo.png"
+                              height={24}
+                              width={24}
+                              alt=""
+                            />
+                          </div>
+                          <div className="item__info-price-content">
+                            <h5>{product.price} ICX</h5>
+                          </div>
+                        </div>
+
+                        <div className="item__info-des">
+                          <p>Description: </p>
+                          <p className="p1">
+                            Lorem ipsum dolor sit amet consectetur adipisicing
+                            elit. Itaque expedita, nam molestias architecto
+                            aspernatur aut perspiciatis nobis quae maxime minus
+                            repellat libero quis dolore minima, velit veritatis
+                            corrupti fugit amet.
+                          </p>
+                        </div>
+
+                        <div className="item__buy">
+                        </div>
+                        <div>
+                          {address ===
+                          getCurrentOwner(
+                            product?.owners_by,
+                            product?.num_owners
+                          ) ? (
+                            product?.status === false ? (
+                              <div>
+                                <p>You are owner of this NFT</p>
+                                <Button>
+                                  <WalletOutlined />
+                                  Publish
+                                </Button>
+                              </div>
+                            ) : (
+                              <div>
+                                <p>You are owner of this NFT</p>
+                                <Button bgColor={"gray"} type={"button"}>
+                                  Unpublish
+                                </Button>
+                              </div>
+                            )
+                          ) : product?.status === false ? (
+                            <Button bgColor={"gray"} type={"button"}>
+                              CAN NOT BUY
+                            </Button>
+                          ) : (
+                            <Button>
+                              <WalletOutlined />
+                              BUY NOW
+                            </Button>
+                          )}
+                        </div>
+                        <div>
+                          {getCurrentOwner(
+                            product?.owners_by,
+                            product?.num_owners
+                          )}
+                        </div>
+                        <div>{address}</div>
+                      </div> */}
                     </form>
                   </div>
                 </Col>

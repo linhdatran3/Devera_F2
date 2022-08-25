@@ -25,7 +25,6 @@ export const cartModel = {
             headers: { Authorization: "Bearer " + token },
           })
           .then((res) => this.setCarts(res.data));
-       
       } catch (error) {
         console.log(error);
       }

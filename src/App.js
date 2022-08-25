@@ -6,6 +6,7 @@ import Products from "./containers/Products";
 import Cart from "./containers/Cart";
 import Checkout from "./containers/Checkout";
 import User from "./containers/User";
+import Store from "./containers/Store/Store"
 import HistoryCart from "./containers/HistoryCart";
 import Item from "./containers/Item";
 import CreateNFT from "./containers/Store/CreateNFT";
@@ -33,6 +34,7 @@ function App() {
           <Route path="/cart" element={<Cart />} />
           <Route path="/checkout" element={<Checkout />} />
           <Route path="/user" element={<User />} />
+          <Route path="/user/:id" element={<Store />} />
           {/* path="/history/:id" */}
           <Route path="/history" element={<HistoryCart />} />
           {/* path="/store/:id" */}

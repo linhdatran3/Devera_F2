@@ -14,7 +14,6 @@ import Row from "react-bootstrap/Row";
 
 import { ENDPOINT } from "../../utils/constant";
 import axios from "axios";
-import { ConsoleSqlOutlined } from "@ant-design/icons";
 const StyledCreateNFT = styled.div`
   .top-creators {
     border-top: 1px solid #f4f4f4;
@@ -64,6 +63,7 @@ const ListStore = [
     widget: "140.526.260",
   },
 ];
+const baseUrl = "http://localhost:3000";
 const CreateNFT = () => {
   const [selectedImage, setSelectedImage] = useState();
   const [name, setName] = useState("");
@@ -108,7 +108,7 @@ const CreateNFT = () => {
         price: price,
         name: name,
         created_by_user: id,
-        owners_by: { 1: address },
+        owners_by: { num1: address },
         num_owners: 1,
       };
       console.log(data); //console.log(e.target.image.files[0]);
@@ -116,10 +116,15 @@ const CreateNFT = () => {
       formData.append("data", JSON.stringify(data));
       axios
         .post(`${ENDPOINT}/products`, formData, { headers: headers })
-        .then(() => {
+        .then((res) => {
+          console.log(res.data);
           toast.success("Create product completed !", {
             position: toast.POSITION.TOP_RIGHT,
           });
+          setTimeout(
+            window.location.assign(`${baseUrl}/products/${res.data?.id}`),
+            5000
+          );
         })
         .catch((err) => {
           console.log(err);

@@ -2,19 +2,19 @@ import React, { useState, useEffect } from "react";
 import { Button } from "../../components/Button";
 import { Input } from "../../components/Input";
 import { Input as InputAnt } from "antd";
-import { Link } from "react-router-dom";
-import { Search } from "../../components/Search";
+
 import {
   InstagramOutlined,
   GithubOutlined,
   CopyOutlined,
-  AppstoreAddOutlined,
+  MoreOutlined,
 } from "@ant-design/icons";
 import { PrimaryLayout } from "../../components/Layout";
 import styled from "styled-components";
 
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
+import { Filter } from "../../components/Filter";
 import { CheckCircleOutlined } from "@ant-design/icons";
 //Toastify CSS
 import { ToastContainer, toast } from "react-toastify";
@@ -24,7 +24,7 @@ import { useDispatch, useSelector } from "../../hooks";
 import { ENDPOINT } from "../../utils/constant";
 import { hashShortener } from "../../sdk/iconSDK";
 import axios from "axios";
-import { Tabs } from "antd";
+import { Tabs, Modal } from "antd";
 const { TabPane } = Tabs;
 
 const StyledUser = styled.div`
@@ -34,7 +34,6 @@ const StyledUser = styled.div`
     padding-bottom: 1rem;
     border-radius: 20px;
     border: 1.5px solid #dbdada;
-    heigh: 100% !important;
   }
   .user__info__avatar {
     margin-left: 1rem;
@@ -96,20 +95,9 @@ const StyledUser = styled.div`
     padding: 1rem;
   }
   .created {
-    border: 1.5px solid #dadada;
     padding: 1rem;
-    border-radius: 20px;
   }
-  .created__head {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 1rem 0;
-    border-bottom: 1px solid #dadada;
-  }
-  .created__head-add svg {
-    font-size: 30px;
-  }
+
   .history-item {
     border-bottom: 1.5px solid #dbdada;
     padding: 0.5rem;
@@ -124,6 +112,28 @@ const StyledUser = styled.div`
   .item-image img {
     border-radius: 5px;
   }
+  .ant-tabs {
+    border: 1px solid #dadada;
+    border-radius: 20px;
+  }
+  .ant-tabs-nav-list {
+    margin-left: 1rem;
+  }
+  .filter {
+    align-items: end;
+    padding: 0.5rem 1rem;
+    padding-top: 1rem;
+  }
+  .filter__sort {
+    align-items: end;
+  }
+
+  .ant-alert-message {
+    font-size: 12px;
+  }
+  .personal-detail__content .row {
+    margin-bottom: 1rem;
+  }
 `;
 const User = () => {
   const [change, setChange] = useState(false);
@@ -134,6 +144,7 @@ const User = () => {
   });
   const [selectedImage, setSelectedImage] = useState();
   const [published, setPublished] = useState("");
+  const [visible, setVisible] = useState(false);
   // This function will be triggered when the file field change
   const imageChange = (e) => {
     if (e.target.files && e.target.files.length > 0) {
@@ -160,7 +171,7 @@ const User = () => {
           { headers: { Authorization: "Bearer " + token } }
         )
         .then((res) => {
-          toast.success("Publish completed !", {
+          toast.success("Update completed !", {
             position: toast.POSITION.TOP_RIGHT,
           });
           if (e === true) {
@@ -206,30 +217,53 @@ const User = () => {
       });
     }
   };
-
+  // const getCurrentUser = async (list, index) => {
+  //   console.log("alo");
+  //   switch (index) {
+  //     case 1:
+  //       return list?.num1;
+  //     case 2:
+  //       return list?.num2;
+  //     case 3:
+  //       return list?.num3;
+  //     case 4:
+  //       return list?.num4;
+  //     case 5:
+  //       return list?.num5;
+  //     case 6:
+  //       return list?.num6;
+  //     default:
+  //     // code block
+  //   }
+  // };
   const id = localStorage.getItem("userId");
-  const { user } = useSelector(({ userModel }) => ({
-    user: userModel.user,
-  }));
-  const { carts } = useSelector(({ cartModel }) => ({
-    carts: cartModel.carts,
-  }));
-  const { products } = useSelector(({ productModel }) => ({
-    products: productModel.products,
-  }));
-  const { getUserById } = useDispatch(({ userModel }) => ({
+  const address = localStorage.getItem("address");
+  const { user, carts, createdProducts, ownerProducts } = useSelector(
+    ({ userModel, cartModel, productModel }) => ({
+      user: userModel.user,
+      carts: cartModel.carts,
+      createdProducts: productModel.createdProducts,
+      ownerProducts: productModel.ownerProducts,
+    })
+  );
+
+  const {
+    getUserById,
+    getListCarts,
+    getListCreatedByUserId,
+    getListUserOwnByAddress,
+  } = useDispatch(({ userModel, cartModel, productModel }) => ({
     getUserById: userModel.getUserById,
-  }));
-  const { getListCarts } = useDispatch(({ cartModel }) => ({
     getListCarts: cartModel.getListCarts,
-  }));
-  const { getListCreatedByUserId } = useDispatch(({ productModel }) => ({
     getListCreatedByUserId: productModel.getListCreatedByUserId,
+    getListUserOwnByAddress: productModel.getListUserOwnByAddress,
   }));
+
   useEffect(() => {
     getUserById(id);
     getListCarts(id);
     getListCreatedByUserId(id);
+    getListUserOwnByAddress(address);
     // setUserTempt(user);
     // userTemp.username = user.username;
     // userTemp.email = user.email;
@@ -240,6 +274,8 @@ const User = () => {
     userTempt,
     getListCreatedByUserId,
     published,
+    address,
+    getListUserOwnByAddress,
   ]);
   return (
     <React.Fragment>
@@ -313,23 +349,337 @@ const User = () => {
                   </div>
                 </Col>
                 <Col>
-                  <Tabs defaultActiveKey="1">
-                    <TabPane tab="Tab 1" key="1">
-                      <div className="personal-detail user__setting">
-                        <div className="personal-detail__head">
-                          <div className="personal-detail__head-title">
-                            <h3>Personal detail</h3>
-                          </div>
-                          <div className="personal-detail__head-edit">
-                            {change === false ? (
-                              <Button bgColor="#d6d6d6" type={"button"}>
-                                Save
-                              </Button>
-                            ) : (
-                              <Button type={"submit"}>Save</Button>
-                            )}
-                          </div>
+                  <Tabs
+                    defaultActiveKey="2"
+                    tabBarExtraContent={{ right: <Filter /> }}
+                  >
+                    <TabPane tab="Collection" key="1">
+                      <div className="created">
+                        <div className="created__content">
+                          {ownerProducts.map((product, index) => (
+                            <div className="history-item" key={index}>
+                              <Row>
+                                <Col sm={1}>
+                                  <h5>#{index + 1}</h5>
+                                </Col>
+                                <Col sm={4}>
+                                  <div className="item-products">
+                                    <div className="item-image">
+                                      <img
+                                        src={
+                                          product?.image[0].url
+                                            ? ENDPOINT + product?.image[0].url
+                                            : "http://localhost:1337/uploads/F2_Store512_dbc086bfc0.png?582352.3999999762"
+                                        }
+                                        alt=""
+                                        height="80px"
+                                      />
+                                    </div>
+                                    <div className="item-info">
+                                      <p className="p1">{product?.name}</p>
+                                      <p className="p2 createdBy">
+                                        Created by:{" "}
+                                        {hashShortener(
+                                          product?.created_by_user
+                                            ?.walletAddress
+                                        )}
+                                      </p>
+                                      <span className="p2">Status: </span>
+                                      <span className="p2">
+                                        {product?.num_owners === 1
+                                          ? "draft"
+                                          : product?.status === true
+                                          ? "sell"
+                                          : "storage"}
+                                      </span>
+                                    </div>
+                                  </div>
+                                </Col>
+
+                                <Col sm={3}>
+                                  <span className="p2">
+                                    {product.created_at}
+                                  </span>
+                                </Col>
+                                <Col sm={2}>
+                                  <p className="p1">
+                                    <img
+                                      src="https://cryptologos.cc/logos/icon-icx-logo.png"
+                                      alt="icx"
+                                      height={16}
+                                      width={16}
+                                    />{" "}
+                                    {product.price}
+                                    {" ICX"}
+                                  </p>
+                                </Col>
+                                <Col sm={2} className="history__status-success">
+                                  <div className="p1">
+                                    {product?.num_owners === 1 ? (
+                                      <Button
+                                        type={"button"}
+                                        onClick={() =>
+                                          handlePublish(true, product?.id)
+                                        }
+                                      >
+                                        Publish
+                                      </Button>
+                                    ) : product?.status === true ? (
+                                      <Button
+                                        type={"button"}
+                                        bgColor={"#dadada"}
+                                        onClick={() =>
+                                          handlePublish(false, product?.id)
+                                        }
+                                      >
+                                        Unpublish
+                                      </Button>
+                                    ) : (
+                                      <Button
+                                        type={"button"}
+                                        onClick={() =>
+                                          handlePublish(true, product?.id)
+                                        }
+                                      >
+                                        Publish
+                                      </Button>
+                                    )}
+
+                                    <div></div>
+                                  </div>
+                                </Col>
+                              </Row>
+                            </div>
+                          ))}
                         </div>
+                      </div>
+                    </TabPane>
+                    <TabPane tab="Created" key="2">
+                      <div className="created">
+                        <div className="created__content">
+                          {createdProducts.map((product, index) => (
+                            <div className="history-item" key={index}>
+                              <Row>
+                                <Col sm={1}>
+                                  <h5>#{index + 1}</h5>
+                                </Col>
+                                <Col sm={4}>
+                                  <div className="item-products">
+                                    <div className="item-image">
+                                      <img
+                                        src={
+                                          product?.image[0].url
+                                            ? ENDPOINT + product?.image[0].url
+                                            : "http://localhost:1337/uploads/F2_Store512_dbc086bfc0.png?582352.3999999762"
+                                        }
+                                        alt=""
+                                        height="80px"
+                                      />
+                                    </div>
+                                    <div className="item-info">
+                                      <p className="p1">{product?.name}</p>
+                                      <p className="p2 createdBy">
+                                        Created by:{" "}
+                                        {hashShortener(
+                                          product?.created_by_user
+                                            ?.walletAddress
+                                        )}
+                                      </p>
+                                      <span className="p2">Status: </span>
+                                      <span className="p2">
+                                        {product?.num_owners > 1
+                                          ? "sold"
+                                          : product?.status === true
+                                          ? "sell"
+                                          : "draft"}
+                                      </span>
+                                    </div>
+                                  </div>
+                                </Col>
+
+                                <Col sm={3}>
+                                  <span className="p2">
+                                    {product.created_at}
+                                  </span>
+                                </Col>
+                                <Col sm={2}>
+                                  <p className="p1">
+                                    <img
+                                      src="https://cryptologos.cc/logos/icon-icx-logo.png"
+                                      alt="icx"
+                                      height={16}
+                                      width={16}
+                                    />{" "}
+                                    {product.price}
+                                    {" ICX"}
+                                  </p>
+                                </Col>
+                                <Col sm={2} className="history__status-success">
+                                  <div className="p1">
+                                    {product?.num_owners > 1 ? (
+                                      ""
+                                    ) : product?.status === true ? (
+                                      <Button
+                                        type={"button"}
+                                        bgColor={"#dadada"}
+                                        onClick={() =>
+                                          handlePublish(false, product?.id)
+                                        }
+                                      >
+                                        Unpublish
+                                      </Button>
+                                    ) : (
+                                      <Button
+                                        type={"button"}
+                                        onClick={() =>
+                                          handlePublish(true, product?.id)
+                                        }
+                                      >
+                                        Publish
+                                      </Button>
+                                    )}
+
+                                    <div></div>
+                                  </div>
+                                </Col>
+                              </Row>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                    </TabPane>
+                    <TabPane tab="Purchase history" key="3">
+                      <div className="created">
+                        <div className="created__content">
+                          {carts.map((cart, index) => (
+                            <div className="history-item" key={index}>
+                              <Row>
+                                <Col sm={1}>
+                                  <h5>#{index + 1}</h5>
+                                </Col>
+                                <Col sm={3}>
+                                  <div className="item-products">
+                                    <div className="item-image">
+                                      <img
+                                        src={
+                                          cart?.product?.image[0].url
+                                            ? ENDPOINT +
+                                              cart?.product?.image[0].url
+                                            : "http://localhost:1337/uploads/F2_Store512_dbc086bfc0.png?582352.3999999762"
+                                        }
+                                        alt=""
+                                        height="80px"
+                                      />
+                                    </div>
+                                    <div className="item-info">
+                                      <p className="p1">
+                                        {cart?.product?.name}
+                                      </p>
+                                    </div>
+                                  </div>
+                                </Col>
+                                <Col sm={3}>
+                                  <p className="p2">
+                                    {"Date: "}
+                                    {cart.created_at}
+                                  </p>
+                                  <p className="p2">From: me</p>
+                                  <p className="p2">
+                                    {`To: ` +
+                                      hashShortener(
+                                        JSON.stringify(cart?.last_owners).slice(
+                                          JSON.stringify(
+                                            cart?.last_owners
+                                          ).lastIndexOf("num") + 7,
+                                          JSON.stringify(cart?.last_owners)
+                                            .length - 2
+                                        )
+                                      )}
+                                  </p>
+                                </Col>
+                                <Col sm={2}>
+                                  <p className="p1">
+                                    <img
+                                      src="https://cryptologos.cc/logos/icon-icx-logo.png"
+                                      alt="icx"
+                                      height={16}
+                                      width={16}
+                                    />{" "}
+                                    {cart.total}
+                                    {" ICX"}
+                                  </p>
+                                </Col>
+                                <Col sm={2} className="history__status-success">
+                                  <CheckCircleOutlined />
+                                  <span className="p1"> Completed!</span>
+                                </Col>
+
+                                <Col sm={1}>
+                                  <Button
+                                    bgColor={"#fff"}
+                                    txtColor={"inherit"}
+                                    onClick={() => {
+                                      setVisible(true);
+                                    }}
+                                    type={"button"}
+                                  >
+                                    <MoreOutlined />
+                                  </Button>
+                                  <Modal
+                                    title="Detail cart"
+                                    centered
+                                    visible={visible}
+                                    onOk={() => setVisible(false)}
+                                    onCancel={() => setVisible(false)}
+                                    width={1000}
+                                  >
+                                    <div className="item-products">
+                                      <div className="item-image">
+                                        <img
+                                          src={
+                                            cart?.product?.image[0].url
+                                              ? ENDPOINT +
+                                                cart?.product?.image[0].url
+                                              : "http://localhost:1337/uploads/F2_Store512_dbc086bfc0.png?582352.3999999762"
+                                          }
+                                          alt=""
+                                          height="80px"
+                                        />
+                                      </div>
+                                      <div className="item-info">
+                                        <p className="p1">
+                                          {cart?.product?.name}
+                                        </p>
+                                      </div>
+                                    </div>
+                                    <p>
+                                      From: {cart?.new_owner?.walletAddress}{" "}
+                                      {cart?.new_owner?.username ? (
+                                        <span>
+                                          ({cart?.new_owner?.username}) (me)
+                                        </span>
+                                      ) : (
+                                        ""
+                                      )}{" "}
+                                    </p>
+                                    <p>
+                                      To: {JSON.stringify(cart?.last_owners)}
+                                    </p>
+                                    <p>Total: {cart?.total} </p>
+                                    <p>
+                                      Service charge:{cart?.service_charge}{" "}
+                                    </p>
+                                    <p>Date time: {cart?.created_at}</p>
+                                  </Modal>
+                                </Col>
+                              </Row>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                    </TabPane>
+                    <TabPane tab="Setting" key="4">
+                      <div className="personal-detail user__setting">
                         <div className="personal-detail__content">
                           <Row className="personal-detail__content-name">
                             <Col md={{ span: 3, offset: 2 }}>
@@ -423,181 +773,19 @@ const User = () => {
                             </Col>
                           </Row>
                         </div>
-                      </div>
-                    </TabPane>
-                    <TabPane tab="Tab 2" key="2">
-                      <div className="created">
-                        <div className="created__head">
-                          <div className="created__head-title">
-                            <h3>Created</h3>
-                          </div>
-                          <div className="created__head-add">
-                            <Link to={"/stores/create"}>
-                              <AppstoreAddOutlined />
-                            </Link>
-                          </div>
-                        </div>
-                        <div className="created__content">
-                          {products.map((product, index) => (
-                            <div className="history-item" key={index}>
-                              <Row>
-                                <Col sm={1}>
-                                  <h5>#{index + 1}</h5>
-                                </Col>
-                                <Col sm={4}>
-                                  <div className="item-products">
-                                    <div className="item-image">
-                                      <img
-                                        src={
-                                          product?.image[0].url
-                                            ? ENDPOINT + product?.image[0].url
-                                            : "http://localhost:1337/uploads/F2_Store512_dbc086bfc0.png?582352.3999999762"
-                                        }
-                                        alt=""
-                                        height="80px"
-                                      />
-                                    </div>
-                                    <div className="item-info">
-                                      <p className="p1">{product?.name}</p>
-                                      <p className="p2 createdBy">
-                                        Created by:{" "}
-                                        {hashShortener(
-                                          product?.created_by_user
-                                            ?.walletAddress
-                                        )}
-                                      </p>
-                                      <span className="p2">Status: </span>
-                                      <span className="p2">
-                                        {product.status === true
-                                          ? "published"
-                                          : product.num_owners === 1
-                                          ? "draft"
-                                          : "memoried"}
-                                      </span>
-                                    </div>
-                                  </div>
-                                </Col>
-
-                                <Col sm={3}>
-                                  <span className="p2">
-                                    {product.created_at}
-                                  </span>
-                                </Col>
-                                <Col sm={2}>
-                                  <p className="p1">
-                                    <img
-                                      src="https://cryptologos.cc/logos/icon-icx-logo.png"
-                                      alt="icx"
-                                      height={16}
-                                      width={16}
-                                    />{" "}
-                                    {product.price}
-                                    {" ICX"}
-                                  </p>
-                                </Col>
-                                <Col sm={2} className="history__status-success">
-                                  <div className="p1">
-                                    {product.status === false ? (
-                                      <Button
-                                        type={"button"}
-                                        onClick={() =>
-                                          handlePublish(true, product?.id)
-                                        }
-                                      >
-                                        {published === ""
-                                          ? "Publish"
-                                          : published}
-                                      </Button>
-                                    ) : (
-                                      <Button
-                                        type={"button"}
-                                        bgColor={"#dadada"}
-                                        onClick={() =>
-                                          handlePublish(false, product?.id)
-                                        }
-                                      >
-                                        {published === ""
-                                          ? "Unpublish"
-                                          : published}
-                                      </Button>
-                                    )}
-                                    <div></div>
-                                  </div>
-                                </Col>
-                              </Row>
-                            </div>
-                          ))}
-                        </div>
-                      </div>
-                    </TabPane>
-                    <TabPane tab="Tab 3" key="3">
-                      <div className="created">
-                        <div className="created__head">
-                          <div className="created__head-title">
-                            <h3>History shopping cart</h3>
-                          </div>
-                          <div className="created__head-add">
-                            <Search />
-                          </div>
-                        </div>
-                        <div className="created__content">
-                          {carts.map((cart, index) => (
-                            <div className="history-item" key={index}>
-                              <Row>
-                                <Col sm={1}>
-                                  <h5>#{index + 1}</h5>
-                                </Col>
-                                <Col sm={4}>
-                                  <div className="item-products">
-                                    <div className="item-image">
-                                      <img
-                                        src={
-                                          cart?.product?.image[0].url
-                                            ? ENDPOINT +
-                                              cart?.product?.image[0].url
-                                            : "http://localhost:1337/uploads/F2_Store512_dbc086bfc0.png?582352.3999999762"
-                                        }
-                                        alt=""
-                                        height="80px"
-                                      />
-                                    </div>
-                                    <div className="item-info">
-                                      <p className="p1">
-                                        {cart?.product?.name}
-                                      </p>
-                                      <p className="p2 createdBy">
-                                        Created by:{" "}
-                                        {hashShortener(
-                                          cart?.users_permissions_user
-                                            ?.walletAddress
-                                        )}
-                                      </p>
-                                    </div>
-                                  </div>
-                                </Col>
-
-                                <Col sm={3}>
-                                  <span className="p2">{cart.created_at}</span>
-                                </Col>
-                                <Col sm={2}>
-                                  <p className="p1">
-                                    <img
-                                      src="https://cryptologos.cc/logos/icon-icx-logo.png"
-                                      alt="icx"
-                                      height={16}
-                                      width={16}
-                                    />{" "}
-                                    {cart.total}
-                                    {" ICX"}
-                                  </p>
-                                </Col>
-                                <Col sm={2} className="history__status-success">
-                                  <CheckCircleOutlined />
-                                  <span className="p1"> Completed!</span>
-                                </Col>
-                              </Row>
-                            </div>
-                          ))}
+                        <div className="personal-detail__save">
+                          <Row className="personal-detail__content-email">
+                            <Col md={{ span: 3, offset: 2 }}></Col>
+                            <Col>
+                              {change === false ? (
+                                <Button bgColor="#d6d6d6" type={"button"}>
+                                  Save
+                                </Button>
+                              ) : (
+                                <Button type={"submit"}>Save</Button>
+                              )}
+                            </Col>
+                          </Row>
                         </div>
                       </div>
                     </TabPane>
