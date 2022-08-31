@@ -122,7 +122,6 @@ const StyledNav = styled.div`
     > .ant-input-group
     > .ant-input-group-addon:last-child
     .ant-input-search-button:not(.ant-btn-primary) {
-    border-raius: 5px !important;
   }
   .ant-input-search input {
     border-radius: 7px !important;
@@ -131,6 +130,15 @@ const StyledNav = styled.div`
     navbarScroll {
       order: 1;
     }
+  }
+  .connect-btn {
+    padding: 0.5rem 1.2rem;
+    border: none;
+    border-radius: 10px;
+    color: #fff;
+    background-color: #40aa54;
+    font-weight: 680;
+    font-size: 18px;
   }
 `;
 
@@ -179,7 +187,7 @@ export const Navbarr = () => {
                   <div className="menu">
                     <Nav.Link href="/">Home</Nav.Link>
                     <Nav.Link href="/products">Explore</Nav.Link>
-                    <Nav.Link href="/products">Favorite</Nav.Link>
+                    <Nav.Link href="/favorites">Favorite</Nav.Link>
                     <Nav.Link href="/stores/create">Create</Nav.Link>
                   </div>
                 </Nav>
@@ -204,7 +212,16 @@ export const Navbarr = () => {
                         {/* icon user */}
                         <Link to={"/user"}>
                           <Nav.Link href="/user">
-                            <UserOutlined className="circleItemCenter" />
+                            {user?.avatar?.url ? (
+                              <img
+                                src={`${ENDPOINT}${user?.avatar?.url}`}
+                                alt="avatar"
+                                height={38}
+                                style={{ borderRadius: "50%" }}
+                              />
+                            ) : (
+                              <UserOutlined className="circleItemCenter" />
+                            )}
                           </Nav.Link>
                         </Link>
                       </div>
@@ -253,7 +270,14 @@ export const Navbarr = () => {
                         {/* icon user */}
                         <Link to={"/user"}>
                           <Nav.Link href="/user">
-                            <UserOutlined className="circleItemCenter" />
+                            {user?.avatar?.url ? (
+                              <img
+                                src={`${ENDPOINT}${user?.avatar?.url}`}
+                                alt="avatar"
+                              />
+                            ) : (
+                              <UserOutlined className="circleItemCenter" />
+                            )}
                           </Nav.Link>
                         </Link>
                       </div>

@@ -13,7 +13,7 @@ import { Pagination } from "antd";
 import { useDispatch, useSelector } from "../../hooks";
 import { ENDPOINT } from "../../utils/constant";
 //import axios from "axios";
-const StyledProduct = styled.div`
+const StyledFavorite = styled.div`
   .products .categories ul {
     width: 100% !important;
     padding-right: 0.5rem;
@@ -28,7 +28,7 @@ const StyledProduct = styled.div`
     border-color: #40aa54;
   }
 `;
-const Products = () => {
+const Favorites = () => {
   const { getListProducts } = useDispatch(({ productModel }) => ({
     getListProducts: productModel.getListProducts,
   }));
@@ -77,7 +77,7 @@ const Products = () => {
   return (
     <React.Fragment>
       <PrimaryLayout>
-        <StyledProduct>
+        <StyledFavorite>
           <section className="products container">
             <Row>
               <Col md={2} className="categories">
@@ -92,18 +92,14 @@ const Products = () => {
                 <Row>
                   {products.map((pro) => (
                     <>
-                      {pro?.status === true ? (
-                        <Col xs={6} md={3}>
-                          <PreviewItem
-                            name={pro.name}
-                            price={pro.price}
-                            image={pro.image.map((img) => ENDPOINT + img.url)}
-                            id={pro.id}
-                          />
-                        </Col>
-                      ) : (
-                        ""
-                      )}
+                      <Col xs={6} md={3}>
+                        <PreviewItem
+                          name={pro.name}
+                          price={pro.price}
+                          image={pro.image.map((img) => ENDPOINT + img.url)}
+                          id={pro.id}
+                        />
+                      </Col>
                     </>
                   ))}
                 </Row>
@@ -114,9 +110,9 @@ const Products = () => {
               </Col>
             </Row>
           </section>
-        </StyledProduct>
+        </StyledFavorite>
       </PrimaryLayout>
     </React.Fragment>
   );
 };
-export default Products;
+export default Favorites;

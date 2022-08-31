@@ -22,6 +22,7 @@ import "bootstrap/dist/js/bootstrap.bundle.min";
 //Provider
 import { Provider } from "react-redux";
 import store from "./stores";
+import Favorites from "./containers/Favorites";
 function App() {
   return (
     <Provider store={store}>
@@ -30,7 +31,7 @@ function App() {
  
         <Route path="/products" element={<Products />} />
         <Route path="/products/:id" element={<Item />} />
-
+        <Route path="/favorites" element={<Favorites />} />
           <Route path="/cart" element={<Cart />} />
           <Route path="/checkout" element={<Checkout />} />
           <Route path="/user" element={<User />} />

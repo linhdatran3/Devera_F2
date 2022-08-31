@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Line } from "react-chartjs-2";
 import { Button } from "../../components/Button";
+import { Input } from "../../components/Input";
 import { PrimaryLayout } from "../../components/Layout";
 import {
   ExportOutlined,
@@ -11,6 +12,7 @@ import {
   EyeOutlined,
   HeartFilled,
 } from "@ant-design/icons";
+import { Alert, Modal, Switch } from "antd";
 import { SwiperCustomize } from "../../components/Swiper";
 import styled from "styled-components";
 import Col from "react-bootstrap/Col";
@@ -101,6 +103,22 @@ const StyledItem = styled.div`
     margin-top: 2rem;
     padding: 1rem;
   }
+  .alert {
+    display: flex;
+    padding: 0;
+  }
+  .alert__owner {
+    margin-right: 1.5rem;
+  }
+  .btn-edit {
+    background-color: #a6a6a6;
+    margin-left: 1rem;
+    padding: 0.8rem 1.8rem;
+    font-weight: 720;
+    color: #fff;
+    border: none;
+    border-radius: 10px;
+  }
 `;
 const listProduct = [
   {
@@ -135,11 +153,25 @@ const listProduct = [
 
 const Item = () => {
   const address = localStorage.getItem("address");
+  const [productTempt, setProductTempt] = useState();
+  const [visible, setVisible] = useState(false);
   const [favorite, setFavorite] = useState({
     status: false,
     count: 12,
   });
   const [published, setPublished] = useState("");
+  const [selectedImage, setSelectedImage] = useState();
+  // This function will be triggered when the file field change
+  const imageChange = (e) => {
+    if (e.target.files && e.target.files.length > 0) {
+      setSelectedImage(e.target.files[0]);
+    }
+  };
+
+  // This function will be triggered when the "Remove This Image" button is clicked
+  const removeSelectedImage = () => {
+    setSelectedImage();
+  };
   const { id } = useParams();
   const { product, historyPrice } = useSelector(({ productModel }) => ({
     product: productModel.product,
@@ -207,6 +239,34 @@ const Item = () => {
         return { ...list, num6: value };
       default:
       // code block
+    }
+  };
+  const editProduct = async (e) => {
+    e.preventDefault();
+    product.price = productTempt.price ? productTempt?.price : product?.price;
+    product.name = productTempt.name ? productTempt?.name : product?.name;
+    try {
+      let token = localStorage.getItem("jwt");
+      const headers = { Authorization: "Bearer " + token };
+      const data = {
+        name: product.name,
+        price: product.price,
+      };
+      const formData = new FormData();
+      formData.append("data", JSON.stringify(data));
+      console.log(formData.data);
+      await axios
+        .put(`${ENDPOINT}/products/${id}`, formData, { headers: headers })
+        .then((res) => {
+          setVisible(false);
+          toast.success("Update completed !", {
+            position: toast.POSITION.TOP_RIGHT,
+          });
+          return res.data;
+        })
+        .catch((err) => err);
+    } catch (error) {
+      console.log(error);
     }
   };
   const sendToken = async (price) => {
@@ -278,7 +338,10 @@ const Item = () => {
         pauseOnHover: true,
         draggable: true,
         progress: undefined,
-        // onClose: setTimeout(window.location.reload(), 10000),
+        onClose: setTimeout(
+          window.location.assign("http://localhost:3000/user"),
+          10000
+        ),
       });
     }
   };
@@ -290,7 +353,14 @@ const Item = () => {
   useEffect(() => {
     getSingleProductById(id);
     historyPriceOfProduct(id);
-  }, [id, getSingleProductById, favorite, historyPriceOfProduct, published]);
+  }, [
+    id,
+    getSingleProductById,
+    favorite,
+    historyPriceOfProduct,
+    published,
+    productTempt,
+  ]);
   return (
     <React.Fragment>
       <PrimaryLayout>
@@ -449,37 +519,81 @@ const Item = () => {
                           ) ? (
                             product?.status === false ? (
                               <div>
-                                <p>You are owner of this NFT</p>
-                                <p>
-                                  Status of product:{" "}
-                                  {product?.num_owners === 1
-                                    ? "draft"
-                                    : "storage"}
-                                </p>
+                                <div className="alert">
+                                  <Alert
+                                    message="You are owner of this NFT"
+                                    type="info"
+                                    className="alert__owner"
+                                  />
+
+                                  <Alert
+                                    message={`The NFT is ${
+                                      product?.num_owners === 1
+                                        ? "DRAFT"
+                                        : "STORAGE"
+                                    }`}
+                                    type="warning"
+                                  />
+                                </div>
+
                                 <Button
                                   type={"button"}
                                   onClick={() => handlePublish(true)}
                                 >
-                                  Publish
+                                  Publish NFT
                                 </Button>
+                                <button
+                                  type={"button"}
+                                  className="btn-edit"
+                                  onClick={() => setVisible(true)}
+                                >
+                                  Edit
+                                </button>
                               </div>
                             ) : (
                               <div>
-                                <p>You are owner of this NFT</p>
-                                <p>Status of product: sell</p>
+                                <div className="alert">
+                                  <Alert
+                                    message="You are owner of this NFT"
+                                    type="info"
+                                    className="alert__owner"
+                                  />
+
+                                  <Alert
+                                    message={`The NFT is SELL`}
+                                    type="success"
+                                  />
+                                </div>
+
                                 <Button
                                   bgColor={"gray"}
                                   type={"button"}
                                   onClick={() => handlePublish(false)}
                                 >
-                                  Unpublish
+                                  Unpublish NFT
                                 </Button>
+                                <button
+                                  type={"button"}
+                                  className="btn-edit"
+                                  onClick={() => setVisible(true)}
+                                >
+                                  Edit
+                                </button>
                               </div>
                             )
                           ) : product?.status === false ? (
-                            <Button bgColor={"gray"} type={"button"}>
-                              CAN NOT BUY
-                            </Button>
+                            <div>
+                              <div className="alert">
+                                <Alert
+                                  message={`The NFT is in DRAFT or STORAGE`}
+                                  type="error"
+                                />
+                              </div>
+
+                              <Button bgColor={"gray"} type={"button"}>
+                                CAN NOT BUY
+                              </Button>
+                            </div>
                           ) : (
                             <Button>
                               <WalletOutlined />
@@ -487,28 +601,165 @@ const Item = () => {
                             </Button>
                           )}
                         </div>
+                        <div>
+                          {" "}
+                          <Modal
+                            title="Modal 1000px width"
+                            centered
+                            visible={visible}
+                            onOk={(e) => editProduct(e)}
+                            onCancel={() => setVisible(false)}
+                            width={1000}
+                          >
+                            <Row>
+                              <Col sm={6} md={4}>
+                                {selectedImage && (
+                                  <div className="previewImg">
+                                    <img
+                                      src={URL.createObjectURL(selectedImage)}
+                                      alt="Thumb"
+                                      height={200}
+                                    />
+                                    <button onClick={removeSelectedImage}>
+                                      Remove This Image
+                                    </button>
+                                  </div>
+                                )}
+                                {!selectedImage && (
+                                  <img
+                                    src={
+                                      product?.image?.[0]?.url
+                                        ? ENDPOINT + product?.image[0]?.url
+                                        : "http://localhost:1337/uploads/F2_Store512_dbc086bfc0.png?582352.3999999762"
+                                    }
+                                    alt=""
+                                    height={200}
+                                  />
+                                )}
+                                <input
+                                  name="image"
+                                  type={"file"}
+                                  accept="image/*"
+                                  onChange={imageChange}
+                                />
+                              </Col>
+                              <Col>
+                                <Row className="personal-detail__content-name">
+                                  <Col md={{ span: 3, offset: 1 }}>
+                                    <span className="p1">Username</span>
+                                  </Col>
+                                  <Col>
+                                    <Input
+                                      name={"Name"}
+                                      border={"1px solid #dadada"}
+                                      value={
+                                        productTempt?.name
+                                          ? productTempt?.name
+                                          : product.name
+                                      }
+                                      placeholder={"Enter username"}
+                                      onChange={(e) => {
+                                        setProductTempt({
+                                          ...productTempt,
+                                          name: e.target.value,
+                                        });
+                                      }}
+                                    />
+                                  </Col>
+                                </Row>
+
+                                <Row className="personal-detail__content-email">
+                                  <Col md={{ span: 3, offset: 1 }}>
+                                    <span className="p1">Price</span>
+                                  </Col>
+                                  <Col>
+                                    <Input
+                                      name={"price"}
+                                      type="number"
+                                      // disabled={"disabled"}
+                                      border={"1px solid #dadada"}
+                                      value={
+                                        productTempt?.price
+                                          ? productTempt?.price
+                                          : product?.price
+                                      }
+                                      placeholder={"Enter email"}
+                                      onChange={(e) => {
+                                        setProductTempt({
+                                          ...productTempt,
+                                          price: e.target.value,
+                                        });
+                                      }}
+                                    />
+                                  </Col>
+                                </Row>
+                                <Row className="personal-detail__content-bio instagram">
+                                  <Col md={{ span: 3, offset: 1 }}>
+                                    <span className="p1">Status</span>
+                                  </Col>
+                                  <Col>
+                                    <Switch
+                                      checked={product?.status}
+                                      checkedChildren=""
+                                      unCheckedChildren=""
+                                    />
+                                    {JSON.stringify(product?.status)}
+                                  </Col>
+                                </Row>
+
+                                <Row className="personal-detail__content-address">
+                                  <Col md={{ span: 3, offset: 1 }}>
+                                    <span className="p1">Created by</span>
+                                  </Col>
+                                  <Col>
+                                    <Input
+                                      disabled={"disabled"}
+                                      value={
+                                        product?.created_by_user?.username
+                                          ? product?.created_by_user?.username
+                                          : product?.created_by_user
+                                              ?.walletAddress
+                                      }
+                                    />
+                                  </Col>
+                                </Row>
+                                <Row className="personal-detail__content-address">
+                                  <Col md={{ span: 3, offset: 1 }}>
+                                    <span className="p1">Number owners: </span>
+                                  </Col>
+                                  <Col>
+                                    <Input
+                                      disabled={"disabled"}
+                                      value={product?.num_owners}
+                                    />
+                                  </Col>
+                                </Row>
+                              </Col>
+                            </Row>
+                          </Modal>
+                        </div>
                       </div>
                       <div className="historyPrice">
                         {historyPrice === null ? (
                           <Line
                             data={{
-                              labels: ["1", "2"],
+                              labels: ["0", "0"],
                               datasets: [
                                 {
-                                  label: "Rainfall",
+                                  label: "ICX",
                                   fill: false,
                                   lineTension: 0.2,
                                   backgroundColor: "rgba(75,192,192,1)",
                                   borderColor: "rgba(0,0,0,1)",
                                   borderWidth: 2,
-                                  data: ["5", "3"],
+                                  data: ["0", "0"],
                                 },
                               ],
                             }}
                             options={{
                               title: {
                                 display: true,
-                                text: "Average Rainfall per month",
+                                text: "History price",
                                 fontSize: 20,
                               },
                               legend: {
